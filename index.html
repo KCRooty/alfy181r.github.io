@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!-- saved from url=(0040)file:///home/alfy/Descargas/index_3.html -->
 <html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -341,10 +340,12 @@ footer b{color:var(--accent)}
     <span class="tb-title">alfy@studio</span>
   </div>
   <nav><ul class="tb-nav">
-    <li><a href="file:///home/alfy/Descargas/index_3.html#about">about</a></li>
-    <li><a href="file:///home/alfy/Descargas/index_3.html#projects">projects</a></li>
-    <li><a href="file:///home/alfy/Descargas/index_3.html#gallery">gallery</a></li>
-    <li><a href="file:///home/alfy/Descargas/index_3.html#connect">connect</a></li>
+    <li><a href="#about">about</a></li>
+    <li><a href="#projects">projects</a></li>
+    <li><a href="#gallery">gallery</a></li>
+    <li><a href="fnaf-as.html">FNAF AS</a></li>
+    <li><a href="foros.html">foro</a></li>
+    <li><a href="#connect">connect</a></li>
   </ul></nav>
   <span class="tb-right"><span class="on">●</span> Online · Studio</span>
 </header>
@@ -364,9 +365,9 @@ footer b{color:var(--accent)}
       <span class="tag">català · español · english</span>
     </div>
     <div class="hero-cta">
-      <a href="file:///home/alfy/Descargas/index_3.html#projects" class="btn pri" data-es="ver proyectos" data-en="view projects">ver proyectos</a>
-      <a href="file:///home/alfy/Descargas/index_3.html#gallery" class="btn" data-es="galería" data-en="gallery">galería</a>
-      <a href="https://github.com/Alfy181R" target="_blank" class="btn">github →</a>
+      <a href="#projects" class="btn pri" data-es="ver proyectos" data-en="view projects">ver proyectos</a>
+      <a href="#gallery" class="btn" data-es="galería" data-en="gallery">galería</a>
+      <a href="fnaf-as.html" class="btn">FNAF AS →</a>
     </div>
   </section>
 
@@ -432,14 +433,14 @@ footer b{color:var(--accent)}
         </div>
       </div>
 
-      <div class="pcard" style="--c:var(--yellow)">
+      <a class="pcard" href="fnaf-as.html" style="--c:var(--yellow)">
         <div class="pstatus" style="color:var(--yellow)"><span class="dot y"></span>en desarrollo</div>
         <div class="pname">FNaF AS</div>
-        <div class="pdesc">Web-serie "What If" basada en la historia original de Five Nights at Freddy's con cambios narrativos clave que alteran todo el lore.</div>
+        <div class="pdesc">Five Nights at Freddy's Alternative Stories: universo alternativo, lore propio y una experiencia visual basada en glitch los renders 3D.</div>
         <div class="ptags">
-          <span class="ptag">FNaF</span><span class="ptag">Web-serie</span><span class="ptag">What If</span>
+          <span class="ptag">FNAF</span><span class="ptag">Fan project</span><span class="ptag">3D</span>
         </div>
-      </div>
+      </a>
 
       <a class="pcard" href="https://github.com/Alfy181R/remotecontrol" target="_blank" style="--c:var(--green)">
         <div class="pstatus" style="color:var(--green)"><span class="dot"></span>activo</div>
@@ -450,7 +451,14 @@ footer b{color:var(--accent)}
           <span class="ptag">Ventoy</span><span class="ptag">USB Tools</span><span class="ptag">GitHub ↗</span>
         </div>
       </a>
-
+      <a class="pcard" href="foros.html" style="--c:var(--purple)">
+        <div class="pstatus" style="color:var(--accent)"><span class="dot"></span>comunitario</div>
+        <div class="pname">Foro</div>
+        <div class="pdesc">Foro con inicio de sesión por usuario y contraseña. Publica mensajes y revisa ideas compartidas en el sitio.</div>
+        <div class="ptags">
+          <span class="ptag">Foro</span><span class="ptag">Chat</span><span class="ptag">Login</span>
+        </div>
+      </a>
     </div>
   </section>
 
@@ -516,13 +524,17 @@ footer b{color:var(--accent)}
 <!-- LIGHTBOX -->
 <div class="lb" id="lb" onclick="closeLb()">
   <button class="lb-close" onclick="closeLb()">[ ✕ cerrar ]</button>
-  <img id="lbImg" src="file:///home/alfy/Descargas/index_3.html" alt="">
+  <img id="lbImg" src="assets/gallery/clip5.png" alt="">
   <div class="lb-name" id="lbName"></div>
 </div>
 
 <script>
 /* ===== GALLERY ===== */
-let imgs=[],curF='all';
+let imgs=[
+  {src:'assets/gallery/clip5_2.png',name:'Render FNAF AS 1',cat:'fanart'},
+  {src:'assets/gallery/clip5.png',name:'Render FNAF AS 2',cat:'fanart'},
+  {src:'assets/gallery/clip5_1.png',name:'Render FNAF AS 3',cat:'fanart'}
+],curF='all';
 
 function setF(btn,f){
   document.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('on'));
@@ -544,7 +556,7 @@ function renderG(){
   const list=curF==='all'?imgs:imgs.filter(i=>i.cat===curF);
   cnt.textContent=imgs.length>0?`${imgs.length} archivo${imgs.length!==1?'s':''}`:'' ;
   if(!list.length){
-    grid.innerHTML=`<div class="gempty"><b>~/gallery</b> · 0 archivos${curF!=='all'?' en esta categoría':''}<br><span style="font-size:.62rem;opacity:.6;display:block;margin-top:5px">las imágenes se guardan en esta sesión</span></div>`;
+    grid.innerHTML=`<div class="gempty"><b>Galería vacía</b><br><span style="font-size:.62rem;opacity:.6;display:block;margin-top:5px">Sube tus dibujos o disfruta del contenido fijo del proyecto.</span></div>`;
     return;
   }
   grid.innerHTML=list.map((img,i)=>`
@@ -584,10 +596,9 @@ function setLang(l){
     const v=el.getAttribute('data-'+l);
     if(v)el.textContent=v;
   });
-  // hero cta
   document.querySelectorAll('.btn.pri').forEach(b=>{const v=b.getAttribute('data-'+l);if(v)b.textContent=v;});
-  // also handle sec-title via data attrs
 }
+window.addEventListener('DOMContentLoaded',()=>{renderG();});
 </script>
 
 
