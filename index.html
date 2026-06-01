@@ -2,7 +2,7 @@
 <html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ALFY "STUDIO" | Terminal</title>
+  <title>𝔸𝕃𝔽𝕐 𝕊𝕋𝕌𝔻𝕀𝕆 | Terminal</title>
   <link rel="preconnect" href="https://fonts.googleapis.com/">
   <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
   <link href="./index_1_files/css2" rel="stylesheet">
@@ -99,6 +99,7 @@ a{text-decoration:none;color:inherit}
   font-weight:700;color:var(--bright);
   line-height:1.08;letter-spacing:-.025em;
   margin-bottom:.6rem;
+  text-shadow:0 0 18px rgba(82,148,226,.28), 0 0 40px rgba(82,148,226,.15);
 }
 .hero-name .hi{color:var(--accent)}
 .hero-sub{font-size:1rem;color:var(--dim);font-weight:300;margin-bottom:1.3rem;letter-spacing:.02em}
@@ -274,12 +275,16 @@ a{text-decoration:none;color:inherit}
 }
 .ccard:hover{border-color:var(--accent);background:var(--card2)}
 .cico{
-  width:34px;height:34px;border-radius:4px;
-  background:var(--aglow);
+  width:42px;height:42px;border-radius:12px;
   display:flex;align-items:center;justify-content:center;
-  font-size:1.1rem;flex-shrink:0;
-  border:1px solid rgba(82,148,226,.2);
+  font-size:1.2rem;flex-shrink:0;
+  color:#fff;
+  box-shadow:0 0 18px rgba(82,148,226,.12);
 }
+.cico.youtube{background:#ff0000;box-shadow:0 0 20px rgba(255,0,0,.35);}
+.cico.tiktok{background:linear-gradient(135deg,#69c9d0,#ee1d52);box-shadow:0 0 20px rgba(238,29,82,.35);}
+.cico.gamejolt{background:#f8bc00;color:#111;box-shadow:0 0 18px rgba(248,188,0,.35);}
+.cico.github{background:#181717;box-shadow:0 0 18px rgba(24,23,23,.55);}
 .cplat{font-family:var(--mono);font-size:.67rem;color:var(--dim);letter-spacing:.04em;display:block}
 .chandle{font-size:.9rem;font-weight:500;color:var(--bright);display:block}
 
@@ -329,6 +334,92 @@ footer b{color:var(--accent)}
   .hero-name{font-size:2rem}
   .lang-bar{bottom:.8rem;right:.8rem}
 }
+.lada-magic{
+  position:fixed;inset:0;z-index:450;
+  display:grid;place-items:center;
+  background:radial-gradient(circle at 30% 20%, rgba(173,96,255,.22), transparent 18%),
+             radial-gradient(circle at 72% 30%, rgba(186,109,255,.14), transparent 20%),
+             linear-gradient(180deg, rgba(12,3,25,.96), #03030c 65%);
+  opacity:0;pointer-events:none;transition:opacity .35s ease;
+}
+.lada-magic.open{opacity:1;pointer-events:auto}
+.lm-moon{
+  position:absolute;top:40%;left:45%;width:260px;height:260px;
+  border-radius:50%;transform:translate(-50%,-50%);
+  background:radial-gradient(circle at 35% 35%, #fff, #c499ff 24%, #8a3ce0 52%, #28072d 100%);
+  box-shadow:0 0 180px rgba(181,96,255,.45), inset 0 0 45px rgba(255,255,255,.22);
+}
+.lm-spiral{
+  position:absolute;top:50%;left:50%;width:470px;height:470px;
+  transform:translate(-50%,-50%);
+  border-radius:50%;
+}
+.lm-spiral::before{
+  content:'';position:absolute;inset:0;border-radius:50%;
+  background:conic-gradient(from 360deg, rgba(174,82,255,.18), transparent 18%, rgba(255,255,255,.1) 30%, transparent 38%, rgba(174,82,255,.22) 52%, transparent 60%, rgba(255,255,255,.12) 72%, transparent 84%, rgba(174,82,255,.16) 100%);
+  filter:blur(1px);
+  animation:spin-reverse 12s linear infinite;
+}
+.lm-star{
+  position:absolute;top:24%;left:62%;width:16px;height:16px;
+  transform:translate(-50%,-50%) rotate(45deg);
+  background:radial-gradient(circle, #ffffff 0%, rgba(255,255,255,.2) 60%);
+  box-shadow:0 0 24px rgba(255,255,255,.8), 0 0 40px rgba(187,89,255,.5);
+}
+.lm-star::after,
+.lm-star::before{
+  content:'';position:absolute;top:50%;left:50%;width:10px;height:10px;
+  border-radius:50%;transform:translate(-50%,-50%);
+  background:rgba(255,255,255,.7);
+  box-shadow:0 0 18px rgba(255,255,255,.9);
+}
+.lm-panel{
+  position:relative;z-index:2;
+  width:min(360px,calc(100%-3rem));
+  padding:2rem;
+  border-radius:18px;
+  background:rgba(8,5,20,.92);
+  border:1px solid rgba(255,255,255,.08);
+  box-shadow:0 0 80px rgba(131,77,255,.18);
+  display:grid;gap:1rem;align-items:center;text-align:center;
+}
+.lm-title{
+  font-family:var(--mono);font-size:1rem;
+  letter-spacing:.2em;text-transform:uppercase;
+  color:#efe6ff;
+}
+.lm-input{
+  width:100%;padding:12px 14px;border-radius:12px;
+  border:1px solid rgba(255,255,255,.12);background:rgba(20,10,45,.95);
+  color:#fff;font-family:var(--mono);font-size:.95rem;
+  outline:none;box-shadow:inset 0 0 0 1px rgba(160,100,255,.12);
+}
+.lm-input:focus{border-color:rgba(173,96,255,.6);box-shadow:0 0 18px rgba(173,96,255,.16);}
+.lm-submit{
+  width:100%;padding:12px 0;border-radius:999px;
+  border:none;background:linear-gradient(135deg,#b082ff,#7d3cea);
+  color:#fff;font-family:var(--mono);font-size:.9rem;letter-spacing:.08em;
+  cursor:pointer;transition:transform .2s,filter .2s;
+}
+.lm-submit:hover{transform:translateY(-1px);filter:brightness(1.05);}
+.lm-feedback{
+  min-height:1.2rem;font-family:var(--mono);font-size:.82rem;color:rgba(255,255,255,.7);
+}
+.lm-feedback.error{color:#f56a6a;}
+.lm-iris{
+  position:absolute;inset:0;top:50%;left:50%;width:120px;height:120px;
+  transform:translate(-50%,-50%);
+  border-radius:50%;
+  background:radial-gradient(circle at 50% 45%, #3a0d64 22%, #7a2cff 42%, #14001c 58%, transparent 65%);
+  box-shadow:0 0 60px rgba(135,55,255,.65), inset 0 0 30px rgba(255,255,255,.12);
+  opacity:0;pointer-events:none;transition:opacity .25s ease;
+}
+.lm-iris::before{
+  content:'';position:absolute;inset:18%;border-radius:50%;
+  background:radial-gradient(circle, #fff 0%, rgba(255,255,255,.3) 35%, transparent 60%);
+}
+.lm-iris.open{opacity:1;}
+@keyframes spin-reverse{100%{transform:translate(-50%,-50%) rotate(-360deg)}}
 </style>
 </head>
 <body>
@@ -340,12 +431,13 @@ footer b{color:var(--accent)}
     <span class="tb-title">alfy@studio</span>
   </div>
   <nav><ul class="tb-nav">
-    <li><a href="#about">about</a></li>
-    <li><a href="#projects">projects</a></li>
-    <li><a href="#gallery">gallery</a></li>
-    <li><a href="fnaf-as.html">FNAF AS</a></li>
-    <li><a href="foros.html">foro</a></li>
-    <li><a href="#connect">connect</a></li>
+    <li><a href="#about" data-es="about" data-en="about" data-ca="sobre">about</a></li>
+    <li><a href="#projects" data-es="projects" data-en="projects" data-ca="projectes">projects</a></li>
+    <li><a href="#gallery" data-es="gallery" data-en="gallery" data-ca="galeria">gallery</a></li>
+    <li><a href="fnaf-as.html" data-es="FNAF AS" data-en="FNAF AS" data-ca="FNAF AS">FNAF AS</a></li>
+    <li><a href="https://gamejolt.com/games/Donnies2001/885221" target="_blank" data-es="Donnie" data-en="Donnie" data-ca="Donnie">Donnie</a></li>
+    <li><a href="foros.html" data-es="foro" data-en="forum" data-ca="foro">foro</a></li>
+    <li><a href="#connect" data-es="connect" data-en="connect" data-ca="connectar">connect</a></li>
   </ul></nav>
   <span class="tb-right"><span class="on">●</span> Online · Studio</span>
 </header>
@@ -355,7 +447,7 @@ footer b{color:var(--accent)}
   <!-- HERO -->
   <section class="hero" id="home">
     <div class="hero-prompt">alfy@studio:~ $ whoami</div>
-    <h1 class="hero-name">ALFY<br><span class="hi">"STUDIO"</span></h1>
+    <h1 class="hero-name">𝔸𝕃𝔽𝕐 𝕊𝕋𝕌𝔻𝕀𝕆</h1>
     <p class="hero-sub"><strong>Developer · Artist · Content Creator</strong><br>Open source, interfaz oscura y arte digital.</p>
     <div class="hero-tags">
       <span class="tag a">game dev</span>
@@ -365,16 +457,17 @@ footer b{color:var(--accent)}
       <span class="tag">català · español · english</span>
     </div>
     <div class="hero-cta">
-      <a href="#projects" class="btn pri" data-es="ver proyectos" data-en="view projects">ver proyectos</a>
-      <a href="#gallery" class="btn" data-es="galería" data-en="gallery">galería</a>
-      <a href="fnaf-as.html" class="btn">FNAF AS →</a>
+      <a href="#projects" class="btn pri" data-es="ver proyectos" data-en="view projects" data-ca="veure projectes">ver proyectos</a>
+      <a href="#gallery" class="btn" data-es="galería" data-en="gallery" data-ca="galeria">galería</a>
+      <a href="https://gamejolt.com/games/Donnies2001/885221" class="btn" target="_blank">Donnie Origins →</a>
+      <a href="fnaf-as.html" class="btn" data-ca="FNaF AS →">FNAF AS →</a>
     </div>
   </section>
 
   <!-- ABOUT -->
   <section class="sec" id="about">
     <div class="sec-label">01 · about_me</div>
-    <h2 class="sec-title" data-es="Sobre mí" data-en="About me">Sobre mí</h2>
+    <h2 class="sec-title" data-es="Sobre mí" data-en="About me" data-ca="Sobre mi">Sobre mí</h2>
     <div class="about-grid">
       <div class="acard full">
         <h3>$ cat bio.txt</h3>
@@ -403,6 +496,15 @@ footer b{color:var(--accent)}
       <div class="acard">
         <h3>$ cat tools.txt</h3>
         <p>Principal stack: Kotlin, Jetpack Compose, Godot 4.6, Python, HTML/CSS/JS y VS Code.</p>
+        <div class="chips" style="margin-top:.85rem">
+          <span class="chip">Cinema 4D</span>
+          <span class="chip">Blender</span>
+          <span class="chip">Krita</span>
+          <span class="chip">Adobe Premiere</span>
+          <span class="chip">Source SDK Engine</span>
+          <span class="chip">GameMaker</span>
+          <span class="chip">Clickteam Fusion</span>
+        </div>
         <p>Trabajo con proyectos open source, interfaces oscuras y experiencias de usuario limpias.</p>
       </div>
     </div>
@@ -411,7 +513,7 @@ footer b{color:var(--accent)}
   <!-- PROJECTS -->
   <section class="sec" id="projects">
     <div class="sec-label">02 · ls-projects --active</div>
-    <h2 class="sec-title" data-es="Proyectos" data-en="Projects">Proyectos</h2>
+    <h2 class="sec-title" data-es="Proyectos" data-en="Projects" data-ca="Projectes">Proyectos</h2>
     <div class="proj-grid">
 
       <a class="pcard" href="https://gamejolt.com/games/Donnies2001/885221" target="_blank" style="--c:var(--red)">
@@ -424,14 +526,14 @@ footer b{color:var(--accent)}
         </div>
       </a>
 
-      <div class="pcard" style="--c:var(--purple)">
+      <button class="pcard pcard-lada" type="button" onclick="openLadaMagic()" style="--c:var(--purple)">
         <div class="pstatus" style="color:var(--purple)"><span class="dot p"></span>en construcción</div>
         <div class="pname">LADA</div>
         <div class="pdesc">Proyecto de personajes originales con historia de ficción extensa, worldbuilding propio y una trama construida desde cero.</div>
         <div class="ptags">
           <span class="ptag">OC / Original</span><span class="ptag">Ficción</span><span class="ptag">Worldbuilding</span>
         </div>
-      </div>
+      </button>
 
       <a class="pcard" href="fnaf-as.html" style="--c:var(--yellow)">
         <div class="pstatus" style="color:var(--yellow)"><span class="dot y"></span>en desarrollo</div>
@@ -439,6 +541,7 @@ footer b{color:var(--accent)}
         <div class="pdesc">Five Nights at Freddy's Alternative Stories: universo alternativo, lore propio y una experiencia visual basada en glitch los renders 3D.</div>
         <div class="ptags">
           <span class="ptag">FNAF</span><span class="ptag">Fan project</span><span class="ptag">3D</span>
+          <span class="ptag" style="cursor:pointer;" onclick="window.open('https://gamejolt.com/games/Donnies2001/885221','_blank')">Donnie Origins ↗</span>
         </div>
       </a>
 
@@ -465,7 +568,7 @@ footer b{color:var(--accent)}
   <!-- GALLERY -->
   <section class="sec" id="gallery">
     <div class="sec-label">03 · ls-gallery --drawings</div>
-    <h2 class="sec-title" data-es="Galería" data-en="Gallery">Galería</h2>
+    <h2 class="sec-title" data-es="Galería" data-en="Gallery" data-ca="Galeria">Galería</h2>
     <div class="gfilt">
       <button class="fbtn on" onclick="setF(this,&#39;all&#39;)">Todo</button>
       <button class="fbtn" onclick="setF(this,&#39;oc&#39;)">OC / Original</button>
@@ -486,22 +589,22 @@ footer b{color:var(--accent)}
   <!-- CONNECT -->
   <section class="sec" id="connect">
     <div class="sec-label">04 · ./connect.sh</div>
-    <h2 class="sec-title" data-es="Conectar" data-en="Connect">Conectar</h2>
+    <h2 class="sec-title" data-es="Conectar" data-en="Connect" data-ca="Connectar">Conectar</h2>
     <div class="con-grid">
       <a href="https://www.youtube.com/@ALFY181X" target="_blank" class="ccard">
-        <div class="cico">▶</div>
+        <div class="cico youtube">▶</div>
         <div><span class="cplat">YouTube</span><span class="chandle">@ALFY181X</span></div>
       </a>
       <a href="https://www.tiktok.com/@a181xy" target="_blank" class="ccard">
-        <div class="cico">♪</div>
+        <div class="cico tiktok">♪</div>
         <div><span class="cplat">TikTok</span><span class="chandle">@a181xy</span></div>
       </a>
       <a href="https://gamejolt.com/@alfy181R" target="_blank" class="ccard">
-        <div class="cico">⚡</div>
+        <div class="cico gamejolt">GJ</div>
         <div><span class="cplat">GameJolt</span><span class="chandle">@alfy181R</span></div>
       </a>
       <a href="https://github.com/Alfy181R" target="_blank" class="ccard">
-        <div class="cico">◈</div>
+        <div class="cico github">GH</div>
         <div><span class="cplat">GitHub</span><span class="chandle">Alfy181R</span></div>
       </a>
     </div>
@@ -509,16 +612,27 @@ footer b{color:var(--accent)}
 
 </div><!-- /wrap -->
 
-<!-- FOOTER -->
-<footer>
-  <div class="wrap">alfy@studio:~$ echo <b>"made with code & art"</b> · Studio OS v3.0 · <a href="https://github.com/Alfy181R/alfy181r.github.io" style="color:var(--accent)">github ↗</a></div>
+<div id="lada-magic" class="lada-magic" onclick="closeLadaMagic()">
+  <div class="lm-spiral"></div>
+  <div class="lm-moon"></div>
+  <div class="lm-star"></div>
+  <div class="lm-panel" onclick="event.stopPropagation()">
+    <div class="lm-title">introducir contraseña</div>
+    <input id="lada-password" class="lm-input" type="password" maxlength="10" autocomplete="off" placeholder="1811" />
+    <button class="lm-submit" onclick="validateLadaPassword()">entrar</button>
+    <div id="lada-feedback" class="lm-feedback"></div>
+    <div id="lada-iris" class="lm-iris" aria-hidden="true"></div>
+  </div>
+</div>
+
+<!-- FOOTER --><footer>  <div class="wrap">alfy@studio:~$ echo <b>"made with code & art"</b> · Studio OS v3.0 · <a href="https://github.com/Alfy181R/alfy181r.github.io" style="color:var(--accent)">github ↗</a></div>
 </footer>
 
 <!-- LANG SWITCHER -->
 <div class="lang-bar">
-  <button class="lang-btn active" onclick="setLang(&#39;es&#39;)">ES</button>
-  <button class="lang-btn" onclick="setLang(&#39;en&#39;)">EN</button>
-  <button class="lang-btn" onclick="setLang(&#39;ca&#39;)" style="color:var(--yellow);border-color:rgba(212,172,103,.3)">CA</button>
+  <button class="lang-btn active" data-lang="es" onclick="setLang(&#39;es&#39;)">ES</button>
+  <button class="lang-btn" data-lang="en" onclick="setLang(&#39;en&#39;)">EN</button>
+  <button class="lang-btn" data-lang="ca" onclick="setLang(&#39;ca&#39;)" style="color:var(--yellow);border-color:rgba(212,172,103,.3)">CA</button>
 </div>
 
 <!-- LIGHTBOX -->
@@ -529,6 +643,36 @@ footer b{color:var(--accent)}
 </div>
 
 <script>
+function openLadaMagic(){
+  const panel=document.getElementById('lada-password');
+  const feedback=document.getElementById('lada-feedback');
+  const iris=document.getElementById('lada-iris');
+  document.getElementById('lada-magic').classList.add('open');
+  feedback.textContent='';
+  feedback.classList.remove('error');
+  iris.classList.remove('open');
+  panel.value='';
+  panel.focus();
+  panel.onkeydown = e => { if (e.key === 'Enter') validateLadaPassword(); };
+}
+function closeLadaMagic(){
+  document.getElementById('lada-magic').classList.remove('open');
+}
+function validateLadaPassword(){
+  const value=document.getElementById('lada-password').value.trim();
+  const feedback=document.getElementById('lada-feedback');
+  const iris=document.getElementById('lada-iris');
+  if(value==='1811'){
+    feedback.textContent='acceso autorizado';
+    feedback.classList.remove('error');
+    iris.classList.add('open');
+    return;
+  }
+  iris.classList.remove('open');
+  feedback.textContent='contraseña incorrecta';
+  feedback.classList.add('error');
+}
+
 /* ===== GALLERY ===== */
 let imgs=[
   {src:'assets/gallery/clip5_2.png',name:'Render FNAF AS 1',cat:'fanart'},
@@ -591,7 +735,8 @@ const t={
 
 function setLang(l){
   document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('active'));
-  document.querySelector(`.lang-btn[onclick="setLang('${l}')"]`).classList.add('active');
+  const activeBtn = document.querySelector(`.lang-btn[data-lang="${l}"]`);
+  if(activeBtn) activeBtn.classList.add('active');
   document.querySelectorAll('[data-'+l+']').forEach(el=>{
     const v=el.getAttribute('data-'+l);
     if(v)el.textContent=v;
