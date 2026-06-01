@@ -1,708 +1,594 @@
 <!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ALFY "STUDIO" | Terminal</title>
-    <style>
-        :root {
-            --bg: #0d1117;
-            --text: #c9d1d9;
-            --primary: #58a6ff;
-            --success: #7ee787;
-            --accent: #bf91f3; 
-            --warning: #f1e05a; 
-            --card-bg: #161b22;
-            --card-border: #30363d;
-            --neon-glow: 0 0 10px rgba(191, 145, 243, 0.5);
-        }
-        
-        body {
-            background-color: var(--bg);
-            color: var(--text);
-            font-family: 'Cascadia Code', monospace;
-            padding: 20px;
-            max-width: 900px;
-            margin: auto;
-        }
+<!-- saved from url=(0040)file:///home/alfy/Descargas/index_3.html -->
+<html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ALFY "STUDIO" | Terminal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com/">
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+  <link href="./index_1_files/css2" rel="stylesheet">
+<style>
+/* ===== RESET ===== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
 
-        .lang-switcher { position: absolute; top: 20px; right: 20px; }
-        .btn-lang {
-            background: #1c2128; color: var(--accent); border: 1px solid var(--accent);
-            padding: 5px 15px; cursor: pointer; font-family: inherit; font-weight: bold; border-radius: 4px;
-        }
-        .btn-lang:hover { background: var(--accent); color: #000; }
+/* ===== TOKENS ===== */
+:root{
+  --bg:       #0d1117;
+  --bg2:      #111820;
+  --card:     #161c26;
+  --card2:    #1a2330;
+  --border:   #1e2b3a;
+  --border2:  #253548;
+  --text:     #cdd6e0;
+  --dim:      #6b7e96;
+  --bright:   #e8f0f7;
+  --accent:   #5294e2;
+  --aglow:    rgba(82,148,226,.14);
+  --green:    #4ec9b0;
+  --yellow:   #d4ac67;
+  --red:      #e0656e;
+  --purple:   #c286dd;
+  --mono:     'JetBrains Mono', monospace;
+  --sans:     'Outfit', sans-serif;
+}
 
-        .header { 
-            display: flex; align-items: center; justify-content: center; gap: 20px;
-            border-bottom: 1px solid var(--card-border); padding-bottom: 20px; 
-            margin-top: 40px; margin-bottom: 20px; 
-        }
-        
-        .main-logo-circle {
-            width: 70px; height: 70px; background: var(--accent);
-            border-radius: 50%; display: flex; align-items: center;
-            justify-content: center; gap: 10px; box-shadow: var(--neon-glow);
-        }
-        .main-eye { width: 12px; height: 12px; background: white; border-radius: 50%; }
+/* ===== BASE ===== */
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--sans);
+  font-size:16px;
+  line-height:1.65;
+  overflow-x:hidden;
+}
 
-        .title-container h1 {
-            margin: 0; font-size: 2.2em; color: var(--accent); text-shadow: var(--neon-glow);
-        }
+/* dot-grid */
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background-image:radial-gradient(circle,rgba(82,148,226,.055) 1px,transparent 1px);
+  background-size:28px 28px;
+  pointer-events:none;
+  z-index:0;
+}
 
-        .about-section {
-            background: rgba(88, 166, 255, 0.05);
-            border: 1px dashed var(--primary);
-            padding: 20px;
-            margin-bottom: 30px;
-            border-radius: 8px;
-            line-height: 1.6;
-        }
+a{text-decoration:none;color:inherit}
+::selection{background:rgba(82,148,226,.3)}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
+::-webkit-scrollbar-thumb:hover{background:var(--accent)}
 
-        .logo-row { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; }
+/* ===== TOPBAR ===== */
+.topbar{
+  position:sticky;top:0;z-index:200;
+  height:40px;
+  background:rgba(13,17,23,.93);
+  border-bottom:1px solid var(--border);
+  backdrop-filter:blur(14px);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 1.5rem;
+  font-family:var(--mono);font-size:.72rem;
+}
+.tb-left{display:flex;align-items:center;gap:10px}
+.dots{display:flex;gap:5px}
+.dots span{width:10px;height:10px;border-radius:50%;display:block}
+.d-r{background:#e0656e}.d-y{background:#d4ac67}.d-g{background:#4ec9b0}
+.tb-title{color:var(--dim);letter-spacing:.04em}
+.tb-title b{color:var(--accent)}
+.tb-nav{display:flex;gap:1.4rem;list-style:none}
+.tb-nav a{color:var(--dim);transition:color .18s;letter-spacing:.04em;font-size:.7rem}
+.tb-nav a:hover{color:var(--accent)}
+.tb-right{color:var(--dim);font-size:.67rem;opacity:.7}
+.tb-right .on{color:var(--green)}
 
-        .eye-donnie {
-            width: 35px; height: 35px; background: #000; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center; border: 2px solid #333;
-        }
-        .iris-donnie { 
-            width: 15px; height: 15px; border: 3px solid var(--warning); 
-            border-radius: 50%; box-shadow: 0 0 8px var(--warning); 
-        }
+/* ===== WRAPPER ===== */
+.wrap{position:relative;z-index:1;max-width:960px;margin:0 auto;padding:0 1.5rem}
 
-        .alfy-icon { 
-            width: 35px; height: 35px; background: var(--accent); color: #000;
-            display: flex; align-items: center; justify-content: center;
-            border-radius: 4px; font-weight: bold; font-size: 1.2em;
-        }
+/* ===== HERO ===== */
+.hero{padding:3.5rem 0 3rem;border-bottom:1px solid var(--border)}
+.hero-prompt{
+  font-family:var(--mono);font-size:.75rem;
+  color:var(--dim);margin-bottom:.85rem;
+  display:flex;align-items:center;gap:8px;
+}
+.hero-prompt::before{content:'';width:22px;height:1px;background:var(--accent);display:inline-block}
+.hero-name{
+  font-family:var(--mono);
+  font-size:clamp(2.2rem,6.5vw,4rem);
+  font-weight:700;color:var(--bright);
+  line-height:1.08;letter-spacing:-.025em;
+  margin-bottom:.6rem;
+}
+.hero-name .hi{color:var(--accent)}
+.hero-sub{font-size:1rem;color:var(--dim);font-weight:300;margin-bottom:1.3rem;letter-spacing:.02em}
+.hero-sub strong{color:var(--text)}
+.hero-tags{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:1.8rem}
+.tag{
+  font-family:var(--mono);font-size:.68rem;
+  padding:3px 9px;border-radius:3px;
+  background:var(--card);border:1px solid var(--border2);
+  color:var(--dim);letter-spacing:.03em;
+}
+.tag.a{border-color:var(--accent);color:var(--accent);background:var(--aglow)}
+.tag.g{border-color:var(--green);color:var(--green);background:rgba(78,201,176,.08)}
+.tag.y{border-color:var(--yellow);color:var(--yellow);background:rgba(212,172,103,.08)}
+.tag.p{border-color:var(--purple);color:var(--purple);background:rgba(194,134,221,.08)}
+.hero-cta{display:flex;gap:10px;flex-wrap:wrap}
+.btn{
+  font-family:var(--mono);font-size:.73rem;
+  padding:7px 18px;border-radius:4px;
+  border:1px solid var(--border2);background:var(--card);
+  color:var(--text);cursor:pointer;transition:all .2s;
+  letter-spacing:.04em;display:inline-block;
+}
+.btn:hover{border-color:var(--accent);color:var(--accent);background:var(--aglow)}
+.btn.pri{background:var(--accent);color:#fff;border-color:var(--accent)}
+.btn.pri:hover{background:#6ba8e8;border-color:#6ba8e8;color:#fff}
 
-        .freddy-mini { width: 35px; height: 35px; fill: #4a342a; }
+/* ===== SECTIONS ===== */
+.sec{padding:2.75rem 0;border-bottom:1px solid var(--border)}
+.sec:last-child{border-bottom:none}
+.sec-label{
+  font-family:var(--mono);font-size:.67rem;
+  color:var(--accent);letter-spacing:.14em;
+  text-transform:uppercase;margin-bottom:.35rem;
+  display:flex;align-items:center;gap:8px;
+}
+.sec-label::after{content:'';flex:1;height:1px;background:var(--border)}
+.sec-title{font-size:1.5rem;font-weight:600;color:var(--bright);margin-bottom:1.3rem;line-height:1.2}
 
-        .project-card {
-            background: var(--card-bg); border: 1px solid var(--card-border);
-            padding: 20px; margin-bottom: 20px; border-radius: 8px;
-        }
+/* ===== ABOUT GRID ===== */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.acard{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:6px;padding:1.2rem;transition:border-color .2s;
+}
+.acard:hover{border-color:var(--border2)}
+.acard.full{grid-column:1/-1}
+.acard h3{
+  font-family:var(--mono);font-size:.7rem;
+  color:var(--accent);letter-spacing:.07em;
+  text-transform:uppercase;margin-bottom:.7rem;
+}
+.acard p{color:var(--text);font-size:.9rem;line-height:1.65}
+.acard p + p{margin-top:.6rem;color:var(--dim);font-size:.85rem}
+.chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:.7rem}
+.chip{
+  font-family:var(--mono);font-size:.65rem;
+  padding:2px 7px;border-radius:2px;
+  background:var(--aglow);
+  border:1px solid rgba(82,148,226,.25);
+  color:var(--accent);
+}
+.chip.g{background:rgba(78,201,176,.08);border-color:rgba(78,201,176,.25);color:var(--green)}
+.chip.y{background:rgba(212,172,103,.08);border-color:rgba(212,172,103,.25);color:var(--yellow)}
 
-        .btn-more {
-            background: transparent; border: 1px solid var(--accent); color: var(--accent);
-            padding: 8px 15px; cursor: pointer; font-family: inherit; margin-top: 10px; border-radius: 4px;
-        }
-        .btn-more:hover { background: var(--accent); color: #000; }
+/* neofetch block */
+.nf{
+  font-family:var(--mono);font-size:.72rem;
+  line-height:1.6;color:var(--dim);
+}
+.nf .k{color:var(--accent)}
+.nf .v{color:var(--text)}
+.nf .os{color:var(--green)}
+.nf .de{color:var(--yellow)}
 
-        .social-bar {
-            background: #090c10; padding: 15px; border-radius: 5px;
-            text-align: center; margin-top: 40px; border: 1px solid var(--accent);
-        }
-        .social-link { color: var(--success); text-decoration: none; margin: 0 10px; font-weight: bold; }
-        .social-link:hover { text-decoration: underline; }
+/* ===== PROJECTS GRID ===== */
+.proj-grid{display:grid;grid-template-columns:1fr 1fr;gap:.9rem}
+.pcard{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:6px;padding:1.2rem;
+  display:block;color:inherit;
+  transition:all .22s;position:relative;overflow:hidden;
+}
+.pcard::before{
+  content:'';position:absolute;
+  top:0;left:0;width:3px;height:100%;
+  background:var(--c,var(--accent));
+  opacity:0;transition:opacity .22s;
+}
+.pcard:hover{border-color:var(--border2);background:var(--card2);transform:translateY(-1px)}
+.pcard:hover::before{opacity:1}
+.pstatus{
+  font-family:var(--mono);font-size:.63rem;
+  letter-spacing:.07em;text-transform:uppercase;
+  color:var(--dim);margin-bottom:.55rem;
+  display:flex;align-items:center;gap:5px;
+}
+.dot{width:5px;height:5px;border-radius:50%;background:var(--green);animation:blink 2s infinite}
+.dot.y{background:var(--yellow)}
+.dot.p{background:var(--purple);animation:none}
+.dot.d{background:var(--dim);animation:none}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.pname{font-family:var(--mono);font-size:1.05rem;font-weight:600;color:var(--bright);margin-bottom:.45rem}
+.pdesc{font-size:.85rem;color:var(--dim);line-height:1.6;margin-bottom:.9rem}
+.ptags{display:flex;flex-wrap:wrap;gap:4px}
+.ptag{
+  font-family:var(--mono);font-size:.62rem;
+  padding:2px 6px;border-radius:2px;
+  background:var(--bg);border:1px solid var(--border);
+  color:var(--dim);
+}
 
-        #details-overlay {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95); z-index: 100; padding: 40px 20px; overflow-y: auto;
-        }
-        .details-content {
-            background: var(--bg); border: 2px solid var(--accent);
-            max-width: 700px; margin: auto; padding: 30px; position: relative;
-        }
-        .close-btn { position: absolute; top: 10px; right: 20px; color: #ff5555; cursor: pointer; font-weight: bold; }
-        .prompt { color: var(--success); font-weight: bold; }
+/* vex banner */
+.vex-banner{
+  margin-top:.9rem;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-left:3px solid var(--accent);
+  border-radius:6px;padding:1rem 1.2rem;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:1rem;flex-wrap:wrap;
+}
+.vex-banner .label{font-family:var(--mono);font-size:.67rem;color:var(--accent);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.25rem}
+.vex-banner p{font-size:.87rem;color:var(--text)}
 
-        /* ===================== GALERÍA ===================== */
-        .gallery-section {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            padding: 20px;
-            margin-bottom: 20px;
-            border-radius: 8px;
-        }
+/* ===== GALLERY ===== */
+.gfilt{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:1.2rem}
+.fbtn{
+  font-family:var(--mono);font-size:.68rem;
+  padding:3px 11px;border-radius:3px;
+  background:var(--card);border:1px solid var(--border);
+  color:var(--dim);cursor:pointer;transition:all .18s;
+}
+.fbtn.on,.fbtn:hover{border-color:var(--accent);color:var(--accent);background:var(--aglow)}
+.ggrid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:7px;min-height:160px;
+}
+.gempty{
+  grid-column:1/-1;
+  border:1px dashed var(--border2);border-radius:6px;
+  padding:2.5rem 1rem;text-align:center;
+  font-family:var(--mono);font-size:.75rem;color:var(--dim);
+}
+.gempty b{color:var(--accent)}
+.gitem{
+  aspect-ratio:1;border-radius:4px;overflow:hidden;
+  border:1px solid var(--border);background:var(--card);
+  cursor:pointer;transition:border-color .2s;
+  position:relative;
+}
+.gitem:hover{border-color:var(--accent)}
+.gitem img{width:100%;height:100%;object-fit:cover;display:block}
+.gitem .gname{
+  position:absolute;bottom:0;left:0;right:0;
+  font-family:var(--mono);font-size:.6rem;
+  background:rgba(13,17,23,.85);color:var(--dim);
+  padding:3px 6px;opacity:0;transition:opacity .2s;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.gitem:hover .gname{opacity:1}
+.gupload-row{margin-top:.9rem;display:flex;gap:.75rem;align-items:center;flex-wrap:wrap}
+.gcount{font-family:var(--mono);font-size:.7rem;color:var(--dim)}
 
-        .gallery-section h2 {
-            margin: 0 0 5px 0;
-            color: var(--accent);
-        }
+/* ===== CONNECT ===== */
+.con-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.9rem}
+.ccard{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:6px;padding:1rem 1.2rem;
+  display:flex;align-items:center;gap:12px;
+  transition:all .22s;
+}
+.ccard:hover{border-color:var(--accent);background:var(--card2)}
+.cico{
+  width:34px;height:34px;border-radius:4px;
+  background:var(--aglow);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;flex-shrink:0;
+  border:1px solid rgba(82,148,226,.2);
+}
+.cplat{font-family:var(--mono);font-size:.67rem;color:var(--dim);letter-spacing:.04em;display:block}
+.chandle{font-size:.9rem;font-weight:500;color:var(--bright);display:block}
 
-        .gallery-filter-bar {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin: 15px 0;
-        }
+/* ===== LANG PILL ===== */
+.lang-bar{
+  position:fixed;bottom:1.2rem;right:1.4rem;
+  z-index:300;
+  display:flex;gap:6px;
+}
+.lang-btn{
+  font-family:var(--mono);font-size:.68rem;
+  padding:4px 10px;border-radius:20px;
+  background:var(--card2);border:1px solid var(--border2);
+  color:var(--dim);cursor:pointer;transition:all .2s;
+}
+.lang-btn.active{background:var(--aglow);border-color:var(--accent);color:var(--accent)}
+.lang-btn:hover{border-color:var(--accent);color:var(--accent)}
 
-        .filter-btn {
-            background: transparent;
-            border: 1px solid var(--card-border);
-            color: var(--text);
-            padding: 4px 12px;
-            cursor: pointer;
-            font-family: inherit;
-            font-size: 0.85em;
-            border-radius: 4px;
-            transition: all 0.2s;
-        }
-        .filter-btn:hover, .filter-btn.active {
-            background: var(--accent);
-            border-color: var(--accent);
-            color: #000;
-        }
+/* ===== FOOTER ===== */
+footer{padding:1.2rem 0;border-top:1px solid var(--border);text-align:center;font-family:var(--mono);font-size:.67rem;color:var(--dim)}
+footer b{color:var(--accent)}
 
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 12px;
-            margin-top: 10px;
-        }
+/* ===== LIGHTBOX ===== */
+.lb{
+  display:none;position:fixed;inset:0;z-index:500;
+  background:rgba(0,0,0,.9);
+  align-items:center;justify-content:center;
+  flex-direction:column;gap:1rem;
+  padding:2rem;
+}
+.lb.open{display:flex}
+.lb img{max-width:90vw;max-height:80vh;border-radius:6px;border:1px solid var(--border2)}
+.lb-name{font-family:var(--mono);font-size:.75rem;color:var(--dim)}
+.lb-close{
+  position:absolute;top:1rem;right:1.5rem;
+  font-family:var(--mono);font-size:.8rem;
+  color:var(--dim);cursor:pointer;background:none;border:none;
+  transition:color .18s;
+}
+.lb-close:hover{color:var(--red)}
 
-        .gallery-item {
-            position: relative;
-            background: #0d1117;
-            border: 1px solid var(--card-border);
-            border-radius: 6px;
-            overflow: hidden;
-            cursor: pointer;
-            transition: border-color 0.2s, box-shadow 0.2s;
-            aspect-ratio: 1 / 1;
-        }
-        .gallery-item:hover {
-            border-color: var(--accent);
-            box-shadow: var(--neon-glow);
-        }
-
-        .gallery-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-            transition: transform 0.3s;
-        }
-        .gallery-item:hover img {
-            transform: scale(1.05);
-        }
-
-        /* Placeholder cuando no hay imagen real */
-        .gallery-placeholder {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: var(--card-border);
-            font-size: 0.75em;
-            text-align: center;
-            padding: 10px;
-            box-sizing: border-box;
-        }
-        .gallery-placeholder svg {
-            width: 40px; height: 40px; margin-bottom: 8px; opacity: 0.4;
-        }
-
-        .gallery-item-overlay {
-            position: absolute;
-            bottom: 0; left: 0; right: 0;
-            background: linear-gradient(transparent, rgba(0,0,0,0.85));
-            padding: 20px 10px 8px;
-            opacity: 0;
-            transition: opacity 0.2s;
-        }
-        .gallery-item:hover .gallery-item-overlay {
-            opacity: 1;
-        }
-        .gallery-item-title {
-            color: #fff;
-            font-size: 0.78em;
-            font-weight: bold;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        .gallery-item-tag {
-            color: var(--accent);
-            font-size: 0.7em;
-        }
-
-        .gallery-empty {
-            grid-column: 1 / -1;
-            text-align: center;
-            padding: 30px;
-            color: var(--card-border);
-            border: 1px dashed var(--card-border);
-            border-radius: 6px;
-            font-size: 0.9em;
-        }
-
-        /* Lightbox de galería */
-        #gallery-lightbox {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.97);
-            z-index: 200;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-        #gallery-lightbox.open {
-            display: flex;
-        }
-        #lightbox-img {
-            max-width: 90vw;
-            max-height: 75vh;
-            object-fit: contain;
-            border: 2px solid var(--accent);
-            border-radius: 6px;
-            box-shadow: var(--neon-glow);
-        }
-        #lightbox-info {
-            margin-top: 15px;
-            text-align: center;
-        }
-        #lightbox-title {
-            color: var(--accent);
-            font-size: 1.1em;
-            font-weight: bold;
-        }
-        #lightbox-tag {
-            color: var(--success);
-            font-size: 0.85em;
-            margin-top: 4px;
-        }
-        #lightbox-close {
-            position: absolute;
-            top: 20px; right: 25px;
-            color: #ff5555;
-            font-size: 1.4em;
-            cursor: pointer;
-            font-weight: bold;
-        }
-        #lightbox-nav {
-            display: flex;
-            gap: 20px;
-            margin-top: 15px;
-        }
-        .lightbox-nav-btn {
-            background: transparent;
-            border: 1px solid var(--accent);
-            color: var(--accent);
-            padding: 6px 18px;
-            cursor: pointer;
-            font-family: inherit;
-            border-radius: 4px;
-        }
-        .lightbox-nav-btn:hover {
-            background: var(--accent);
-            color: #000;
-        }
-
-        /* Panel de subida de dibujos */
-        .gallery-upload-area {
-            border: 1px dashed var(--primary);
-            border-radius: 6px;
-            padding: 15px;
-            margin-top: 15px;
-            text-align: center;
-            background: rgba(88,166,255,0.03);
-        }
-        .gallery-upload-area p {
-            margin: 0 0 10px 0;
-            font-size: 0.85em;
-            color: var(--primary);
-        }
-        .btn-upload-trigger {
-            background: transparent;
-            border: 1px solid var(--primary);
-            color: var(--primary);
-            padding: 7px 15px;
-            cursor: pointer;
-            font-family: inherit;
-            border-radius: 4px;
-        }
-        .btn-upload-trigger:hover {
-            background: var(--primary);
-            color: #000;
-        }
-        #gallery-file-input { display: none; }
-
-        .gallery-count {
-            font-size: 0.8em;
-            color: var(--text);
-            opacity: 0.6;
-            margin-left: 10px;
-        }
-        /* =================== FIN GALERÍA =================== */
-    </style>
+/* ===== RESPONSIVE ===== */
+@media(max-width:680px){
+  .tb-nav,.tb-right{display:none}
+  .about-grid,.proj-grid,.con-grid{grid-template-columns:1fr}
+  .ggrid{grid-template-columns:repeat(2,1fr)}
+  .hero-name{font-size:2rem}
+  .lang-bar{bottom:.8rem;right:.8rem}
+}
+</style>
 </head>
 <body>
 
-    <div class="lang-switcher">
-        <button class="btn-lang" onclick="toggleLanguage()" id="langBtn">EN / ES</button>
+<!-- TOPBAR -->
+<header class="topbar">
+  <div class="tb-left">
+    <div class="dots"><span class="d-r"></span><span class="d-y"></span><span class="d-g"></span></div>
+    <span class="tb-title">alfy@studio</span>
+  </div>
+  <nav><ul class="tb-nav">
+    <li><a href="file:///home/alfy/Descargas/index_3.html#about">about</a></li>
+    <li><a href="file:///home/alfy/Descargas/index_3.html#projects">projects</a></li>
+    <li><a href="file:///home/alfy/Descargas/index_3.html#gallery">gallery</a></li>
+    <li><a href="file:///home/alfy/Descargas/index_3.html#connect">connect</a></li>
+  </ul></nav>
+  <span class="tb-right"><span class="on">●</span> Online · Studio</span>
+</header>
+
+<div class="wrap">
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero-prompt">alfy@studio:~ $ whoami</div>
+    <h1 class="hero-name">ALFY<br><span class="hi">"STUDIO"</span></h1>
+    <p class="hero-sub"><strong>Developer · Artist · Content Creator</strong><br>Open source, interfaz oscura y arte digital.</p>
+    <div class="hero-tags">
+      <span class="tag a">game dev</span>
+      <span class="tag g">open source</span>
+      <span class="tag p">art &amp; illustration</span>
+      <span class="tag">content creator</span>
+      <span class="tag">català · español · english</span>
     </div>
-
-    <div class="header">
-        <div class="main-logo-circle">
-            <div class="main-eye"></div>
-            <div class="main-eye"></div>
-        </div>
-        <div class="title-container">
-            <h1>ALFY "STUDIO"</h1>
-            <p id="system-status">[ System: Studio OS v2.4 | Status: Active ]</p>
-        </div>
+    <div class="hero-cta">
+      <a href="file:///home/alfy/Descargas/index_3.html#projects" class="btn pri" data-es="ver proyectos" data-en="view projects">ver proyectos</a>
+      <a href="file:///home/alfy/Descargas/index_3.html#gallery" class="btn" data-es="galería" data-en="gallery">galería</a>
+      <a href="https://github.com/Alfy181R" target="_blank" class="btn">github →</a>
     </div>
+  </section>
 
-    <div id="main-view">
-        <div class="about-section">
-            <p><span class="prompt">alfy@studio:~$</span> cat about_me.txt</p>
-            <p id="about-text">
-                ¡Hola! Soy Alfy, un pequeño creador de contenido apasionado por el arte y el desarrollo de proyectos creativos. Esta página es mi base de datos personal donde archivo mis trabajos, desde fangames de terror hasta series originales. ¡Gracias por echar un vistazo a mi mundo!
-            </p>
+  <!-- ABOUT -->
+  <section class="sec" id="about">
+    <div class="sec-label">01 · about_me</div>
+    <h2 class="sec-title" data-es="Sobre mí" data-en="About me">Sobre mí</h2>
+    <div class="about-grid">
+      <div class="acard full">
+        <h3>$ cat bio.txt</h3>
+        <p>
+          ¡Hola! Soy <strong style="color:var(--bright)">Alfy</strong>, un creador de contenido, desarrollador y artista.
+          Me apasionan los proyectos creativos: desde fangames de terror analógico hasta apps open-source para Android.
+        </p>
+        <p>
+          Esta página es mi base de datos personal donde archivo mis trabajos y comparto mi proceso.
+          Hablo català, castellano i english y trabajo con ideas que combinan código, diseño y narrativa.
+        </p>
+      </div>
+      <div class="acard">
+        <h3>$ ls skills/</h3>
+        <div class="chips">
+          <span class="chip">Game Dev</span>
+          <span class="chip">Android Dev</span>
+          <span class="chip g">Open Source</span>
+          <span class="chip">Art / Illustration</span>
+          <span class="chip">Content Creation</span>
+          <span class="chip g">Linux</span>
+          <span class="chip">Git / GitHub</span>
+          <span class="chip">VS Code</span>
         </div>
-
-        <p><span class="prompt">alfy@studio:~$</span> <span>ls-projects --active</span></p>
-
-        <div class="project-card">
-            <div class="logo-row">
-                <div class="eye-donnie"><div class="iris-donnie"></div></div>
-                <h2 style="margin:0">Donnie Origins</h2>
-            </div>
-            <p id="desc-donnie">Fangame de FNaF en desarrollo desde 2021. Terror analógico y ambición máxima.</p>
-            <button class="btn-more" onclick="openDetails('donnie')">[ VER ARCHIVO ]</button>
-            <a href="https://gamejolt.com/games/Donnies2001/885221" class="social-link" target="_blank" style="margin-left:15px">GameJolt</a>
-        </div>
-
-        <div class="project-card">
-            <div class="logo-row">
-                <div class="alfy-icon">A</div>
-                <h2 style="margin:0">LADA</h2>
-            </div>
-            <p id="desc-lada">Proyecto basado en personajes originales. Historia de ficción con trama extensa.</p>
-            <button class="btn-more" onclick="openDetails('lada')">[ VER ARCHIVO ]</button>
-        </div>
-
-        <div class="project-card">
-            <div class="logo-row">
-                <svg class="freddy-mini" viewBox="0 0 100 100">
-                    <path d="M50 10c-20 0-35 15-35 35 0 10 5 18 12 24l-2 15h50l-2-15c7-6 12-14 12-24 0-20-15-35-35-35z"/>
-                    <circle cx="35" cy="45" r="8" fill="#000"/>
-                    <circle cx="65" cy="45" r="8" fill="#000"/>
-                    <rect x="40" y="5" width="20" height="10" fill="#222"/>
-                    <rect x="35" y="15" width="30" height="3" fill="#222"/>
-                </svg>
-                <h2 style="margin:0">FNaF AS</h2>
-            </div>
-            <p id="desc-fnafas">Web-serie "What If" basada en la historia original de FNaF con cambios clave.</p>
-            <button class="btn-more" onclick="openDetails('fnafas')">[ VER ARCHIVO ]</button>
-        </div>
-
-        <!-- ===================== GALERÍA ===================== -->
-        <p><span class="prompt">alfy@studio:~$</span> <span id="gallery-cmd">ls-gallery --drawings</span></p>
-
-        <div class="gallery-section">
-            <div class="logo-row">
-                <svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect width="35" height="35" rx="6" fill="#1c2128"/>
-                    <path d="M8 26 L14 18 L19 23 L23 16 L28 26 Z" fill="#bf91f3" opacity="0.8"/>
-                    <circle cx="12" cy="13" r="3" fill="#f1e05a" opacity="0.9"/>
-                    <rect x="6" y="6" width="23" height="23" rx="3" stroke="#bf91f3" stroke-width="1.5" fill="none"/>
-                </svg>
-                <h2 id="gallery-title" style="margin:0">Gallery <span class="gallery-count" id="gallery-count">[0 archivos]</span></h2>
-            </div>
-
-            <p id="gallery-desc" style="margin:0 0 10px 0; opacity:0.7; font-size:0.9em">
-                Dibujos y arte original. Usa los filtros para navegar por categoría.
-            </p>
-
-            <div class="gallery-filter-bar" id="gallery-filters">
-                <button class="filter-btn active" onclick="filterGallery('all', this)" data-label-es="Todo" data-label-en="All">Todo</button>
-                <button class="filter-btn" onclick="filterGallery('original', this)" data-label-es="OC / Original" data-label-en="OC / Original">OC / Original</button>
-                <button class="filter-btn" onclick="filterGallery('fanart', this)" data-label-es="Fanart" data-label-en="Fanart">Fanart</button>
-                <button class="filter-btn" onclick="filterGallery('concept', this)" data-label-es="Concept Art" data-label-en="Concept Art">Concept Art</button>
-                <button class="filter-btn" onclick="filterGallery('other', this)" data-label-es="Otro" data-label-en="Otro">Otro</button>
-            </div>
-
-            <div class="gallery-grid" id="gallery-grid">
-                <div class="gallery-empty" id="gallery-empty-msg">
-                    <span id="gallery-empty-text">No hay dibujos aún. ¡Sube el primero!</span>
-                </div>
-            </div>
-
-            <div class="gallery-upload-area">
-                <p id="upload-hint">[ Sube tus dibujos — JPG, PNG, GIF, WEBP — se guardan en esta sesión ]</p>
-                <input type="file" id="gallery-file-input" accept="image/*" multiple onchange="handleUpload(event)">
-                <button class="btn-upload-trigger" onclick="document.getElementById('gallery-file-input').click()">
-                    <span id="btn-upload-text">[ + SUBIR DIBUJO ]</span>
-                </button>
-            </div>
-        </div>
-        <!-- =================== FIN GALERÍA =================== -->
-
-        <div class="social-bar">
-            <p><span class="prompt">alfy@studio:~$</span> ./connect.sh</p>
-            <a href="https://www.youtube.com/@ALFY181X" class="social-link" target="_blank">▶ YouTube</a> | 
-            <a href="https://www.tiktok.com/@a181xy" class="social-link" target="_blank">📱 TikTok</a> | 
-            <a href="https://gamejolt.com/@alfy181R" class="social-link" target="_blank">⚡ GameJolt</a>
-        </div>
+      </div>
+      <div class="acard">
+        <h3>$ cat tools.txt</h3>
+        <p>Principal stack: Kotlin, Jetpack Compose, Godot 4.6, Python, HTML/CSS/JS y VS Code.</p>
+        <p>Trabajo con proyectos open source, interfaces oscuras y experiencias de usuario limpias.</p>
+      </div>
     </div>
+  </section>
 
-    <div id="details-overlay">
-        <div class="details-content">
-            <span class="close-btn" onclick="closeDetails()" id="close-text">[ CERRAR ]</span>
-            <div id="details-text"></div>
+  <!-- PROJECTS -->
+  <section class="sec" id="projects">
+    <div class="sec-label">02 · ls-projects --active</div>
+    <h2 class="sec-title" data-es="Proyectos" data-en="Projects">Proyectos</h2>
+    <div class="proj-grid">
+
+      <a class="pcard" href="https://gamejolt.com/games/Donnies2001/885221" target="_blank" style="--c:var(--red)">
+        <div class="pstatus" style="color:var(--yellow)"><span class="dot y"></span>en desarrollo · desde 2021</div>
+        <div class="pname">Donnie Origins</div>
+        <div class="pdesc">Fangame de FNaF con terror analógico y ambición máxima. Un proyecto largo, muy personal, que lleva años creciendo.</div>
+        <div class="ptags">
+          <span class="ptag">FNaF</span><span class="ptag">Game Dev</span>
+          <span class="ptag">Terror analógico</span><span class="ptag">GameJolt ↗</span>
         </div>
-    </div>
+      </a>
 
-    <!-- Lightbox galería -->
-    <div id="gallery-lightbox">
-        <span id="lightbox-close" onclick="closeLightbox()">[ ✕ CERRAR ]</span>
-        <img id="lightbox-img" src="" alt="">
-        <div id="lightbox-info">
-            <div id="lightbox-title"></div>
-            <div id="lightbox-tag"></div>
+      <div class="pcard" style="--c:var(--purple)">
+        <div class="pstatus" style="color:var(--purple)"><span class="dot p"></span>en construcción</div>
+        <div class="pname">LADA</div>
+        <div class="pdesc">Proyecto de personajes originales con historia de ficción extensa, worldbuilding propio y una trama construida desde cero.</div>
+        <div class="ptags">
+          <span class="ptag">OC / Original</span><span class="ptag">Ficción</span><span class="ptag">Worldbuilding</span>
         </div>
-        <div id="lightbox-nav">
-            <button class="lightbox-nav-btn" onclick="lightboxNav(-1)" id="btn-prev">◀ PREV</button>
-            <button class="lightbox-nav-btn" onclick="lightboxNav(1)" id="btn-next">NEXT ▶</button>
+      </div>
+
+      <div class="pcard" style="--c:var(--yellow)">
+        <div class="pstatus" style="color:var(--yellow)"><span class="dot y"></span>en desarrollo</div>
+        <div class="pname">FNaF AS</div>
+        <div class="pdesc">Web-serie "What If" basada en la historia original de Five Nights at Freddy's con cambios narrativos clave que alteran todo el lore.</div>
+        <div class="ptags">
+          <span class="ptag">FNaF</span><span class="ptag">Web-serie</span><span class="ptag">What If</span>
         </div>
+      </div>
+
+      <a class="pcard" href="https://github.com/Alfy181R/remotecontrol" target="_blank" style="--c:var(--green)">
+        <div class="pstatus" style="color:var(--green)"><span class="dot"></span>activo</div>
+        <div class="pname">X-USB</div>
+        <div class="pdesc">App Android open-source tipo Rufus/Ventoy. Gratis, sin anuncios, uso ilimitado. ISO Burner, MultiOS USB UEFI, Partition Wizard, PS2 USB Utils y más.</div>
+        <div class="ptags">
+          <span class="ptag">Android</span><span class="ptag">Open Source</span>
+          <span class="ptag">Ventoy</span><span class="ptag">USB Tools</span><span class="ptag">GitHub ↗</span>
+        </div>
+      </a>
+
     </div>
+  </section>
 
-    <script>
-        // ─── SISTEMA ORIGINAL ───────────────────────────────────────────────
-        let currentLang = 'es';
-        const translations = {
-            es: {
-                status: "[ System: Studio OS v2.4 | Estado: Activo ]",
-                btnMore: "[ VER ARCHIVO ]",
-                close: "[ CERRAR ]",
-                about: "¡Hola! Soy Alfy, un pequeño creador de contenido apasionado por el arte y el desarrollo de proyectos creativos. Esta página es mi base de datos personal donde archivo mis trabajos, desde fangames de terror hasta series originales. ¡Gracias por echar un vistazo a mi mundo!",
-                descDonnie: "Fangame de FNaF en desarrollo desde 2021. Terror analógico y ambición máxima.",
-                descLada: "Proyecto basado en personajes originales. Historia de ficción con trama extensa.",
-                descFnafas: "Web-serie 'What If' basada en la historia original de FNaF con cambios clave.",
-                infoDonnie: `<h2>DONNIE ORIGINS</h2><p><span class="prompt">>> INFO:</span> Donnie Origins es un fangame de FNaF desarrollado desde 2021 que ha tenido muchos cambios a lo largo de su existencia, pero sigue siendo uno de mis proyectos más ambiciosos.</p><p><span class="prompt">>> CONTENIDO:</span> Tendrá múltiples animaciones o incluso una mini serie basada en el terror analógico y más contenido.</p><p><span class="prompt">>> SINOPSIS:</span> Se basa en que el protagonista Nick despierta aturdido en un lugar aparentemente desubicado; el sitio es familiar y se encuentra con viejos conocidos... ¿podrá sobrevivir la noche?</p>`,
-                infoLada: `<h2>LADA</h2><p><span class="prompt">>> INFO:</span> Lada es un proyecto basado en personajes originales míos, principalmente "Alfy" que se llama igual que yo.</p><p><span class="prompt">>> ESTATUS:</span> Es una historia de ficción con una trama muy extensa, pero actualmente se encuentra en pausa por priorizar otros proyectos.</p>`,
-                infoFnafas: `<h2>FNaF AS</h2><p><span class="prompt">>> CONCEPTO:</span> FNaF AS es un "What If", una web-serie en planeamiento basada en la historia original de FNaF.</p><p><span class="prompt">>> DESCRIPCIÓN:</span> Con mini episodios haciendo cambios en la historia para plantear: "¿qué pasaría si?".`
-            },
-            en: {
-                status: "[ System: Studio OS v2.4 | Status: Active ]",
-                btnMore: "[ VIEW FILE ]",
-                close: "[ CLOSE ]",
-                about: "Hi! I'm Alfy, a small content creator passionate about art and developing creative projects. This page is my personal database where I archive my work, from horror fangames to original series. Thanks for checking out my world!",
-                descDonnie: "FNaF fangame in development since 2021. Analog horror and maximum ambition.",
-                descLada: "Project based on original characters. Fiction story with an extensive plot.",
-                descFnafas: "'What If' web-series based on the original FNaF story with key changes.",
-                infoDonnie: `<h2>DONNIE ORIGINS</h2><p><span class="prompt">>> INFO:</span> Donnie Origins is a FNaF fangame developed since 2021 that has undergone many changes, yet remains one of my most ambitious projects.</p><p><span class="prompt">>> CONTENT:</span> It will feature multiple animations or even a mini-series based on analog horror and more content.</p><p><span class="prompt">>> SYNOPSIS:</span> The story follows Nick, who wakes up dazed in a seemingly disoriented place; the site is familiar and he encounters old acquaintances... can he survive the night?</p>`,
-                infoLada: `<h2>LADA</h2><p><span class="prompt">>> INFO:</span> Lada is a project based on my original characters, mainly "Alfy", named after myself.</p><p><span class="prompt">>> STATUS:</span> It is a fiction story with a very extensive plot, but it is currently on hiatus to prioritize other projects.</p>`,
-                infoFnafas: `<h2>FNaF AS</h2><p><span class="prompt">>> CONCEPT:</span> FNaF AS is a "What If" web-series in planning based on the original FNaF story.</p><p><span class="prompt">>> DESCRIPTION:</span> Featuring mini-episodes that make changes to the story to ask: "what would happen if?".`
-            }
-        };
-
-        function toggleLanguage() {
-            currentLang = currentLang === 'es' ? 'en' : 'es';
-            const t = translations[currentLang];
-            document.getElementById('system-status').innerText = t.status;
-            document.getElementById('close-text').innerText = t.close;
-            document.getElementById('about-text').innerText = t.about;
-            document.querySelectorAll('.btn-more').forEach(btn => {
-                if(btn.tagName === "BUTTON") btn.innerText = t.btnMore;
-            });
-            document.getElementById('desc-donnie').innerText = t.descDonnie;
-            document.getElementById('desc-lada').innerText = t.descLada;
-            document.getElementById('desc-fnafas').innerText = t.descFnafas;
-
-            // Actualizar textos de la galería
-            updateGalleryLang();
-        }
-
-        function openDetails(id) {
-            const t = translations[currentLang];
-            document.getElementById('details-text').innerHTML = t['info' + id.charAt(0).toUpperCase() + id.slice(1)];
-            document.getElementById('details-overlay').style.display = 'block';
-        }
-
-        function closeDetails() {
-            document.getElementById('details-overlay').style.display = 'none';
-        }
-
-        // ─── GALERÍA ────────────────────────────────────────────────────────
-        const galleryTexts = {
-            es: {
-                title: "Gallery",
-                desc: "Dibujos y arte original. Usa los filtros para navegar por categoría.",
-                empty: "No hay dibujos aún. ¡Sube el primero!",
-                emptyFilter: "No hay dibujos en esta categoría.",
-                uploadHint: "[ Sube tus dibujos — JPG, PNG, GIF, WEBP — se guardan en esta sesión ]",
-                uploadBtn: "[ + SUBIR DIBUJO ]",
-                cmd: "ls-gallery --drawings",
-                prev: "◀ PREV",
-                next: "NEXT ▶",
-                closeLb: "[ ✕ CERRAR ]",
-                tags: { all:"Todo", original:"OC / Original", fanart:"Fanart", concept:"Concept Art", other:"Otro" }
-            },
-            en: {
-                title: "Gallery",
-                desc: "Original drawings and art. Use the filters to browse by category.",
-                empty: "No drawings yet. Upload the first one!",
-                emptyFilter: "No drawings in this category.",
-                uploadHint: "[ Upload your drawings — JPG, PNG, GIF, WEBP — saved this session ]",
-                uploadBtn: "[ + UPLOAD DRAWING ]",
-                cmd: "ls-gallery --drawings",
-                prev: "◀ PREV",
-                next: "NEXT ▶",
-                closeLb: "[ ✕ CLOSE ]",
-                tags: { all:"All", original:"OC / Original", fanart:"Fanart", concept:"Concept Art", other:"Other" }
-            }
-        };
-
-        // Almacén de imágenes (solo esta sesión)
-        let galleryItems = [];
-        let currentFilter = 'all';
-        let lightboxIndex = 0;
-        let filteredItems = [];
-
-        function updateGalleryLang() {
-            const gt = galleryTexts[currentLang];
-            document.getElementById('gallery-title').childNodes[0].textContent = gt.title + ' ';
-            document.getElementById('gallery-desc').textContent = gt.desc;
-            document.getElementById('upload-hint').textContent = gt.uploadHint;
-            document.getElementById('btn-upload-text').textContent = gt.uploadBtn;
-            document.getElementById('gallery-cmd').textContent = gt.cmd;
-            document.getElementById('btn-prev').textContent = gt.prev;
-            document.getElementById('btn-next').textContent = gt.next;
-            document.getElementById('lightbox-close').textContent = gt.closeLb;
-            // Filtros
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                const key = btn.getAttribute('onclick').match(/'(\w+)'/)[1];
-                if (gt.tags[key]) btn.textContent = gt.tags[key];
-            });
-            renderGallery();
-        }
-
-        function handleUpload(event) {
-            const files = Array.from(event.target.files);
-            if (!files.length) return;
-
-            // Preguntar categoría para cada lote
-            const tag = promptTag();
-
-            files.forEach(file => {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    galleryItems.push({
-                        src: e.target.result,
-                        name: file.name.replace(/\.[^/.]+$/, ""),
-                        tag: tag
-                    });
-                    updateCount();
-                    renderGallery();
-                };
-                reader.readAsDataURL(file);
-            });
-            event.target.value = '';
-        }
-
-        function promptTag() {
-            const gt = galleryTexts[currentLang];
-            const options = ['original','fanart','concept','other'];
-            const labels = options.map(o => gt.tags[o]);
-            const choice = prompt(
-                currentLang === 'es'
-                    ? `Categoría:\n1) ${labels[0]}\n2) ${labels[1]}\n3) ${labels[2]}\n4) ${labels[3]}\n\nEscribe el número:`
-                    : `Category:\n1) ${labels[0]}\n2) ${labels[1]}\n3) ${labels[2]}\n4) ${labels[3]}\n\nType the number:`,
-                '1'
-            );
-            const idx = parseInt(choice) - 1;
-            return (idx >= 0 && idx < options.length) ? options[idx] : 'other';
-        }
-
-        function updateCount() {
-            const n = galleryItems.length;
-            document.getElementById('gallery-count').textContent = `[${n} archivo${n !== 1 ? 's' : ''}]`;
-        }
-
-        function filterGallery(tag, btn) {
-            currentFilter = tag;
-            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            renderGallery();
-        }
-
-        function renderGallery() {
-            const grid = document.getElementById('gallery-grid');
-            const gt = galleryTexts[currentLang];
-            const tagLabels = gt.tags;
-
-            filteredItems = currentFilter === 'all'
-                ? galleryItems
-                : galleryItems.filter(i => i.tag === currentFilter);
-
-            grid.innerHTML = '';
-
-            if (filteredItems.length === 0) {
-                const msg = galleryItems.length === 0 ? gt.empty : gt.emptyFilter;
-                grid.innerHTML = `<div class="gallery-empty"><span>${msg}</span></div>`;
-                return;
-            }
-
-            filteredItems.forEach((item, idx) => {
-                const div = document.createElement('div');
-                div.className = 'gallery-item';
-                div.onclick = () => openLightbox(idx);
-                div.innerHTML = `
-                    <img src="${item.src}" alt="${item.name}" loading="lazy">
-                    <div class="gallery-item-overlay">
-                        <div class="gallery-item-title">${item.name}</div>
-                        <div class="gallery-item-tag">#${tagLabels[item.tag] || item.tag}</div>
-                    </div>
-                `;
-                grid.appendChild(div);
-            });
-        }
-
-        function openLightbox(idx) {
-            lightboxIndex = idx;
-            showLightboxItem();
-            document.getElementById('gallery-lightbox').classList.add('open');
-        }
-
-        function closeLightbox() {
-            document.getElementById('gallery-lightbox').classList.remove('open');
-        }
-
-        function showLightboxItem() {
-            const item = filteredItems[lightboxIndex];
-            const gt = galleryTexts[currentLang];
-            if (!item) return;
-            document.getElementById('lightbox-img').src = item.src;
-            document.getElementById('lightbox-title').textContent = item.name;
-            document.getElementById('lightbox-tag').textContent = '#' + (gt.tags[item.tag] || item.tag);
-            document.getElementById('btn-prev').style.visibility = lightboxIndex > 0 ? 'visible' : 'hidden';
-            document.getElementById('btn-next').style.visibility = lightboxIndex < filteredItems.length - 1 ? 'visible' : 'hidden';
-        }
-
-        function lightboxNav(dir) {
-            const newIdx = lightboxIndex + dir;
-            if (newIdx >= 0 && newIdx < filteredItems.length) {
-                lightboxIndex = newIdx;
-                showLightboxItem();
-            }
-        }
-
-        // Cerrar lightbox con Escape
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                closeLightbox();
-                closeDetails();
-            }
-            if (e.key === 'ArrowLeft') lightboxNav(-1);
-            if (e.key === 'ArrowRight') lightboxNav(1);
-        });
-    </script>
-
-    <!-- Logo footer -->
-    <div style="text-align:center; margin-top: 30px; padding: 20px 0 10px 0; opacity:0.85;">
-        <img src="data:image/png;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAPoA+gDASIAAhEBAxEB/8QAHAABAAIDAQEBAAAAAAAAAAAAAAYHAwQFAQII/8QANBABAAICAgEDBAIBAwQCAQUAAAECAwQFEQYSITETIkFRYXEUBzKBI1JikSQzoTRCRHKx/8QAGwEBAAIDAQEAAAAAAAAAAAAAAAQFAwYHAgH/xAAwEQEAAgIBAwMDAwQCAgMAAAAAAQIDBBEFEiEGMUETIlEUMmFCcaGxI5E0gRYkM//aAAwDAQACEQMRAD8A/GQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA9mJiO5iXgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADJrY5y5q0j5mWN0uLrTFW2e/4+GbBj+peIn2faxzLJzOPDhxUxUiPV17+7ks23mtnz2vae+5YX3ZyRkyTNY4gtPMgDA+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPqlZtPUQyZMlvRFI9ohta+H6WpbNePn4aFp7tMs96TjrH5l9mOHgDA+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADY0ME7GzXHEd9z7tdKfEuPmKX3MlZ9NY7+E3p+rOznike3y90r3Tw0vIvThpTWr81jqXDb3NZpzb+SZnuInqGi872SMme0x7Pl55kARHkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABm1NfJsZq48dZmZn8PVazaeI9xt8Hx2Te2q1rH29+8ptzMY+L4X6WOIifT+Gz41xVdHUrMx98x+Ud893fXmjBWfaG701I6T062W377JkU+lj5+UTyW9WSbT+ZfINHmeUMAfAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABvcdx+TavEz9tPzMwyY8Vstu2scy+xEz7NXDivlt1WH1sYoxTFZtEy7Wzl1dDDOPDaL5OupnpwsuS2S82tPcykbGGmCO3nm3+nq0RD4AQ3gAAAAAAAAAAAAAAB7Edz0BSs2tFY+ZTrw3hvp1jZzVjv8Of4hwk58kbGasxWPj2T3FSuOkUrHUQ3f030XmY2csf2hM18X9UsO9mrr6t7z7REKr5rana3sl++47TrzXdjBoTjife3t8q4tPdpmfyxerNzuyVwVnxDzs389rwBpqKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAy4MGXNaK48drT/AA+xWbTxAxNrT0djZvFaUn3SDhvGMmSa5Nmvpr8+8uvubnHcNh9GKKTkiP12vtXoluz6uzPZX/LPXD45t4cnU4PBp4/r7uakTH/7emjynMT1ODUn0Uj29o67afK8rsbuSZtefT+nOYNnfx0j6WrHbX8/MvNrxHir6ve157tMzL5BTzPLEAAAAAAAAAAAAAAAAO541w997Yra9Y9EftpcNoZN7arStZ679/ZZ3E6OPS1q0rEd9e/s2ToHR53Mn1MkfbH+UjBi755n2ZtPWx62GMeOsREQzWnqJl619/LGHVyXn8Q6TPbip48RCf7QgPm239XenFE/7fZG23yuWc29kvM9+7Uce6hsTsbN8k/Mqu9u60yAIbwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAzYNXYzWiMeK9v+HqtZtPERyML7xYr5LdUrMykfF+MbGaYtmrFY/lK+N4HV1KxPpibR/C/0fTm1s+bR2wz0wWsh3EeN7O1aLZK2rX+ky4zg9PRxxb0d2j5mZdaIrjp7e0QiflfP/Si2vgme/wAzEtpjQ0ejYvq3jmf5SeymKOZe+R+QU1otg1p6n+IQja2Muxkm+S82mf2+M2W+W83vMzM/uXw0jqPU8u9k5tPj4hDyZJvIArGMAAAAAAHsRMz7FqzWepjo4HgAAAAAAAD7w0nJkrSPmZ6fCV+F8TGxljYyRPpj3hM0NO+5mjFX5e6Vm08QkHinFU1NWuS1Y9cw775pWKVisfEPp13U1qa2KMdI9lnWsVjiBwvMdqcHHWiJ95h3UE8+2/VmrhrPtHugdd2f0+lefmfDxmt20lEbz6rTLwHJVYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADJjw5ck9Upa39Q39XhN/P11hmsfuWbFr5cs8UrMvsVmfZzBKtLxHPfqct+v6h29LxTTxdTesWn+fdca/pzezeZrxH8stcF5V9iwZck9Ux2t/UOjpcByGzaOsXpifzZY+vxepgiIrjj/026YsdP8AbSIXut6QrHnNf/pmrq/mUQ4zxGKRFtjJEz+YiEj0+K1dasRXHE9ftvjZdTpOrqx/x1SK4q19oeVrWsdViIfOTJTHWbXtER/LDu7mDVxzfJkrHX7lCPIvI755ti17RFf3Dx1HquDQpzafP4MmSKQ6Pk/kdccTg1prM/EzEoRny3zZJvee5l83va9ptae5l8uZ9R6lm3sndefHxCuvkm8+QBXPAPYnoiszHs+8DwB8AAAHW4Hisu9sV+y0U795ZsGC+e8UpHMy+1rNp4hs+L8PbdzfUyR/04/cMPlODFg3fRjiI69p6WBg1sXHcfNa+3VflWvObE7G/kv337tl6toYun6VMf8AXPmUjLSKUiPloANURgAAAAAGzx2tba2qYqx8ytLhNKunp0pWIiekW8G42Zt/kZK/0nEOiel+nRixfXvHmfb+ydrY+I7pAG3JTDt5Ixa97zPXUKr53ana38lu+47T7y7drr8danfU29vlWd7eq82n8y0H1duc3rgifbzKFtW88PkBpaIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA9r16o7+O/dLcPjNNrRrlwWibTHfUIil3h/NfRt/j5re3URHa56LGrfNOPZjxPz+GXF2zPFnL2fHd7DbqMc2/pgjhN6Z98c/+lqV+nkp3HVok+nT8ViP+G1W9Ja1p5raeEn9LVWNPHeQvP8A9fpj+Wzi8V3L/if+fZY0UrHxWHvUfplp6T1K/umZfY1qoNreGZLTE5s3UfqsOpqeJ6eKYm0er/8AskwsMPp/RxeYpz/dkjBSPhoa3E6eCI9OOPb+G3TDjp/tpEMgtceDHjjitYhkiIj2AGV9AYdrYxa+Ob5L1rEfuXm1orHMjLa0Vju0xEfy4fN+Qa+lSa0vS1/xDheQ+SzebYta0dfuETzZsma82vbuZab1b1PGPnHreZ/KJl2OPFW/y3MbO9eZvfqv4iHNmZme5eDRs2fJmt35J5lDmZmeZAGJ8AAH1W0x8PkB91iLTPc+75tX0z08ZtaaTkiMnw91iLeH1hexEzPUR3Lq5uJvfHGTX++JjvqHX8b8cyZLxl2axER+JT9fpWxnyxjrX3+fh7rjtM8OfwPAZ93LW16TGP8AmVgcbx2DSxRTHSImIZ9bXxYMcUx0isR+mZ0bpXRsOhXn3t+U/HiijkeU7EYOMv7/ADHSrsk+q8zM9+6a+fbnVYwRb+4QhpnqjZ+rt9kf0omxbm3AA1pHAAAAG1xetbZ26Y6x33LVj3lNPBuM/wD5N6/13Cx6XpW3NmuOPb5ZMdO+3CV8Vq11dOmOI69m2R7R0Ou48cY6RWvtCziOI4Hkz1Hb1g38sYdW95/EPt7RWs2n4fZ8IH5zuzl3PoxPtX2lGG5y+ac+9kvM9+7Tce6jsTsbN8k/lVZLd1pkAQXgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAfWO9qWi1Z6mHyETwJz4pz9bRGvnt7+0RMphWYtHcfCmcOS2LJF6TMTE9rB8V5ymzhjDmt9/fTfvTvXPqR+nzz5+JTcGbn7ZSYeRMTHcPW5pYA+gAAADW5DZrq61stpiOoVzz3ObG7ltSLRGPv8QlHnWzbHp/TrPXavZ95aB6p6lk+r+npPEfKFs5J57YJmZnuXgNMRAAAAAAAAB9Y6WveK1juZe4cV8t4pSszM/qE28X8eila7GxE9/MRMLHp3Tcu9kilI8fMsmPHN54hm8Q4zPjxevPb7Zj/bMJTStax1WIiP4KUrSsVrHUQ+nVNHSpqYox1+FjSkVjgYN3YprYLZLz7RDNMxHzLl+Q6GXe1Zpit1LLtXvTFacccy+2mYjwrzyDdtub179zMd+39Oa6fKcPtad5m9JmP305sxMT1MdOP7kZvrWnNHEyq788+XgCK8gAAPYjueoBtcVq22tumOI7iZ91qcVq11dOmOsRHUe6M+D8X6af5WSvz8Ji6R6Y6d9DD9a8ebf6T9fH2xzIA2pJHD8w2ZwcZbqfeXcQz/AFA2Y9NcMT7wqet5/oaV7Mea3FJQm092mXgORqsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAZtPYvrZq5KTMTE9sI9VtNZ5j3PZZfi3M03teuO9o+pDvqg43cy6exXJjtMdSsnx/lMe9rV+774r7ukdA61G1SMOWfuj/KwwZu6OJ93WAbQkAAAAIf8A6ge2Csx8xKCp3/qFH/x6TH76n+kEcs9S/wDn2V2x+8AUDAAAAAAAMutgy7GSKY6TaZ/T60tbJtZox447mVg+NcFi1MUZMuOs5Fv0rpOXfycR4r8yy48U3lreMeP1wUrm2Kfd+plKq1itYisdRBEREdRHUPXT9LRxaeOMeOFjSkVjiB5aYrEzPxD1H/LOVjT1Zx0tHrtD3t7VNXFOW/tBa0VjmWh5P5DODL9LXtPtPv0z8H5NhzxXHnmIsgOfLbLkm95mZl8VtNZiaz1MOc//ACTarszlifE/CB+ot3crfyYtbdxe8VvEx8o9zHiuLLE3149M/pwOD8iz6lq0yW9VPaE74zktfexRal47/TadfZ0Os07bx93+UmtqZY8q05DitrUvMXxz1H5aExMT1MdLiz6uDPXrJjraJRbnfFq37y63tP6UPUfS2TFE3wTzH4YcmtMeaoKNre0s+plmmSkx1LVanelqT22jiUaY4HR4HRvubtKxWZr37+zQx1m94rEdzKw/DeLjW14zXrHqtC16L0+d3ZivxHuyYad9ne0cFdfWrjrHXUM4Os0rFKxWPhZxHAA9D5yW9NJt+oVl5btfX5K0RPcVn2WFzGxGvo5LzPU9eyqd3L9XZvf9z20v1dtcUrhj58om1bxEMADQUIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB7Edz0+r47VjuY9nw6WtFNnRtjn/7It7M2LHGSZj5fYjlzR9ZKzS81n5iXywzHHh8AAAAAAAAAAAAAAAAAAAAAAAAAAHR4Xk8uhsRatp9P5hzhlw5r4bxek8TD7EzE8wt7itzHu61clLRMzEdtxWvivMX08/07Wn0THSxtfNTPji9J7iYdU6P1Sm/hif6o91liyReGQBcsoACM+eYZtpRaI9pV2tXyrBObh8vUdzX3hVmSOr2j+XNvVmHs24v+YQNmOLPkBqyMAAAAM+lq5NrNGPHEzMz+nulq5drNGPHS09z+IWF43wdNLHGTJWfX/K46T0nJv5PbivzLLixTeTxrg8elijJkiJvP8O/EdR1D0dR1dXHq44x444iFjWsVjiAHlpiI7lIemDe2K62tbJaeuoVfz+/fd3b2mZ9MT7QkPmnM9zOritHX5Q2Z7nuXO/U3VPr5PoY58R7/wB0HYycz2w8Aakijc4/kNjTvFsd5iI/DTHvHktjt3UniX2J49li+P8AkeLZrXHmtFb+0e6R1tW9e6zEwprFkvjtFqWmJj9JP495Jkw3ri2LTNP23fpHqaJ4xbP/AGl4tj4sl3K8Tr72OYtSPV+0J5XxnZ17zOKJtVYGpt4dnHF8d4nuGe1Yt8xEr3e6Pq9Qjv8An8wzXxVv5QTxrx7JOxGXYpaIifynWOkUpFax1EFa1r8REPpK6d03FoY+yj1jxxSOIAFiyAPJ+ARfzvc+lqxiifeyv5nue028n47d5He6x47eiP38MGn4fknqc2SK/wAQ511fR3OoblppSeI8IOWlr38Qh4n2347oaWlfLkrN5iPzKDbM1nNb01isd/EKTqHTMuhxGWY5n4Yb45p7sQCtYwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABl1ss4skWiWIfa2ms8wNndtXLecsfM/LWbWjSMt5x2/Xs+N3Xtr5praGbJS1q/VfZj5YAGB8AAAAAZNaaxnp6v9vfu+1jmeBjEp2OAjZ0a7OpHfz3CObOvlwXmmSsxMJe1oZtbibx4n2l7tSa+7CAhvAAAAAAAAAAAAAAAAD2szE9xPUpn4bzXc/wCNmt+I67Qtk18tsOWL0nqYT+nb99LNGSvt8veO80nlcsTEx3D1w/GOWpu60Uvb74iHcdb1dmmzijJSfErOtotHMACQ9MezjjLgvjmO4tWYVPzWvOtvXp17drcQTzzQ9GT/ACK19pt7tV9Van1daMsR5qjbNea8ogA5ugAADc4zQzbuetKVmYfXE6GXe2K46R7TPvKx+E4jBo4a/ZX1/mel90bouTev3W8VhmxYpvP8MXA8Jg0cVbTSJydfPbtR7A6br62PXpFMccRCxrWKxxAAzvo4HlHMU08FsdLffMfiW35BydNDVtPqj1deys+R3Mu5sWyZJ77n2av6g61GrT6OP90/4R8+XtjiGLazXz5rZLzMzMsQObWtNp5lXgD4AABHsAOtw3M7Gjlr90zXv47WBw3L6+9irMWiLfpVLa0N3NqZYvjtMdL/AKT13LpW7beas+LNNPf2XAIz475Fi2ojFmmK29oSWtotHdZ7iXSNTdxbePvxTyn1vFo5h6AlvQADz0x3309HzktFKTafiIfJ4jyIz5zvxi1JwRPvb5hX0z3PbteXbn+TyNoie4r7OI5P13c/Vbdp+I8QrM1+6wApmIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB94ck48kWj8JTs6lOT4mNnFH/AFK0jtE0p8J3IjLGrkmJrbuPdb9ItS+ScGT2t4/9suLiZ7Z+UZy0tjvNLR1MPhK/MOHnDedjFX7ZjuUVmOp6RN7Tvp5px3eL0ms8S8AQ3kAAABOfBN+LYb62SYn37jt2OZ4PX3aTMUiL/tX/AAO3OrvVt31E/K09PNXPr0yVn5iHROgZsW/qfQzRz2p+CYvXtlWXMcJs6N5mazNff3hyZiYnqVxbeti2cc0yViYmEP57xeY9WbWjv+FT1X0zfDzk1/Mfhiy68x5qhgy7GDJgvNclZiYYmpWrNZ4lFAHwAAAAAAAAAAAAAAdDht/JpbMXiZ9P5Wdxe5j3NauStomeo7VCkviHL21c/wBLJb7LdNn9O9WnVy/RyT9s/wCEjBl7Z4lYo+cd65KRak9xL6dKiYnzCwHO5/TrucfkxzHv17Oi8mO46Y82KubHNLe0vkxzHCnt/XvrbN8Vo66lrp35hws5a22MVfeI7npBslLUvNbR1MOSdU6ffSzzSY8fCsyY5pPD5Z9LXybOeuOlZnufwwx7z0nXhXFVrijZyUjv8dnS+n23s8Y49vkx077cOt45xWPS1azNfvmPzDsvIjqOoeus6+vTXxxjpHiFnWsVjiABnfRg3c9dbXtltPtEM6JecclGPD/jUt7z8oPUdyupr2yS8ZLdteUZ8i5TJvbVvun0RPt7uQ9me57eOQ7Ge+fJOS88zKrtabTzIAwvgAAAAAAAD7w5L4rxekzExKxPDd7Ls63WS0zMeyuE4/0/t3W0S2P0zmtXcikT4ln15+/hMgHT1iAAOP5TuxqaFvfq0x7OvM9R3Kv/ADne+ts/Rrb2j59/ypuubv6XUtaPefEMWa/bVGc15yZbXn8y+AcnmZmeZVgA+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2eNzzr7mPLE9em0S1nse0vdLzS0Wj4fYnhbFYxclxkxaIn1VVz5Bx2TR3b1ms+j5iUx8H3fra30rT7xDc8n4uu7q2mtfviroO/p16to1z0/dEJ16fVpzHuq8ZtvBfXz2x2jrphc9tWazxKAAPIAA9pPptFo/CwfCeQjNrRitPvHsr11vGt6dPep79Vm0drjom9OptVmfafEsuG/bZajyYiY6mO4fGveMmKtonuJZHWImLRys3F5ngdbdpMxWIv17SgnMcNsaOW3dZmvftK1Wvu6mLaxTTJWJ7UHVOgYNyJtSOLMGTDF/ZTs+wkXknA5dS85cVJmnXfsj1oms9THUub7epl1ck48kcSgWrNZ4l4AjPIAAAAAAAAAAAA+qWmlotE9TD5CJ4E+8P5mMuP6GW33R18pYpzS2b62aMlJmOlnePclTf1Inv7oiO4dF9N9X/UU+hkn7o9v5T9fL3R2y6oDbUl85KVyUmlo7iY6Q3yXxqb3tn1o95/CaPJiJ+YQN/p2Hex9mSHi+OLxxKr+L4XZybtaXxWiIn37WVo4K6+tTHWPiH3XDirb1RSO/2yIvSej4+nRPbPMy84sUYwBcsoDyZ6juXwYN/Ypr618l7RHUKs5zbnb3r377jtI/NeWmZnWxXnr89Shs+89udep+pxny/Qp7VQNjJzPbAA1NGAAAAAAAAAAE0/08nu16/wDMIWmf+nn+6/46+P6Xfp3/AM+jNg/fCbgOrrIABpczsxq6OTJM9eyqt/PbY2b5LTM9yl3nfI9R/jUn+0Jc29U731tiMVZ8V/2gbN+bcADVkYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABIfCtydfksdJnqtp6lZE9Wr18xKntDLOLapeJ66nta/F54z6eO8T33WHQPSW134rYZ+E7VtzHCLea8P8A7trDX2iO56QqY6nqVx7eGufBbHaO4mOla+TcXfS27WrX7J94V/qbpP0r/qMceJ92PYxcT3Q4oDT0UAAe1mazEx8w8AWT4dyH+VqfTtb7qxCQqw8U3509+O7fbaOpWZgvGTFW9Z7i0dup+nt/9VqxFp+6qywX7qvsBfszFsYcefHNL1iYmFeeX8ZGpsTfHTqs+6yHM5/Qpu6WSOvuivspet9Nru688R90ezFmx99VUDPvYL6+xbHeOphgcpvWaWms/CsnwAPIAAAAAAAAAAAAOv45yd9HZj7vtnrtyBm1898GSMlJ8w+1mazzC49LZps4YyUnvtnQLw7mZxZP8fNb2nrrtPK2i0dxPcOs9K6jTewRePf5WePJF45egLNkAAAAHA8o5imlgnHS0euYdLl92mlq2yWtET17e6sOX3sm7tWvaZ679o7a16h6t+jxfTxz90o+fL2xxDW2s18+a2S89zMsQOZ2tNp5lXgD4AAAAAAAAAACa/6fVnq0/r2QpPvAMcxrTf8A4lf+m6d29Vm14+9LAHU1kMG9nrr618lp66hnRTznkIw4PoUt72+fdB6jtxqa9sk/Dxkt215Q/m9qdreveZ7jv2aD209zMz+Xjj+XJOW83t7yq5nmeQBjfAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHtZ6tErE8I2vqaUY5t7x7K6SXwnanFueiZ9pnte+ntr6G5Xn2nwzYLdt1iuX5Bx1N7UvHp+6Kz06ke8dk+7p+fDTPjml48SsZiJjiVO7+tfW2LY7x10107814j6lZ2sNfeK+/SCzExPUuS9V0LaOxOOfb4VmSk0tw8AVrGAA+sdppeLR+JWL4dyUbOpTDa33VjpXDqePb9tLdpPfVZt7rnonUJ0tmJn2n3ZcN+yy1hg0s1c+vXJWe+2d1etotEWhZjyY7jqXo9CDec8Z6ckbOOvt6fdDlvcrq12tS2OY77iVW8rqX1Nm2O0dR37Obep+nfQzfWpHi3+0DYx9s8w0wGrIwAAAAAAAAAAAAAD7xZLY7xes9TCxPE+YjawfSyW++OlcNzi92+nsRkrMxHfut+j9TtoZ4t/TPuy4snZK3hz+E36b2rF4mJn8ug6thy1zUi9Z8SsonmOYAGV9AAQz/AFBzW9NccT7fEoQnvn2rOTDGWsd+yBS5Z6kraN63crtjnvAFAwAAAAAAAAAAAAPY+YWR4Rj9PGxbr3n5Vxjj1Xiv7laXi9PRxeP26mY921eksfdtTb8Qk60fc6wDpCexbOSMWG17T7RCr/JNy23v3tNu4iek08y3/wDG0px1nq1oVveZtaZn8tB9Wb/daNes+3mULZv/AEvAGlogAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA3+DzfR38dv56aD7wW9GWto/E9suHJOPJFo+H2J4nlcOnk+prY7/uGZyvGc/1uOr7/EOq7Lq5Yy4a3j5ha1nmOWLZxVzYbY7R3Ex0rbyji7aezN61+yVnObz3HU3tW1ZiPVFZ6VfXOmRvYJ4/dHsx5sffCpxsb+vfW2LY7x1013K70mlprPvCtmOAB5B7E9TEx8w8ATjwflfVT/Gy29+/btMlO6GzfV2K5KzMdTErQ4Lkab2rFu/u/LovpnqkZsX0Mk/dHsn6+TmO2XSAbakiKeZ8VGXD9fHX3ifdK3xmx1y45paO4lC39Om3hnFb5eL0i0cKZtWa2ms/MPHc8q4y2lt2vEfZa09OG5Fta99bLOO/vCstWazxIAjvIAAAAAAAAAAAAADveK8rbS2Ypa32WmFkYMtM2OL0nuJU1WZrPcT1KbeHcz6o/wAfLb9ddty9NdX+nP6bLPifZL18vH2ymY8ie47h639NAH0afLakbepbH+fwqvk9W+rtWx2jrqZXAiPm/FRkxRsYq+8T7tW9TdM/UYfrUj7q/wCkbYx90cwgY9mOpmJ/DxzZAAAAAAAAAAAAAbHH0+pt46fuVscXj+npY6/Ht7qy8bw/W5TFWfjv5WpijrHWP4b56Pw8UvkTdWPEy+3xlvFMc2n8Q+3E8q5Cupo2rEx6rR18tu2tiuvitkt8JNrdscoZ5ZyE7e9akT9tZcN95rzkyWvPzMvhx3a2LbGa2S3yq7W7p5AEd5AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHsfLwBPfAtn1YfpTP8JarjwrZ+lu+nv591jRPcdw6l6b2PraUR+Fjr25o9AbAzoh5nw8ZK/wCTir7xE9oLMTE9SuXYxVzYpx2j2mFb+U8VbT2fXWv2z20D1N0nst+pxx4n3QtjFx90OCA0xEAAHd8W5S2ntRS1p9MzDhPYmYnuJ6lI1dm+tljJT3h6raazzC5cGSuXHF6z3EsiL+F8rGxgnBkt91YjpKHXtHbpt4K5a/K0paLRzAAmPTleR8fXd0rRMe8e8Kx3de+vnvjtHXUritETExPwhfmvEe1trFX279+moep+lfWp+oxx5j3RdjHzHdCFD2Y6mYn8PHPEEAAAAAAAAAAAAAAZdfNfBljJSZiYntiH2tprPMC0PGOUpu6nVrffX2dpVHBcjk0dqJi0xWZjtZ3HbVNrXjJW0T26h0DqsbmHsvP3QscGXvjiWyA2FnGHcw1za9qWjvuGYebVi0TEiqfItG2nu5I66rNvZy1ieacd9fWtmpXuax2r29Zreaz+HJ+t6E6ezNY9p9lZmp2WfICnYgAAAAAAAAAEl8G1vqbvrmPaFiR8Ih/p/h6xWyzHtP8A/qYOpem8H0tGs/nysdeOKPL2itZtPxCuPM9//I3Zx1t9tU08k241ePvPfUzHsq3ZyzmzWvM/Mqr1ZvdtY16/PmWPZv8A0sYDQkIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABvcJm+jv47fz0tbSyfU1cd+/wp7Db05K2j8StHxfPGbjq+/wAQ3b0hscWvilL1beZh1gG+Jo53Ocfj3tWa2rHqiJ6dEYs2Kuak0vHiXyYiY4lT3I6t9TYnHeJj9NZYPmHD12MX18dfuiJ+EAyUtS01tHUw5N1bp19HPNJ9vhWZcc0nh8gKtjAAb3DbltPbreJmI/K0uN2qbWtTJWe+4hT8eyY+Ecp6bRrXt8x7Nr9MdS+hl+hefFv9pOvk4niU5HkT3ET+3royeMG7gps618V47i0M4+WrF6zWfaT3VT5Fx9tLfyV6n0d+zlrM8s4uu5qXvWv3xHfat9jFbDltjtHUxLlPXOmzpbE8ftn2VubH2WYwFKwgAAAAAAAAAAAAACU+H8xODN9DLb7ZmOu0WfWO9sd4tWephL0dy+pmjLT4eqWms8wualovWLRPcPpG/EeXrs6/0slvvjrpJHXdPbptYYy0+VpS0WjmABKemPYxVzYb47R3FomFXeSaM6e9MddRPvC1UY8346NjWrmpH3V77a56k0P1Ot31j7qsGendXlXg9mJiZifmHjmCuAAAAAAAAHtY7tER+XjY4/H9Tbx0/cvVK91or+SPKxfDcE4uNrMx16vl3Z9oavF4vpaWOvXU9e7738sYdW+SfiIdj1Mca+rWs/ELWsdtUL883pvljBWfaPlEG7zGzbZ3sl5nv3aTlXVNqdrZtkVuS3daZAFe8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPY+U+8CzerX9Ez8eyAJR4Ns/T25xzPz7rv0/n+ju15+WbBPF1hDyPeO3rq6yAAfOSlclJraO4lX3mHDzrZYzY6/bbvvpYbV5LVpt69sd6xPtPSq6v02m9gms+/wx5ccXjhT46PN8dk0dmazWfT+HOcnzYb4bzS8cTCsmJieJAGJ8GfQz21tqmWs9dSwD1S00tFo94InhbHAbtd3Qx3ie566l0leeFcn/j7FcF5+y1lhVtFqxMfDrPRd+NzWi3zHiVnhv31egLdlfN6xas1mO4mOkC804n6GWdjHX7ZjuU/anKalNvUvitHfdZiFX1bp9d7Xmk+/wx5ad9eFQDf5rRvpblscxPX4aDkuXFbFeaW94VkxxPEgDG+AAAAAAAAAAAAAANzity+ns1yVnqO47Whw+9Td1YvWYmfyqNIfEeWtqbP0slvstMNl9PdVnUzfSvP2ykYMvbPErJHzjvW9YtWe4l9OmRPKwGHcxVzYLUtHfbMPlqxaJiRU/P6NtPeyV66rNp6c1P8AzfjvrYJzUr7xHaA2ia2mJ/DkvWdGdPZtX4n2VmWnZZ4AqWIAAAAAAdfxXB9blMfcfbE+7kJl4Bqxa9s0x8eyz6Pr/qNylf5ZMVe68Qm2OOqRH6hwvMd2NfQtSJ6m0O/Pwr/zzb+ptRhrPtX+XROvbX6bStMe8+E7Nbtoi1p7tMvAcoVoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA6vjOaMPJ4pmfbvpymbTvNNilo/Es+tk+lmrf8AEvVZ4nlcOKe8dZj9PtqcTf6uhhyd9+qsNt2fFbvpFvytY8wAMj6AA43knFU3daZrWPXESrTc176+acd4mJhck+6IeZcLGSv+Rhr7xE9tQ9SdH+tT9RijzHui7GLmO6EEHtqzWepjqXjniCAAya+W2HLXJWepie1m+MchG3pxEz3aFXO54ryVtPbitrfbbpfdA6j+j2Ii0/bLNgydllnD4w5Iy44vX4mO326nExMcwsgB9Ec8u4qu1rzlpX74hXebHbHkmlo6mFy3rF6zW0dxMdID5pxE6+X6+Kv2zHc9NI9T9J5j9Tjj+6HsYv6oRUBoiGAAAAAAAAAAAAAAPqlppaLRPUw+QieBYXh/Lxnw/Ry2+6IjpKFQcXuX09mMlZ9vytHh92m7q1vWe56jt0r031X9Ti+jefuhYa+TujiW8A2hIYdzBXY1747R8xKref0ram7asx1E/C2EX834z6+vXPjr91e++mtepOnfqdf6lY+6qPsY+6vMK9HsxMTMT8w8cyV4AAAAAD2PmFj+D4fp8dFuveflXeCnrzVr+5Wp47hnDx2OJjqem2eksPds2v8AiEnWj7uW7tZPp4L3/Udqq57P9fkMlonuO/ZYnlGx9DjLzE9TMeyrclvXktafzPaV6v2ebUwx/d62re0PkBpKIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPaz1aJ/UvAFn+GZ5y8RWkz70l20P/ANP9iZpbFP5hMHXei5vraWO38cLTFPNIAFqyAAD4zY65cc0tHcTD7HyYiY4kV15Zw9tbNObHT7Jjv2RqVw8jqY9vWvjvET3WYhWHO8dk0NuaTH2/MS5t6i6R+lyfWxx9s/4QM+LtnmHNAaujD2szWe4nqXgCxfDOUja1/oXt99awkqpuC3raW5W8T1HxKz+N2qbWtTJWe+6um+nOpxtYPp3n7qrDBk7q8S2gGypA1eS1KbetbHesT3E9NoeMlK5KzW3tL5Mcql5rj76O1NJrPp/DnrO8m4qm5q2tWv3xEq22cN8OWaXjqYcr630u2jm8ftn2V2bH2SxAKRhAAAAAAAAAAAAAAEk8O5WdXY+je32WjpG33hvOPJF4+YStLavq5q5afD1S01nmFy0tF6RaJ9pjt9I74jysbWtXHefuiqROvae1Tawxkp8rSlotHMDHsYq5sU0tHcSyCTMRaOJelYeTcTfS2rWrWfRa0uItvmOPx72vNJiPV+FZcvo5NHZmlo6juenMev8AR508n1KR9sq7Pi7J5j2aIDXGAAAABtcXEW3scT+ZWzo19OpjifmKqq4Knr5LFWfzK18P269e/wAVb56PrxTJZN1faUT8/wBrrHGCJ+UGdzzDZnPyVqxPtE9OG1rrmz+o3b2/HhHzW7ryAKhiAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASbwbY+nu+j+e1iKp8az/AEeVxT37TPS08M+rFWf4dH9J5u/Vmn4lP1p5rw+wG1pIAAAA43knFU3ta0xX74q7LyY7jqWDZ16bGOcd48S+WrFo4lT29rX1c9sd466a6wPMOF+vjtsYa/dFfdActLY7zS0dTDlHVem30c00n2+FZlxzSeHyAq2N7E9T2lnhfLTjy11clvaY6hEmTWy2w5q5Kz1MSm9P3L6eeuSr3S80nlctbRasWj4l64nivJV3dKlZn74j3dt13V2KbGKMlPaVnW0WjmABIenkxEx1KGeZcL33s4a/Ee8QmjHsYq5sU0vHcTCv6joU3cM47f8Ap4yUi8cKatE1nqfl4kPlfEW1M85KV+yY7R5ybb1b6uWcd48wrLVms8SAIzyAAAAAAAAAAAAAA6fj+/bT3qT39sz1K0NHPXY1qZaz3Ewp2J6mJhO/BeT+phrq5Le8T1DcPS3Uvp5P0958T7JWtk4ntlLgHQk4RTzzSx31a5o6i1ZStCPPdy3qjBW3t+VJ6gvjro374Yc8xFJ5Q2faengOUK0AAAB1vFsc35Okfysbk9iNbjrXmevtQHwys25OsR8/MJF51u/S1IwxPvb5hu/RM0avTMmVMwz245lB+QzTn275J/Mtd7M9z28aVe03tNp+UOfIA8gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADPpTemxTJWJ+20Strjcn1dPHf91iVTaOaMWWPV8Ss/x3JF+Ox9T31DdfSF4i968+6Xqz5l0wG+poAAAAAD5yUi9JraO4mEG8u4OaWvs4a+3zPSdsW1hpnw2x3iJiYVvU+nY97DNLe/wx5McXjhTdomszE/MPEg8q4a+lntlxx/05lH3KNvVyauWcd48wrbVms8SAIzy63jfI30t2k+r7Zn3Wbp567GvTJWe+4U7WZiYmPwnPhHKfUx/wCPkt7xPUdtw9L9T+nf9PefE+yVr5OJ7ZTAIHQk4ABp8tpY9zVvjtETM1npV/MaOTR27YrVnr5iVuI55dxNdrXtlpX74q1n1F0qNrF9WkfdVHz4+6OYVwPvNjtjyTS0dTD4c0mJieJV4A+AAAAAAAAAAAAA3+E27am9jyRPXVoaD2JmJ7hkxZLYrxevvD7E8TyuHRz12NeuSs/LYRTwjkJyYJw3n36iUrdg6dtxt69ckLTHbury+bz6aTafxCsPLdj63J3j/t9lkcjljFp5Lz+Kqm5G/wBTcyW+fdrXq/Pxjpij5R9q3iIa4DQEIAAABIvB465Cb/8AbHqhj8w2/wDI5C1Yt3FWTxW8YcObLMxE1juP5cTeyTl2r377iZ9l5mzzj6bTFH9UzLNNuMcQwAKNhAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAE98K2rTpzEzM9QgSWeA5YnLkw2Xnp7LOPdrET7s2CeLpvrbGPNX7Z9/0zojyefNxPI1yx39Ke+4SHjOQwbuGt8do7mPeHRNTqFct5w38XhOrfmeJ926AsmQAAAAABq8jp49zXtjvWJ7Vv5DxOTQ2LT6Z9EzPS0mjy2hi3tecd4jv8SoutdHpvY+Y/dHsw5cUXj+VRjo81xmXR2JrNZ9P4lznL82G+G80vHEwrpiYniRt8XtX1NumSs/Fo7ag8472x2i1feCJ4XBxuzXa1a5Kz22kN8D5HuL6+S349kydf6XuRua1cke/ytMd++vIAsHsfN6xes1tHcTHT6HyY5Fe+ZcRbXzfXx1+20d+yLre5bUpt6lsdo7nqelWcpp309mcd4n+HNfUnS/02b6tI+2yv2MfbPMNQBrCOAAAAAAAAAAAANvj9DPuZYpipM9tjhuJz7+WPTX7PzKwuF4jBoYY+yvq/a/6R0PJvWi1vFGfFhm/9mr43wdePxRe8ffMft3o6/Dh+TcxTQwemkx65/Hb68V5Cd3VmbT3aJ6b3q59XWyxpYveITK2rWeyHnmGx9HjbdT1MwrK892mU3/1A2Oq1xRKDtJ9UZ/qbk1/CJsW5uANbRwAAAGbFs5ceOcdLdRPyxTPc9vB6m0zERMnIA8gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA7nh2X6XKV/8vZw2/wAHk+nv0nv8pehk+ns0t+JeqTxaFheS6cbfGTaI+6PdA+P5HY4zamsWnqJ6mFm4es2pET7xaqufL9KdXkrzFeq294bl6kwXx9m5i8Sl7FZji8JzwnL4d/DHVoi/6dVUHG72bSzVvjtMdSn/AI9z+Ldx1pktEX6TejeoKbURjy+Lf7e8WeLeJ90gHkTE/D1tCQAAAAAA53M8Zi3sFq2rHq6nqVbczxuXQ2LUtWfT+1tOXznF4t7XtE1j1de0td650Wm7Tvp4vH+WDNh745j3VSOjynF7GpsWpNJ679mlOKaz90dOa5MGTFaa2jiYV8xMe7c4LanV3qWieomelp6OaufVx5InvuFQTeItHpr11Kf+Fb/1taMNre9Z6bZ6V3vp5ZwWnxPsk61+J7UnAdATgABFfMuK+vi+vSvvHfwlT4zY65cc0tHcShb+nTbwzit8vN6RaOFNXrNLTW0dTD5d3yvjLae3N4j7bTPThORbWvfWyzjv7wq7V7Z4AEd5AAAAAAAe1iZnqI7kHkO34/wmXey1taIinfv3DP43wGXby1yZYmtP5hYGlq49XFFMcRHX8Nr6J0C2zMZc0cV/2k4cHd5lj43Qw6WGKY6VjqPxByu5j09W2S89dQ2c2SuPHN7TEREK78u5a21sTix2+ys/iW2dU3sfTNbikefiEnJeMdfDl8zvX3dq17T3Hfs6/g29OHbvhtPtMdwjLPo7FtbZrlr+PlzjV3r4tuNi0+efKBW8xbudfzHZnNyE1ie4j4cFm3M05883mflhYdzP9fPbJ+ZfL27p5AEV5AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGXUv6NnHb/wAmJ9U/3Q9Vni0SQtrhLxk4/HPfft05HnGj/kasZqx91YmG14jm+px1f6dTew1z69qWj2mHWZxV3unxSfmFnx304U4y62fJr5IvjtMTH6ZuW1rau/lxTHURaemo5RatsOSY9phW+0p3455JXJ6cOxbqe+u5SzFkrkpFqzExKmqWtS0WrPUwkvj3keXWmMWe0zT4bl0b1L28Ytn/ALSsWx8WWGNXR3cG3ji+O8T22m80yVyV7qzzCZE8gD2+gAAANHk9HFtYrd0ibfhWvN6WxrbNvqUmK9z0thzOa4vDv4Jiax6up6lr3W+jRu4+6ni0f5YM2Lvjwqh2fFd2dXfiJnqstfmeMzaGea3rPp/EtHDeceSLx8w51jnJpbETaOJrKDHNLLkw3jJji8fEx2+3G8U3Y2+Mxz390R1LsuvaueM+GuSvzCzrPdHIAkPQADj+T8fXd0Zjr7onuFY7GO2HNfHaOprPS5L19VJrP5V35nx3+Pt3zVr1W09tJ9V9O7qxs0jzHuibNP6oRsBoaEAAAAA3+O4vZ3MkVpjt1P8ADJixXy27aRzL7ETPs08WO+S8VpWbTP6hLfG/HLXmubYraI+epdfgvHMGpFcmWJm/8pDStaR1WOobx0f012TGXZ9/wmYtfjzZ84MNMOOKUjqIfcz1HZM9R3KP+Tc3j08NsWO0Tef5bZs7OLTxTe88RCTa0VjmWj5hzf06TrYbe8/KDXtN7Ta09zLJt577Gacl5mZmf2wuU9T6jfezTe3t8K3Jkm88gCtYwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAj5AFg+B5fXq2p/wBqUTHcdIP/AKfZvTmmkz8x10nLq/p/L9TRp/CzwTzSEB870vRsznrH+6O5RNZ/lup/kaEzEdzESrG0TW01n5iemk+pNT6G3No9reUPYr22eANeYHT4fltjRzRMXma9/Ce8JzuvvUis2iL9fHar2bV2Muvki+O0xMLzpfXM2jMV96/hmx5pouOJiY7h6h3AeT1vNcOxPv8AHaXYclcuOL0nuJjt0fR6jh3ad2OU+mSLx4fYCe9gAAAOdzHGYd/Bat6x6uvaVec5xGbQzW+2Zp37T0tRqclo4d3DNMlYn+VB1jomPerNq+LsOXDF4/lCfBd/6OxGC09RNlgwrfkeKz8Vu1zY4n0RPft/ae8VsxtatbxPv1HaN6cy5MVbambxavt/Z5wTMR2y2wG0JAAA43lOjG3o29veKuy+clIvWa2+JR9nBXYxWx2+Xm1e6OFN58c48s0n8MaR+WcTk19n6tKTNbd/EI/GPJM9RSZn9RDkG5qX1s1sdo9lXes1nh8Dp8fwu9t2j04LxX9z7JNxviVKxFs/p7/9pOn0fb2v2V8fmXqmK1vZCaY8l56pS1v6hvafDb2zaPTi9MfysTW4TTw9f9OJdDFr4cUdUx1j/hset6QnnnNf/pIrq/mUR4jxX0zFs89/1CU6Wjg1aRXHXrptDatLpevpxxjr5/KTTHWnsPJmIjuZ6eXvWlZtaeohFfJvIq4azh17/d+4hk3d7Fp45vkkveKRzLc8j53DqY7Y8d4m6vd3ZybWe2S899vnZ2Muxkm+S82mf2wuY9V6tl6hfmfFfiFfkyzeQBUMQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACReEZfTyHo/fvCx4947VV4xlnFy2G349XutWnU1jr4dH9JZe7VtX8Sn60/axbuP6mtev8ACp+Zw/Q5LNT+e4W7MdxMftW/nGt9LkIyde1vZj9Xa/fgrlj4l82q815R4BzxBCPcj3lIPG+DybmWMmSIikfuEnV1cm1kjHjjmXqtZtPEPnxvhM27mrktXqkT+1i6eCuvgrir8Vjp5o6uLVwxjx1iOv4ZM+WuLHN7T1EOn9J6Vj6di5/q+ZWOLHGOH3Noj5kiYn4QHyTyHLfZ9Gve0Vr/AC3OA8ojqMe1P692GnqLUtsThmeP5+Hn69e7hMxr6u5g2aRbFkiYn+WwvaXreOazyzxPIA9gADBt62LZxTTJWJ7hrcZpzp3tWs/ZMe0OgMFsFJvGTjzD52xzyAM76AAAAw7Wti2KenLSLQ1qcTpUnuuGkf8ADfGG+DFee61YmXyaxLHjw48cdVrEQyAyxER4h9AH0GHZ2MWvjm+S3UQ1OW5TBo4pm8/d+kA53nM+9kmtbWin9qPqvW8OjXj3t+GHJmijq+SeSWy+rDrWtEftE8uS+S82vaZmf3L5mZme5nt45tu7+bdyd+SUC95vPMgCE8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANvib+jfxT+5Wxo29erjt/4qfw2mmWlo+YmJWzwmSMnH4rR+axLd/R+X7slEzVn3hvIj/qBq+rW+rEfHulzleTYIz8beJj8S2jq+v8AX070/hIy17qzCqntYm09RHcvuuK9ss461mZieks8Z8btea59mloj5iJcu0en5tzJ2Y4V1KTeeIa3jHAW2bxlzRMVj+E91dfHr4ox44iIiHuvhx4McUpHUQyy6f0vpWLQx8Vjz8ysceOKQ+b2ilZtaeohDPL+diYtrYLR/PTf8s5uutitgxWn1z7e0q+zZLZck3tMzMy1/wBR9b7InXwz5+ZYM+bj7YfNrTa0zPzJEzHw8GhcoTocZyuzpZImt5mP12m/DeS6+zWKZpitlcPql7UnuszErjp3WtjSnis8x+GXHmtRcuLJTJWLUtExL7VnxHkWzqTFbWm1U04fndbdpETaK26+Jb907r2tucV54t+E3Hmrd2B5W0WjusxMPV2zAD6AAAAAAAAAMG3tYtbHN8luoh5tetI5tPgmeGW9opXu09QjnkHkeLVpbHh7tf8AiXI8i8ltlm2LX7iPj5RTLktlvNrzMzP7lpfWPUsV5xa3/aJl2PirY39/PuZJtkvae/xMtQGjZMlslu608yhzPIA8PgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD6pPV4n+VneJXm3F0j/t9lXrG8GyerQiJ+em0+lMnbtzX8wk60/ckjBv4pza18cfMx7M46PesXrNZ+U+fKL8T45XFt2z5qxPc9xEyk1K1pWK1jqIfQi6mlh1K9uOHmtIr7DieScvj0de1a2rN5j2jtn53lcXH69pmfu69vZW3K7+Xe2LZL2mYmVL17rVdSk4sc/fP+GHNm7Y4j3Yd3Zvs57Zbz3MywA5ra03mbT7q+fIA8gAAy4M+XDb1Y7TE/wASxD7FprPMCUcL5Pmw3rTYtNq/tMuP5bV3KRNLx3P4VKz6u3m17xbHeY/5bJ071Jsav25PuqkY9i1fdcUTE/EvUF4byu2OsU2ff+Ur4/ldXcpE48kN50ur625EdlvP4TKZa29m+PImJ+JerNkAH0AAHxky48cd3tENTltrNrYLXxY4tMIFzPO72XJalrWpH666U3U+s4tCOLRMyxZMsUSrmPI9fVrNccza38ITyvMbO9kmbWtFf1252TJfJaZvaZn+ZfLn/Uet7G7PEzxX8IOTNa5PvPYCmYgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACPeeoAT7wLudefb2+YR7x/g827kre8TFP6WFxuli08EUxx+P03L0x03NGWNi0cVS9fHPPc2wHQE0aPLchi0de17zHfXtHbJye5j09a2XJMR1CtfIOVyb+xP3fZE+yh611imhj7a/un2YcuWKR/LHznJZN/ZtaZn09+0duaDmGbNfNeb3nmZV0zMzzIAxPgAAAAAAAA2NXbz69otjvMf8ALXHql7Unms8SRPCU8V5XnwzFc/3V/wDyk/H+Q6ez1E3itp/Cr31TJek91tML/S9Sbev4tPdH8s9Ni1Vx48+LJHdL1n+pZImJ+FS6vLbmCY9OW0xH47drT8t2MdYjJHqbLrerNbJ4yR2pFdms+6wREMXmOKY++kzP/wCGWfL9br2iZn+FpXr2jaOe9k+tT8pTatbR1aImEc8i4LV2Kzkjqlvf4aefzCla/ZEd/wDtwOW8h2dzusWtFf7VfVOtdOyYppP3MeTNjmOHM3tf/Gz2x9xPTXe2tNp7tMzP8vHO7zE2maxxCBIA8gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADNq62XYyRTFS1pn9Q9VrNp4rHkY8dLZLRWsTMz+ks8b8btmmM2xFor+unQ8b8crhiubYrPq/UpVjpWlYrWOohu/RfTftm2Y/9JmHX+bMetr49fHFMcdRDMDd61iscQmAD0I/5vWZ4ybR8fEq2n591p+VU+pxGWnX47hVuSOry5x6tpxtxb8wgbUfc+QGqIwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPYiZnqHY4PhM+/lr3Tqn57ln19fJsXimOOZl9rWbTxDT4vj827mitKTMftYPj/B4dHFFr07v/AG2uJ4nX0MURSlfV+ZdCbVrHvPTovR+g49OIyZfNv9J+LBFPM+72IiI6h65+5y2prxPqyV7j+Ue5Ly6Iia68x3+4habXVtXVj77Mlsta+6VbO1hwVm2S3TQ1OZw7O3OHF79K83+Y29u0zfLbqf5dXweZnf7n5a/T1Lba2qYsUcVmWCNjutEQsQI+BuKW53kMd8Zk6+YjtVWxHWa8fytnmo70Mn9Kn2/bYvH6loPrCv8Ay0n+ELa94YgGmIgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA+8WO+W8VpXuZfDc4vbrp54yWxxf+2TFWtrxF54h9jjny7/j/jWXJauXZrEV/Upljrq8fh6+ynUf0iVvLesPpx06nr8ezhcjzO1t2n1WmI/tuWHqfT+mYuNeO635SoyY8cfal/L+U4MHdMNq2t/7RbkPId/ZmY+tatf1Hs48zMz3LxQ7vXNvanzbiPxDDfNazJkzZMk93va0/wAyxgqJmZ92ISjwKO9/3+PiUXSvwCP/AJlp/Ex1/wArXocc72P+7Lh/fCfgOtrNq8pHq0skfusqm3v/ANVk/v3W5ve+rk/rtU3KREb+Xr4m3bR/WNf/AM5Q9r4aoDRkMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAATH/T6n/Uvb8ShyeeAYusFrz+feF76cp371f4ZsEc3S4B1VZMex19C/fx17qm5qvp5HLH/AJT0trN1OK0T+YVT5BExyOTv9zDTPWFf+Kk/yibXtDnANAQgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHsfKyfCMXo4yLf93vCudes3zVrHzMrU8ew/R43HX+O22eksM22bX/EJOrH3cukA6MnvnLHeO0fwqzyaOuTyfzK08n+yf6Vf5Z7cpeP57hqPq6P/AK9Z/lF2v2uOA52ggAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOhwGGc3I46xHc9rW1qRTDWsfpAPBdX6m79SY9o94lYUe0Ojek9fs1pyT8yn61eK8vRiz7GLDWbZL1r/co/y3lOrrxNMVptb+IbBtb2DVrzltwz2vWvukObJTHjm1piIVf5Rkrk5O81nuIn2e8pzu3uWn771r+u3Kva17eq09y0HrvXMe/WMeOPEfKDmzRfxD5AaujgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD2sdzEft49rPVon9ECwvEMWLT476+Xqvq/b3l/J8GCJpi6mf7QjLyWzfHGOMlorH47adrTae5nuW0W9RWw4K4NaOOI90j6/FeKuryXN7e3af+p6az+Icu1rWnu0zMvka7m2Mme3dknmWCbTPuAML4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/9k=" 
-             alt="ALFY logo" 
-             style="width:120px; height:120px; object-fit:contain; filter: drop-shadow(0 0 12px rgba(191,145,243,0.6));">
+  <!-- GALLERY -->
+  <section class="sec" id="gallery">
+    <div class="sec-label">03 · ls-gallery --drawings</div>
+    <h2 class="sec-title" data-es="Galería" data-en="Gallery">Galería</h2>
+    <div class="gfilt">
+      <button class="fbtn on" onclick="setF(this,&#39;all&#39;)">Todo</button>
+      <button class="fbtn" onclick="setF(this,&#39;oc&#39;)">OC / Original</button>
+      <button class="fbtn" onclick="setF(this,&#39;fanart&#39;)">Fanart</button>
+      <button class="fbtn" onclick="setF(this,&#39;concept&#39;)">Concept Art</button>
+      <button class="fbtn" onclick="setF(this,&#39;other&#39;)">Otro</button>
     </div>
+    <div class="ggrid" id="ggrid">
+      <div class="gempty"><b>~/gallery</b> · 0 archivos<br><span style="font-size:.62rem;opacity:.6;display:block;margin-top:5px">las imágenes se guardan en esta sesión</span></div>
+    </div>
+    <div class="gupload-row">
+      <input type="file" id="fInput" accept="image/*" multiple="" style="display:none" onchange="handleUp(event)">
+      <button class="btn" onclick="document.getElementById(&#39;fInput&#39;).click()">+ subir dibujo</button>
+      <span class="gcount" id="gcount"></span>
+    </div>
+  </section>
 
-</body>
-</html>
+  <!-- CONNECT -->
+  <section class="sec" id="connect">
+    <div class="sec-label">04 · ./connect.sh</div>
+    <h2 class="sec-title" data-es="Conectar" data-en="Connect">Conectar</h2>
+    <div class="con-grid">
+      <a href="https://www.youtube.com/@ALFY181X" target="_blank" class="ccard">
+        <div class="cico">▶</div>
+        <div><span class="cplat">YouTube</span><span class="chandle">@ALFY181X</span></div>
+      </a>
+      <a href="https://www.tiktok.com/@a181xy" target="_blank" class="ccard">
+        <div class="cico">♪</div>
+        <div><span class="cplat">TikTok</span><span class="chandle">@a181xy</span></div>
+      </a>
+      <a href="https://gamejolt.com/@alfy181R" target="_blank" class="ccard">
+        <div class="cico">⚡</div>
+        <div><span class="cplat">GameJolt</span><span class="chandle">@alfy181R</span></div>
+      </a>
+      <a href="https://github.com/Alfy181R" target="_blank" class="ccard">
+        <div class="cico">◈</div>
+        <div><span class="cplat">GitHub</span><span class="chandle">Alfy181R</span></div>
+      </a>
+    </div>
+  </section>
+
+</div><!-- /wrap -->
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">alfy@studio:~$ echo <b>"made with code & art"</b> · Studio OS v3.0 · <a href="https://github.com/Alfy181R/alfy181r.github.io" style="color:var(--accent)">github ↗</a></div>
+</footer>
+
+<!-- LANG SWITCHER -->
+<div class="lang-bar">
+  <button class="lang-btn active" onclick="setLang(&#39;es&#39;)">ES</button>
+  <button class="lang-btn" onclick="setLang(&#39;en&#39;)">EN</button>
+  <button class="lang-btn" onclick="setLang(&#39;ca&#39;)" style="color:var(--yellow);border-color:rgba(212,172,103,.3)">CA</button>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lb" id="lb" onclick="closeLb()">
+  <button class="lb-close" onclick="closeLb()">[ ✕ cerrar ]</button>
+  <img id="lbImg" src="file:///home/alfy/Descargas/index_3.html" alt="">
+  <div class="lb-name" id="lbName"></div>
+</div>
+
+<script>
+/* ===== GALLERY ===== */
+let imgs=[],curF='all';
+
+function setF(btn,f){
+  document.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');curF=f;renderG();
+}
+
+function handleUp(e){
+  Array.from(e.target.files).forEach(file=>{
+    const r=new FileReader();
+    r.onload=ev=>{imgs.push({src:ev.target.result,name:file.name,cat:'other'});renderG();};
+    r.readAsDataURL(file);
+  });
+  e.target.value='';
+}
+
+function renderG(){
+  const grid=document.getElementById('ggrid');
+  const cnt=document.getElementById('gcount');
+  const list=curF==='all'?imgs:imgs.filter(i=>i.cat===curF);
+  cnt.textContent=imgs.length>0?`${imgs.length} archivo${imgs.length!==1?'s':''}`:'' ;
+  if(!list.length){
+    grid.innerHTML=`<div class="gempty"><b>~/gallery</b> · 0 archivos${curF!=='all'?' en esta categoría':''}<br><span style="font-size:.62rem;opacity:.6;display:block;margin-top:5px">las imágenes se guardan en esta sesión</span></div>`;
+    return;
+  }
+  grid.innerHTML=list.map((img,i)=>`
+    <div class="gitem" onclick="openLb('${img.src}','${img.name}')">
+      <img src="${img.src}" alt="${img.name}" loading="lazy">
+      <div class="gname">${img.name}</div>
+    </div>`).join('');
+}
+
+function openLb(src,name){
+  document.getElementById('lbImg').src=src;
+  document.getElementById('lbName').textContent=name;
+  document.getElementById('lb').classList.add('open');
+}
+function closeLb(){document.getElementById('lb').classList.remove('open')}
+
+/* ===== LANG ===== */
+const t={
+  es:{
+    'ver proyectos':'ver proyectos','galería':'galería',
+    'Sobre mí':'Sobre mí','Proyectos':'Proyectos','Galería':'Galería','Conectar':'Conectar'
+  },
+  en:{
+    'ver proyectos':'view projects','galería':'gallery',
+    'Sobre mí':'About me','Proyectos':'Projects','Galería':'Gallery','Conectar':'Connect'
+  },
+  ca:{
+    'ver proyectos':'veure projectes','galería':'galeria',
+    'Sobre mí':'Sobre mi','Proyectos':'Projectes','Galería':'Galeria','Conectar':'Connectar'
+  }
+};
+
+function setLang(l){
+  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelector(`.lang-btn[onclick="setLang('${l}')"]`).classList.add('active');
+  document.querySelectorAll('[data-'+l+']').forEach(el=>{
+    const v=el.getAttribute('data-'+l);
+    if(v)el.textContent=v;
+  });
+  // hero cta
+  document.querySelectorAll('.btn.pri').forEach(b=>{const v=b.getAttribute('data-'+l);if(v)b.textContent=v;});
+  // also handle sec-title via data attrs
+}
+</script>
+
+
+</body></html>
