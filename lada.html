@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LADA · ALFY STUDIO</title>
+  <meta name="description" content="LADA — proyecto de ficción original. Veldren, una ciudad con otoño permanente. Personajes, worldbuilding, una historia construida desde cero.">
+  <meta property="og:title" content="LADA · ALFY STUDIO">
+  <meta property="og:description" content="Veldren. Otoño permanente. Algo que salió mal.">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#06040e;--bg2:#09070f;
+  --card:rgba(14,10,28,.96);
+  --border:rgba(194,134,221,.1);
+  --border2:rgba(194,134,221,.18);
+  --text:#d8cce8;--dim:#8878a4;
+  --purple:#c286dd;--purple2:#a855d4;--purple3:#7c3aed;
+  --pglow:rgba(194,134,221,.14);
+  --cyan:#4ec9b0;--blue:#5294e2;
+  --mono:'JetBrains Mono',monospace;--sans:'Outfit',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  min-height:100vh;font-family:var(--sans);color:var(--text);
+  background:var(--bg);overflow-x:hidden;position:relative;
+}
+
+/* fondo gradiente lunar */
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(ellipse 60% 55% at 80% 10%, rgba(168,85,212,.08), transparent 55%),
+    radial-gradient(ellipse 40% 50% at 10% 90%, rgba(124,58,237,.06), transparent 50%),
+    radial-gradient(ellipse 80% 30% at 50% 100%, rgba(82,148,226,.04), transparent 60%);
+}
+
+/* punto-grid morado muy sutil */
+body::after{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:radial-gradient(circle,rgba(194,134,221,.045) 1px,transparent 1px);
+  background-size:28px 28px;
+}
+
+/* ===== LUNA DECORATIVA ===== */
+.moon{
+  position:fixed;top:4%;right:5%;width:140px;height:140px;z-index:0;
+  pointer-events:none;
+  border-radius:50%;
+  background:radial-gradient(circle at 38% 38%, #e0c0ff 0%, #c286dd 20%, #8b3dba 45%, #4a1570 75%, transparent 90%);
+  box-shadow:
+    inset -18px 0 0 rgba(0,0,0,.85),
+    0 0 60px rgba(194,134,221,.3),
+    0 0 100px rgba(168,85,212,.15);
+  animation:moonFloat 9s ease-in-out infinite;
+  opacity:.7;
+}
+.moon::after{
+  content:'';position:absolute;inset:12%;border-radius:50%;
+  background:radial-gradient(circle at 38% 38%, rgba(255,220,255,.35), rgba(200,120,255,.1), transparent 60%);
+}
+@keyframes moonFloat{
+  0%,100%{transform:translateY(0) rotate(0deg)}
+  50%{transform:translateY(-10px) rotate(1.5deg)}
+}
+
+/* ===== PARTÍCULAS ===== */
+#stars{position:fixed;inset:0;z-index:0;pointer-events:none}
+.star{
+  position:absolute;border-radius:50%;background:#fff;
+  animation:starTwinkle var(--d,3s) ease-in-out infinite var(--delay,0s);
+}
+@keyframes starTwinkle{
+  0%,100%{opacity:var(--lo,.15)}
+  50%{opacity:var(--hi,.7)}
+}
+
+/* ===== TOPBAR ===== */
+.topbar{
+  position:sticky;top:0;z-index:20;
+  background:rgba(6,4,14,.95);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 1.5rem;height:42px;
+  font-family:var(--mono);font-size:.76rem;
+}
+.tb-left{display:flex;align-items:center;gap:10px}
+.dots{display:flex;gap:5px}
+.dots span{width:10px;height:10px;border-radius:50%}
+.d-r{background:#e05252}.d-y{background:#d4ac67}.d-g{background:#c286dd}
+.tb-title{color:var(--dim)}
+.tb-nav{display:flex;gap:1.2rem;list-style:none}
+.tb-nav a{color:var(--dim);text-decoration:none;transition:color .18s;font-size:.7rem}
+.tb-nav a:hover{color:var(--purple)}
+
+/* ===== LAYOUT ===== */
+.wrap{
+  position:relative;z-index:2;
+  max-width:1000px;margin:0 auto;padding:0 1.5rem 4rem;
+}
+
+/* ===== ENTRADA CON FADE ===== */
+.fade-in{
+  opacity:0;transform:translateY(18px);
+  transition:opacity .65s ease, transform .65s ease;
+}
+.fade-in.visible{opacity:1;transform:translateY(0)}
+
+/* ===== HERO ===== */
+.hero{padding:4rem 0 2.8rem;border-bottom:1px solid var(--border);}
+.hero-pre{
+  font-family:var(--mono);font-size:.72rem;
+  color:var(--dim);margin-bottom:.8rem;
+  display:flex;align-items:center;gap:8px;
+}
+.hero-pre::before{content:'';width:20px;height:1px;background:var(--purple);display:inline-block}
+.hero-h1{
+  font-family:var(--mono);
+  font-size:clamp(3rem,8vw,5.5rem);
+  font-weight:700;line-height:1;color:#fff;
+  margin-bottom:.6rem;letter-spacing:-.03em;
+  text-shadow:
+    0 0 24px rgba(194,134,221,.4),
+    0 0 60px rgba(168,85,212,.2),
+    0 0 100px rgba(124,58,237,.1);
+  animation:heroPulse 6s ease-in-out infinite;
+}
+@keyframes heroPulse{
+  0%,100%{text-shadow:0 0 24px rgba(194,134,221,.4),0 0 60px rgba(168,85,212,.2),0 0 100px rgba(124,58,237,.1)}
+  50%{text-shadow:0 0 30px rgba(194,134,221,.55),0 0 70px rgba(168,85,212,.3),0 0 120px rgba(124,58,237,.15)}
+}
+.hero-tagline{
+  font-size:1.05rem;color:var(--dim);
+  line-height:1.7;max-width:600px;margin-bottom:1.6rem;
+}
+.hero-tagline em{color:var(--purple);font-style:normal}
+.hero-cta{display:flex;gap:10px;flex-wrap:wrap}
+.btn{
+  font-family:var(--mono);font-size:.72rem;
+  padding:7px 18px;border-radius:4px;
+  border:1px solid var(--border2);background:var(--pglow);
+  color:var(--text);cursor:pointer;transition:all .2s;
+  letter-spacing:.04em;display:inline-block;text-decoration:none;
+}
+.btn:hover{border-color:var(--purple);color:var(--purple);background:rgba(194,134,221,.12)}
+
+/* ===== SECTIONS ===== */
+.sec{padding:2.8rem 0;border-bottom:1px solid var(--border);}
+.sec:last-child{border-bottom:none}
+.sec-label{
+  font-family:var(--mono);font-size:.67rem;
+  color:var(--purple);text-transform:uppercase;letter-spacing:.14em;
+  margin-bottom:.4rem;display:flex;align-items:center;gap:.6rem;
+}
+.sec-label::after{content:'';flex:1;height:1px;background:rgba(194,134,221,.12)}
+.sec-title{font-size:1.55rem;font-weight:600;color:#fff;margin-bottom:1.2rem;line-height:1.2}
+
+/* ===== CARDS ===== */
+.card-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:8px;padding:1.3rem;
+  transition:border-color .22s;
+}
+.card:hover{border-color:var(--border2)}
+.card h3{
+  font-family:var(--mono);font-size:.72rem;
+  color:var(--purple);letter-spacing:.07em;
+  text-transform:uppercase;margin-bottom:.7rem;
+}
+.card p{color:var(--dim);font-size:.92rem;line-height:1.72}
+.card p strong{color:var(--text)}
+.card.full{grid-column:1/-1}
+
+/* ===== VELDREN BLOCK ===== */
+.veldren-block{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-left:3px solid var(--purple2);
+  border-radius:8px;padding:1.5rem;
+  position:relative;overflow:hidden;
+}
+.veldren-block::after{
+  content:'';position:absolute;
+  top:-30%;right:-10%;width:200px;height:200px;
+  border-radius:50%;
+  background:radial-gradient(circle, rgba(168,85,212,.06), transparent 70%);
+  pointer-events:none;
+}
+.veldren-title{
+  font-family:var(--mono);font-size:1.1rem;
+  font-weight:600;color:#fff;margin-bottom:.8rem;
+  letter-spacing:.04em;
+}
+.veldren-title span{color:var(--purple)}
+.veldren-body{font-size:.93rem;color:var(--dim);line-height:1.78}
+.veldren-body p+p{margin-top:.65rem}
+
+/* clima chips */
+.clima-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:1rem}
+.clima-chip{
+  font-family:var(--mono);font-size:.63rem;
+  padding:3px 9px;border-radius:3px;
+  border:1px solid rgba(194,134,221,.2);
+  background:rgba(194,134,221,.07);
+  color:var(--purple);letter-spacing:.03em;
+}
+
+/* ===== PERSONAJES ===== */
+.char-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-top:1rem}
+.char-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:8px;padding:1.3rem;
+  border-top:2px solid var(--c,var(--purple));
+  transition:border-color .22s,transform .22s;
+}
+.char-card:hover{transform:translateY(-2px);border-color:var(--c,var(--purple2))}
+.char-name{
+  font-family:var(--mono);font-size:.9rem;
+  font-weight:700;color:#fff;margin-bottom:.2rem;
+}
+.char-role{
+  font-family:var(--mono);font-size:.62rem;
+  color:var(--c,var(--purple));letter-spacing:.06em;
+  text-transform:uppercase;margin-bottom:.65rem;
+}
+.char-desc{font-size:.88rem;color:var(--dim);line-height:1.68}
+.char-palette{
+  display:flex;gap:5px;margin-top:.75rem;
+}
+.palette-dot{width:12px;height:12px;border-radius:50%;border:1px solid rgba(255,255,255,.1)}
+
+/* ===== INCIDENTE ===== */
+.incident-box{
+  background:rgba(124,58,237,.07);
+  border:1px solid rgba(124,58,237,.22);
+  border-radius:8px;padding:1.4rem 1.5rem;
+  position:relative;overflow:hidden;
+}
+.incident-box::before{
+  content:'';position:absolute;
+  top:0;left:0;width:3px;height:100%;
+  background:linear-gradient(180deg,var(--purple),var(--purple3));
+}
+.incident-label{
+  font-family:var(--mono);font-size:.65rem;
+  color:var(--purple);letter-spacing:.1em;
+  text-transform:uppercase;margin-bottom:.7rem;
+}
+.incident-text{font-size:.92rem;color:var(--dim);line-height:1.75}
+.incident-text strong{color:var(--text)}
+
+/* ===== ESTADO ===== */
+.status-grid{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;margin-top:1rem}
+.status-item{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:8px;padding:1rem 1.2rem;
+  display:flex;align-items:flex-start;gap:.8rem;
+}
+.s-dot{
+  width:7px;height:7px;border-radius:50%;
+  margin-top:.5rem;flex-shrink:0;
+  background:var(--c,var(--purple));
+  box-shadow:0 0 6px var(--c,var(--purple));
+}
+.status-item h4{
+  font-family:var(--mono);font-size:.72rem;
+  color:#fff;margin-bottom:.2rem;
+}
+.status-item p{font-size:.82rem;color:var(--dim);line-height:1.5}
+
+/* ===== NOTE ===== */
+.note{
+  background:rgba(194,134,221,.06);
+  border:1px solid rgba(194,134,221,.15);
+  border-radius:8px;padding:1rem 1.2rem;
+  font-size:.88rem;color:var(--text);line-height:1.65;
+  margin-top:1rem;
+}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:720px){
+  .card-grid,.char-grid,.status-grid{grid-template-columns:1fr}
+  .hero-h1{font-size:3rem}
+  .tb-nav{display:none}
+  .moon{width:80px;height:80px;top:8%;right:3%}
+}
+</style>
+</head>
+<body>
+
+<!-- Luna decorativa -->
+<div class="moon"></div>
+
+<!-- Estrellas generadas por JS -->
+<div id="stars"></div>
+
+<header class="topbar">
+  <div class="tb-left">
+    <div class="dots"><span class="d-r"></span><span class="d-y"></span><span class="d-g"></span></div>
+    <span class="tb-title">ALFY STUDIO — LADA</span>
+  </div>
+  <nav><ul class="tb-nav">
+    <li><a href="index.html">home</a></li>
+    <li><a href="donnies.html">Donnies</a></li>
+    <li><a href="fnaf-as.html">FNAF AS</a></li>
+    <li><a href="foros.html">foro</a></li>
+  </ul></nav>
+</header>
+
+<div class="wrap">
+
+  <!-- HERO -->
+  <section class="hero fade-in">
+    <div class="hero-pre">alfy@studio · ficción original · en construcción</div>
+    <h1 class="hero-h1">LADA</h1>
+    <p class="hero-tagline">
+      Un proyecto de ficción original en desarrollo desde 2020.
+      <em>Veldren</em> — ciudad costera, otoño permanente, lluvia constante,
+      algo que salió muy mal.
+    </p>
+    <div class="hero-cta">
+      <a href="index.html#projects" class="btn">← Todos los proyectos</a>
+    </div>
+  </section>
+
+  <!-- VELDREN -->
+  <section class="sec fade-in">
+    <div class="sec-label">01 · el mundo</div>
+    <h2 class="sec-title">Veldren</h2>
+    <div class="veldren-block">
+      <div class="veldren-title"><span>// </span>ciudad costera · costa atlántica</div>
+      <div class="veldren-body">
+        <p>
+          Veldren es una ciudad de tamaño medio en la costa atlántica. No es grande ni pequeña.
+          Tiene barrios, historia, infraestructura que nadie ha arreglado en demasiado tiempo.
+          Los cielos son siempre grises. La lluvia aparece sin avisar.
+        </p>
+        <p>
+          No es un sitio de ciencia ficción lejano ni una distopía de película.
+          Es algo más cercano — más sucio, más real.
+          La ciudad tiene personalidad propia. Se nota en cada escena.
+        </p>
+      </div>
+      <div class="clima-chips">
+        <span class="clima-chip">otoño permanente</span>
+        <span class="clima-chip">cielos encapotados</span>
+        <span class="clima-chip">lluvia frecuente</span>
+        <span class="clima-chip">luz escasa</span>
+        <span class="clima-chip">urbano deteriorado</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- PERSONAJES -->
+  <section class="sec fade-in">
+    <div class="sec-label">02 · personajes</div>
+    <h2 class="sec-title">El grupo</h2>
+    <div class="char-grid">
+      <div class="char-card" style="--c:#c286dd">
+        <div class="char-name">Alfy</div>
+        <div class="char-role" style="--c:#c286dd">Protagonista</div>
+        <p class="char-desc">
+          Alto, pelo gris oscuro. El ojo derecho — negro con iris morado — es el resultado directo
+          del incidente incitante. Irreversible. Siempre presente.
+          Punto de vista principal de la historia.
+        </p>
+        <div class="char-palette">
+          <div class="palette-dot" style="background:#3a3a4a" title="pelo"></div>
+          <div class="palette-dot" style="background:#1a0a2e" title="ojo derecho"></div>
+          <div class="palette-dot" style="background:#c286dd" title="iris morado"></div>
+        </div>
+      </div>
+      <div class="char-card" style="--c:#5294e2">
+        <div class="char-name">Finn</div>
+        <div class="char-role" style="--c:#5294e2">Compañero central</div>
+        <p class="char-desc">
+          Pelo castaño. Calmado, analítico. El tipo que ancla al grupo cuando todo
+          se pone caótico. Contrapeso a los elementos más emocionales de la historia.
+        </p>
+        <div class="char-palette">
+          <div class="palette-dot" style="background:#7b5c3a" title="pelo"></div>
+          <div class="palette-dot" style="background:#e05252" title="rojo"></div>
+          <div class="palette-dot" style="background:#8a9aaa" title="gris"></div>
+          <div class="palette-dot" style="background:#5294e2" title="azul"></div>
+        </div>
+      </div>
+      <div class="char-card" style="--c:#4ec9b0">
+        <div class="char-name">Eloi</div>
+        <div class="char-role" style="--c:#4ec9b0">Inventor</div>
+        <p class="char-desc">
+          Construyó el exotraje. Lo técnico del grupo — la persona que resuelve
+          los problemas que no tienen solución obvia.
+        </p>
+        <div class="char-palette">
+          <div class="palette-dot" style="background:#4ec9b0" title="cyan"></div>
+        </div>
+      </div>
+      <div class="char-card" style="--c:#d4ac67">
+        <div class="char-name">Max</div>
+        <div class="char-role" style="--c:#d4ac67">Piloto</div>
+        <p class="char-desc">
+          Opera el exotraje que construyó Eloi. La relación entre los dos —
+          quien lo hace y quien lo usa — define algo importante del grupo.
+        </p>
+        <div class="char-palette">
+          <div class="palette-dot" style="background:#d4ac67" title="oro"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INCIDENTE -->
+  <section class="sec fade-in">
+    <div class="sec-label">03 · el incidente</div>
+    <h2 class="sec-title">El incidente incitante</h2>
+    <div class="incident-box">
+      <div class="incident-label">// archivo — clasificado</div>
+      <p class="incident-text">
+        Hay un evento que lo arranca todo. Sus detalles exactos están sin definir públicamente,
+        pero sus consecuencias son permanentes y visibles: el <strong>ojo derecho de Alfy</strong>
+        — negro con iris morado — es el resultado directo. Irreversible.
+      </p>
+      <p class="incident-text" style="margin-top:.7rem">
+        El incidente tiene tono oscuro. Algo traumático, posiblemente ligado a
+        la tecnología o ciencia del mundo de Veldren. Su función narrativa es clara:
+        <strong>cataliza al grupo</strong>. Los une bajo algo que ninguno puede ignorar.
+      </p>
+    </div>
+    <div class="card-grid" style="margin-top:1rem">
+      <div class="card">
+        <h3>El exotraje</h3>
+        <p>
+          Construido por Eloi, operado por Max. Sugiere que en Veldren existe tecnología
+          avanzada accesible a nivel individual — no solo institucional.
+          No funciona perfectamente. Tiene costes.
+        </p>
+      </div>
+      <div class="card">
+        <h3>Tono</h3>
+        <p>
+          Oscuro y visceral. Las cosas duelen, las consecuencias son reales,
+          los personajes se ven afectados de forma permanente.
+          <strong>No es oscuro por serlo</strong> — la oscuridad tiene propósito narrativo.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ESTADO -->
+  <section class="sec fade-in">
+    <div class="sec-label">04 · estado</div>
+    <h2 class="sec-title">¿En qué punto está?</h2>
+    <div class="status-grid">
+      <div class="status-item" style="--c:var(--purple)">
+        <div class="s-dot" style="--c:var(--purple)"></div>
+        <div>
+          <h4>Mundo (Veldren)</h4>
+          <p>Definido en concepto — expansible</p>
+        </div>
+      </div>
+      <div class="status-item" style="--c:#5294e2">
+        <div class="s-dot" style="--c:#5294e2"></div>
+        <div>
+          <h4>Personajes</h4>
+          <p>Alfy y Finn: definidos. Eloi y Max: roles claros, personalidades en desarrollo.</p>
+        </div>
+      </div>
+      <div class="status-item" style="--c:#4ec9b0">
+        <div class="s-dot" style="--c:#4ec9b0"></div>
+        <div>
+          <h4>Incidente incitante</h4>
+          <p>Concebido — detalles por expandir</p>
+        </div>
+      </div>
+      <div class="status-item" style="--c:#d4ac67">
+        <div class="s-dot" style="--c:#d4ac67"></div>
+        <div>
+          <h4>Formato</h4>
+          <p>Sin decidir — serie web, cómic o novela. El universo tiene prioridad.</p>
+        </div>
+      </div>
+    </div>
+    <div class="note">
+      LADA es un proyecto de largo recorrido. No hay calendario ni formato fijo.
+      El universo y los personajes tienen prioridad sobre el soporte.
+    </div>
+  </section>
+
+</div>
+
+<footer style="position:relative;z-index:2;padding:1.2rem 1.5rem;border-top:1px solid var(--border);font-family:var(--mono);font-size:.67rem;color:var(--dim);text-align:center">
+  alfy@studio · <b style="color:var(--purple)">LADA</b> · <a href="index.html" style="color:var(--blue)">← home</a>
+</footer>
+
+<script>
+/* ===== ESTRELLAS ===== */
+(function(){
+  const c=document.getElementById('stars');
+  for(let i=0;i<80;i++){
+    const s=document.createElement('div');
+    s.className='star';
+    const sz=Math.random()<.25?Math.random()*2.5+1:Math.random()*1.5+.4;
+    const lo=(Math.random()*.15+.05).toFixed(2);
+    const hi=(Math.random()*.5+.25).toFixed(2);
+    s.style.cssText=`
+      left:${Math.random()*100}%;top:${Math.random()*100}%;
+      width:${sz}px;height:${sz}px;
+      --d:${(Math.random()*4+2).toFixed(1)}s;
+      --delay:${(Math.random()*5).toFixed(1)}s;
+      --lo:${lo};--hi:${hi};
+    `;
+    c.appendChild(s);
+  }
+})();
+
+/* ===== FADE-IN on scroll ===== */
+(function(){
+  const els=document.querySelectorAll('.fade-in');
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});
+  },{threshold:.1});
+  els.forEach(el=>obs.observe(el));
+  /* primer elemento visible de entrada */
+  document.querySelector('.hero.fade-in')?.classList.add('visible');
+})();
+</script>
+
+</body>
+</html>
