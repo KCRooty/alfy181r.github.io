@@ -368,6 +368,38 @@ footer b{color:var(--accent)}
   .lang-bar{bottom:.8rem;right:.8rem}
 }
 
+/* ===== WIP POPUP ===== */
+.wip-backdrop{
+  position:fixed;inset:0;z-index:500;
+  background:rgba(0,0,0,.55);
+  display:grid;place-items:center;
+  opacity:0;pointer-events:none;
+  transition:opacity .2s;
+}
+.wip-backdrop.show{opacity:1;pointer-events:auto}
+.wip-box{
+  background:var(--card2);
+  border:1px solid var(--border2);
+  border-top:2px solid var(--purple);
+  border-radius:8px;
+  padding:1.8rem 2.2rem;
+  text-align:center;
+  transform:translateY(10px) scale(.97);
+  transition:transform .2s;
+  font-family:var(--mono);
+  max-width:320px;width:calc(100%-3rem);
+}
+.wip-backdrop.show .wip-box{transform:none}
+.wip-icon{font-size:1.8rem;margin-bottom:.8rem;opacity:.7}
+.wip-title{font-size:.95rem;color:#fff;letter-spacing:.06em;margin-bottom:.4rem}
+.wip-sub{font-size:.72rem;color:var(--dim);letter-spacing:.03em}
+.wip-close{
+  margin-top:1.2rem;
+  font-size:.68rem;color:var(--dim);
+  cursor:pointer;letter-spacing:.06em;
+  transition:color .15s;display:inline-block;
+}
+.wip-close:hover{color:var(--accent)}
 </style>
 </head>
 <body>
@@ -522,20 +554,20 @@ footer b{color:var(--accent)}
         </div>
       </a>
 
-      <a class="pcard" href="lada.html" style="--c:var(--purple)">
+      <div class="pcard" role="button" tabindex="0" onclick="showWip()" onkeydown="if(event.key==='Enter')showWip()" style="--c:var(--purple);cursor:pointer">
         <div class="pstatus" style="color:var(--purple)"><span class="dot p"></span>
           <span data-es="en construcción" data-en="in construction" data-ca="en construcció">en construcción</span>
         </div>
         <div class="pname">LADA</div>
-        <div class="pdesc" data-es="Proyecto de personajes originales. Veldren — una ciudad con otoño permanente, lluvia y algo que salió mal."
-             data-en="Original characters project. Veldren — a city with permanent autumn, rain and something that went wrong."
-             data-ca="Projecte de personatges originals. Veldren — una ciutat amb tardor permanent, pluja i alguna cosa que va anar malament.">
-          Proyecto de personajes originales. Veldren — una ciudad con otoño permanente, lluvia y algo que salió mal.
+        <div class="pdesc" data-es="Proyecto de personajes originales con historia de ficción extensa, worldbuilding propio y una trama construida desde cero."
+             data-en="Original characters project with an extensive fiction story, own worldbuilding and a plot built from scratch."
+             data-ca="Projecte de personatges originals amb una història de ficció extensa, worldbuilding propi i una trama construïda des de zero.">
+          Proyecto de personajes originales con historia de ficción extensa, worldbuilding propio y una trama construida desde cero.
         </div>
         <div class="ptags">
           <span class="ptag">OC / Original</span><span class="ptag">Ficción</span><span class="ptag">Worldbuilding</span>
         </div>
-      </a>
+      </div>
 
       <a class="pcard" href="fnaf-as.html" style="--c:var(--yellow)">
         <div class="pstatus" style="color:var(--yellow)"><span class="dot y"></span>
@@ -635,6 +667,16 @@ footer b{color:var(--accent)}
 
 </div><!-- /wrap -->
 
+<!-- WIP POPUP -->
+<div class="wip-backdrop" id="wip-backdrop" onclick="closeWip()">
+  <div class="wip-box" onclick="event.stopPropagation()">
+    <div class="wip-icon">🚧</div>
+    <div class="wip-title">aún bajo construcción</div>
+    <div class="wip-sub">este apartado estará disponible próximamente</div>
+    <span class="wip-close" onclick="closeWip()">[ cerrar ]</span>
+  </div>
+</div>
+
 <!-- FOOTER -->
 <footer>
   <div class="wrap">alfy@studio:~$ echo <b>"made with code &amp; art"</b> · Studio OS v3.1 · <a href="https://github.com/Alfy181R/alfy181r.github.io" style="color:var(--accent)">github ↗</a></div>
@@ -655,6 +697,11 @@ footer b{color:var(--accent)}
 </div>
 
 <script>
+/* ===== WIP ===== */
+function showWip(){document.getElementById('wip-backdrop').classList.add('show');}
+function closeWip(){document.getElementById('wip-backdrop').classList.remove('show');}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeWip();});
+
 /* ===== HAMBURGER ===== */
 function toggleMobNav(){
   document.getElementById('mob-nav').classList.toggle('open');
