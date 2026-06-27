@@ -53,8 +53,9 @@ body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(r
   </div>
   <nav><ul class="tb-nav">
     <li><a href="index.html">home</a></li>
-    <li><a href="foros.html">foro</a></li>
+    <li><a href="donnies.html">Donnies</a></li>
     <li><a href="fnaf-as.html">FNAF AS</a></li>
+    <li><a href="foros.html">foro</a></li>
   </ul></nav>
 </header>
 <div class="wrap">
@@ -102,6 +103,33 @@ body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(r
     <div class="sec-label">Por qué ver</div>
     <h2 class="sec-title">¿Por qué FNAF AS?</h2>
     <div class="note">Este espacio complementario está pensado para los fans del universo FNAF que quieren explorar historias alternativas, estética glitch y arte 3D. En el foro podrás comentar teorías y compartir ideas.</div>
+  </section>
+  <section class="sec">
+    <div class="sec-label">Comentarios</div>
+    <h2 class="sec-title">Comentarios</h2>
+    <p style="color:var(--dim);font-size:.85rem;margin-bottom:1.2rem">Login con GitHub. Los comentarios se guardan en los Discussions del repo.</p>
+    <!--
+      GISCUS SETUP — completar en 3 pasos:
+      1. Ir a https://github.com/Alfy181R/alfy181r.github.io → Settings → Features → activar "Discussions"
+      2. Ir a https://giscus.app → repo: Alfy181R/alfy181r.github.io → mapping: pathname → categoría: Comments
+      3. Reemplazar el bloque <script> de abajo con el que genera giscus.app
+    -->
+    <script src="https://giscus.app/client.js"
+      data-repo="Alfy181R/alfy181r.github.io"
+      data-repo-id="REEMPLAZAR_CON_REPO_ID"
+      data-category="Comments"
+      data-category-id="REEMPLAZAR_CON_CATEGORY_ID"
+      data-mapping="pathname"
+      data-strict="0"
+      data-reactions-enabled="1"
+      data-emit-metadata="0"
+      data-input-position="top"
+      data-theme="transparent_dark"
+      data-lang="es"
+      data-loading="lazy"
+      crossorigin="anonymous"
+      async>
+    </script>
   </section>
 </div>
 </body>
