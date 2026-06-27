@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Donnie's Origins · ALFY STUDIO</title>
+  <meta name="description" content="Donnie's Origins — analog horror fangame de FNaF. Source Engine, renders 3D y una historia construida desde cero.">
+  <meta property="og:title" content="Donnie's Origins · ALFY STUDIO">
+  <meta property="og:description" content="Fangame de FNaF con terror analógico y ambición máxima.">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#050810;--bg2:#07090f;
+  --card:rgba(8,11,18,.92);
+  --border:rgba(255,255,255,.07);
+  --text:#dde8f5;--dim:#7080a0;
+  --accent:#e05252;--accent2:#5294e2;
+  --gold:#d4ac67;--green:#4ec9b0;--purple:#c286dd;
+  --mono:'JetBrains Mono',monospace;--sans:'Outfit',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  min-height:100vh;font-family:var(--sans);color:var(--text);
+  background:var(--bg);position:relative;overflow-x:hidden;
+}
+
+/* animated bg — subtle red vignette */
+body::before{
+  content:'';position:fixed;inset:0;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(224,82,82,.06), transparent 60%),
+    radial-gradient(ellipse 60% 80% at 100% 100%, rgba(140,40,40,.04), transparent 50%);
+  pointer-events:none;z-index:0;
+}
+/* dot grid */
+body::after{
+  content:'';position:fixed;inset:0;
+  background-image:radial-gradient(circle,rgba(255,255,255,.028) 1px,transparent 1px);
+  background-size:28px 28px;
+  pointer-events:none;z-index:0;
+}
+
+/* ===== TOPBAR ===== */
+.topbar{
+  position:sticky;top:0;z-index:20;
+  background:rgba(5,8,16,.94);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 1.5rem;height:42px;
+  font-family:var(--mono);font-size:.76rem;
+}
+.tb-left{display:flex;align-items:center;gap:10px}
+.dots{display:flex;gap:5px}
+.dots span{width:10px;height:10px;border-radius:50%}
+.d-r{background:#e05252}.d-y{background:#d4ac67}.d-g{background:#4ec9b0}
+.tb-title{color:var(--dim)}
+.tb-nav{display:flex;gap:1.2rem;list-style:none}
+.tb-nav a{color:var(--dim);text-decoration:none;transition:color .18s;font-size:.7rem}
+.tb-nav a:hover{color:var(--accent2)}
+
+/* ===== LAYOUT ===== */
+.wrap{
+  position:relative;z-index:1;
+  max-width:1000px;margin:0 auto;padding:0 1.5rem 4rem;
+}
+
+/* ===== HERO ===== */
+.hero{padding:3.5rem 0 2.5rem;border-bottom:1px solid var(--border);}
+.hero-pre{
+  font-family:var(--mono);font-size:.72rem;
+  color:var(--dim);margin-bottom:.8rem;
+  display:flex;align-items:center;gap:8px;
+}
+.hero-pre::before{content:'';width:20px;height:1px;background:var(--accent);display:inline-block}
+.hero h1{
+  font-family:var(--mono);
+  font-size:clamp(2.4rem,6vw,3.8rem);
+  line-height:1.05;color:#fff;margin-bottom:.5rem;
+  text-shadow:0 0 20px rgba(224,82,82,.3), 0 0 50px rgba(224,82,82,.12);
+}
+.hero-sub{
+  font-size:1rem;color:var(--dim);line-height:1.7;
+  max-width:680px;margin-bottom:1.6rem;
+}
+.hero-cta{display:flex;gap:10px;flex-wrap:wrap}
+.btn{
+  font-family:var(--mono);font-size:.72rem;
+  padding:7px 18px;border-radius:4px;
+  border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);
+  color:var(--text);cursor:pointer;transition:all .2s;
+  letter-spacing:.04em;display:inline-block;text-decoration:none;
+}
+.btn:hover{border-color:var(--accent2);color:var(--accent2);background:rgba(82,148,226,.08)}
+.btn.pri{background:var(--accent);color:#fff;border-color:var(--accent)}
+.btn.pri:hover{background:#e86868;border-color:#e86868}
+
+/* ===== SECTIONS ===== */
+.sec{padding:2.5rem 0;border-bottom:1px solid var(--border);}
+.sec:last-child{border-bottom:none}
+.sec-label{
+  font-family:var(--mono);font-size:.67rem;
+  color:var(--accent);text-transform:uppercase;letter-spacing:.14em;
+  margin-bottom:.4rem;display:flex;align-items:center;gap:.6rem;
+}
+.sec-label::after{content:'';flex:1;height:1px;background:var(--border)}
+.sec-title{font-size:1.6rem;font-weight:600;color:#fff;margin-bottom:1.2rem;line-height:1.2}
+
+/* ===== CARDS ===== */
+.card-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:8px;padding:1.3rem;
+}
+.card h3{
+  font-family:var(--mono);font-size:.75rem;
+  color:var(--accent2);letter-spacing:.07em;
+  text-transform:uppercase;margin-bottom:.7rem;
+}
+.card p{color:var(--dim);font-size:.92rem;line-height:1.7}
+
+/* character cards */
+.char-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1rem}
+.char-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:8px;padding:1.2rem;
+  border-top:3px solid var(--c,var(--accent2));
+  transition:border-color .2s;
+}
+.char-card:hover{border-color:var(--c,var(--accent2));background:rgba(255,255,255,.02)}
+.char-name{
+  font-family:var(--mono);font-size:.85rem;
+  font-weight:600;color:#fff;margin-bottom:.3rem;
+}
+.char-role{
+  font-family:var(--mono);font-size:.63rem;
+  color:var(--c,var(--accent2));letter-spacing:.06em;
+  text-transform:uppercase;margin-bottom:.7rem;
+}
+.char-desc{font-size:.85rem;color:var(--dim);line-height:1.65}
+.char-detail{
+  margin-top:.7rem;font-family:var(--mono);font-size:.65rem;
+  color:var(--dim);opacity:.7;
+}
+
+/* production status */
+.prod-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1rem}
+.prod-item{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:8px;padding:1rem 1.2rem;
+  display:flex;align-items:flex-start;gap:.8rem;
+}
+.prod-dot{
+  width:8px;height:8px;border-radius:50%;
+  margin-top:.45rem;flex-shrink:0;
+  background:var(--c,var(--green));
+}
+.prod-item h4{
+  font-family:var(--mono);font-size:.75rem;
+  color:#fff;margin-bottom:.25rem;
+}
+.prod-item p{font-size:.82rem;color:var(--dim);line-height:1.5}
+
+/* note box */
+.note{
+  background:rgba(82,148,226,.06);
+  border:1px solid rgba(82,148,226,.16);
+  border-radius:8px;padding:1rem 1.2rem;
+  font-size:.88rem;color:var(--text);line-height:1.65;
+  margin-top:1rem;
+}
+
+/* ===== COMMENTS SECTION ===== */
+.comments-section{
+  margin-top:2rem;
+  padding:2rem 0;
+  border-top:1px solid var(--border);
+}
+.comments-section .sec-label{margin-bottom:1rem}
+/* giscus widget inherits the page background */
+.giscus,.giscus-frame{width:100%}
+
+/* ===== FOOTER ===== */
+.page-footer{
+  margin-top:2rem;padding:1.2rem 0;
+  border-top:1px solid var(--border);
+  text-align:center;font-family:var(--mono);
+  font-size:.67rem;color:var(--dim);
+}
+.page-footer b{color:var(--accent2)}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:720px){
+  .card-grid,.char-grid,.prod-grid{grid-template-columns:1fr}
+  .hero h1{font-size:2.2rem}
+  .tb-nav{display:none}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="tb-left">
+    <div class="dots"><span class="d-r"></span><span class="d-y"></span><span class="d-g"></span></div>
+    <span class="tb-title">ALFY STUDIO — Donnie's Origins</span>
+  </div>
+  <nav><ul class="tb-nav">
+    <li><a href="index.html">home</a></li>
+    <li><a href="fnaf-as.html">FNAF AS</a></li>
+    <li><a href="foros.html">foro</a></li>
+    <li><a href="https://gamejolt.com/games/Donnies2001/885221" target="_blank">GameJolt ↗</a></li>
+  </ul></nav>
+</header>
+
+<div class="wrap">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-pre">alfy@studio · analog horror · Source Engine</div>
+    <h1>Donnie's Origins</h1>
+    <p class="hero-sub">
+      Fangame de Five Nights at Freddy's con terror analógico y ambición máxima.
+      Una pizzería familiar abandonada. Animatrónicos que no deberían estar activos.
+      Una noche que no termina como debería.
+    </p>
+    <div class="hero-cta">
+      <a href="https://gamejolt.com/games/Donnies2001/885221" target="_blank" class="btn pri">Ver en GameJolt ↗</a>
+      <a href="index.html#projects" class="btn">← Todos los proyectos</a>
+    </div>
+  </section>
+
+  <!-- QUÉ ES -->
+  <section class="sec">
+    <div class="sec-label">01 · descripción</div>
+    <h2 class="sec-title">El proyecto</h2>
+    <div class="card-grid">
+      <div class="card">
+        <h3>¿Qué es?</h3>
+        <p>
+          Donnie's Origins es un fangame de FNaF en clave de terror analógico. Ambientado en una pizzería familiar
+          con animatrónicos abandonada desde los años 90, la historia combina misterio, atmósfera opresiva
+          y una narrativa construida desde cero.
+        </p>
+      </div>
+      <div class="card">
+        <h3>Formato</h3>
+        <p>
+          El proyecto se desarrolla en dos formatos paralelos: <strong style="color:#fff">dos juegos</strong> con mecánicas
+          de supervivencia nocturna al estilo FNaF, y una
+          <strong style="color:#fff">serie YouTube</strong> de 6 episodios en formato analog horror.
+          Los dos medios cuentan la misma historia desde ángulos distintos.
+        </p>
+      </div>
+      <div class="card">
+        <h3>Tono</h3>
+        <p>
+          Terror analógico con raíces en ciencia ficción. La oscuridad tiene propósito narrativo —
+          no gore gratuito, sino consecuencias reales y personajes que el jugador llega a conocer.
+          Referentes visuales: Dormitabis, Half-Life 2, FNAF 1/2/4.
+        </p>
+      </div>
+      <div class="card">
+        <h3>Ambientación</h3>
+        <p>
+          Yellow Springs, Ohio — pueblo pequeño (~3.500 hab.) donde todo el mundo se conoce.
+          No es un lugar oscuro ni siniestro: es un sitio normal.
+          Eso es exactamente lo que lo hace funcionar.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ANIMATRÓNICOS -->
+  <section class="sec">
+    <div class="sec-label">02 · personajes</div>
+    <h2 class="sec-title">Los animatrónicos</h2>
+    <p style="color:var(--dim);font-size:.9rem;margin-bottom:.5rem">
+      Donnie's Dinners Place tenía tres animatrónicos en escena. Llevan años en el edificio abandonado.
+      La pregunta no es si están activos — es <em style="color:var(--text)">qué quieren</em>.
+    </p>
+    <div class="char-grid">
+      <div class="char-card" style="--c:var(--gold)">
+        <div class="char-name">Donnie</div>
+        <div class="char-role" style="--c:var(--gold)">Animatrónico principal</div>
+        <p class="char-desc">Perro marrón con ojos amarillos. Calmado, el que pone orden sin pedirlo. El primero en moverse.</p>
+        <div class="char-detail">diseño: marrón · ojos: amarillo</div>
+      </div>
+      <div class="char-card" style="--c:var(--green)">
+        <div class="char-name">Lany</div>
+        <div class="char-role" style="--c:var(--green)">Animatrónico</div>
+        <p class="char-desc">Coneja rosa/salmón con ojos verdes. Alegre, entusiasta, la más expresiva del grupo. También la más defectuosa.</p>
+        <div class="char-detail">diseño: rosa/salmón · ojos: verde</div>
+      </div>
+      <div class="char-card" style="--c:var(--purple)">
+        <div class="char-name">Shadow</div>
+        <div class="char-role" style="--c:var(--purple)">Animatrónico</div>
+        <p class="char-desc">Gato negro/gris con ojos morados. Silencioso, misterioso. Aparece donde no lo esperas. No suele hablar.</p>
+        <div class="char-detail">diseño: negro/gris · ojos: morado</div>
+      </div>
+    </div>
+    <div class="note">
+      Los animatrónicos superan los 2 metros. Están diseñados para resultar imponentes. En el escenario de un restaurante familiar ya abandonado, esa escala hace todo lo que tiene que hacer.
+    </div>
+  </section>
+
+  <!-- LOS JUEGOS -->
+  <section class="sec">
+    <div class="sec-label">03 · juegos</div>
+    <h2 class="sec-title">Donnie's Origins: los dos juegos</h2>
+    <div class="card-grid">
+      <div class="card">
+        <h3>Juego 1 — 2001</h3>
+        <p>
+          La primera noche en Donnie's Dinners Place. Ambientado en 2001, el local lleva una década cerrado.
+          Survival nocturno: 6 niveles, una hora por nivel. Linterna, puertas, cámaras.
+          Los animatrónicos no deberían estar activos.
+        </p>
+      </div>
+      <div class="card">
+        <h3>Juego 2 — 2002</h3>
+        <p>
+          Secuela directa. Un año después. El mapa cambia — hay más que el local de arriba.
+          Los animatrónicos están dañados. Dos noches, 12 niveles.
+          El juego termina de forma definitiva.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- LA SERIE -->
+  <section class="sec">
+    <div class="sec-label">04 · serie</div>
+    <h2 class="sec-title">Serie YouTube — Analog Horror</h2>
+    <p style="color:var(--dim);font-size:.9rem;margin-bottom:1rem">
+      6 episodios de 3 a 5 minutos. ~25 minutos en total. Formato VHS / analog horror.
+      Cada episodio es un tipo de documento diferente: grabaciones de seguridad, reportajes, audiologs, transmisiones.
+    </p>
+    <div class="card">
+      <h3>La misma historia, otro ángulo</h3>
+      <p>
+        La serie explica el lore que los juegos no muestran directamente. Qué pasó antes.
+        Qué pasó con el restaurante. Por qué los animatrónicos son lo que son.
+        Los jugadores que vean la serie y jueguen los juegos conectarán cosas que ninguno de los dos medios
+        revela por sí solo.
+      </p>
+    </div>
+  </section>
+
+  <!-- PRODUCCIÓN -->
+  <section class="sec">
+    <div class="sec-label">05 · producción</div>
+    <h2 class="sec-title">Estado y stack técnico</h2>
+    <div class="prod-grid">
+      <div class="prod-item" style="--c:var(--gold)">
+        <div class="prod-dot" style="--c:var(--gold)"></div>
+        <div>
+          <h4>Motor</h4>
+          <p>Source Engine SDK 2013 Singleplayer + Hammer Editor</p>
+        </div>
+      </div>
+      <div class="prod-item" style="--c:var(--accent2)">
+        <div class="prod-dot" style="--c:var(--accent2)"></div>
+        <div>
+          <h4>Modelado 3D</h4>
+          <p>Cinema 4D R20 + Blender 3.6 → Crowbar → Source .mdl</p>
+        </div>
+      </div>
+      <div class="prod-item" style="--c:var(--green)">
+        <div class="prod-dot" style="--c:var(--green)"></div>
+        <div>
+          <h4>Estado actual</h4>
+          <p>Fase de modelado — Donnie completado (cabeza). Juego en desarrollo.</p>
+        </div>
+      </div>
+      <div class="prod-item" style="--c:var(--purple)">
+        <div class="prod-dot" style="--c:var(--purple)"></div>
+        <div>
+          <h4>Pendiente</h4>
+          <p>Modelos de Lany, Shadow, Isaac, The Fox. OST. Mapas del juego.</p>
+        </div>
+      </div>
+    </div>
+    <div class="note" style="margin-top:1rem">
+      Proyecto de largo recorrido. El juego lleva en desarrollo desde 2021.
+      Puedes seguir el progreso en GameJolt y en el canal de YouTube @ALFY181X.
+    </div>
+  </section>
+
+  <!-- COMENTARIOS (GISCUS) -->
+  <section class="sec comments-section">
+    <div class="sec-label">06 · comentarios</div>
+    <h2 class="sec-title" style="margin-bottom:.5rem">Comentarios</h2>
+    <p style="color:var(--dim);font-size:.85rem;margin-bottom:1.5rem">
+      Login con GitHub. Los comentarios se guardan en los Discussions del repo.
+    </p>
+
+    <!--
+      GISCUS SETUP — completar en 3 pasos:
+      1. Ir a https://github.com/Alfy181R/alfy181r.github.io → Settings → Features → activar "Discussions"
+      2. Ir a https://giscus.app → seleccionar repo Alfy181R/alfy181r.github.io
+         → mapping: pathname → categoría: Comments → obtener el script
+      3. Reemplazar el bloque <script> de abajo con el que te da giscus.app
+    -->
+    <script src="https://giscus.app/client.js"
+      data-repo="Alfy181R/alfy181r.github.io"
+      data-repo-id="REEMPLAZAR_CON_REPO_ID"
+      data-category="Comments"
+      data-category-id="REEMPLAZAR_CON_CATEGORY_ID"
+      data-mapping="pathname"
+      data-strict="0"
+      data-reactions-enabled="1"
+      data-emit-metadata="0"
+      data-input-position="top"
+      data-theme="transparent_dark"
+      data-lang="es"
+      data-loading="lazy"
+      crossorigin="anonymous"
+      async>
+    </script>
+  </section>
+
+</div><!-- /wrap -->
+
+<footer class="page-footer">
+  <div style="max-width:1000px;margin:0 auto;padding:0 1.5rem">
+    alfy@studio · <b>Donnie's Origins</b> · <a href="index.html" style="color:var(--accent2)">← home</a>
+  </div>
+</footer>
+
+</body>
+</html>

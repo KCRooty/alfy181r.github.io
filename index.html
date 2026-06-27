@@ -1,11 +1,24 @@
 <!DOCTYPE html>
-<html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>𝔸𝕃𝔽𝕐 𝕊𝕋𝕌𝔻𝕀𝕆 | Terminal</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com/">
-  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
-  <link href="./index_1_files/css2" rel="stylesheet">
+<html lang="es"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>𝔸𝕃𝔽𝕐 𝕊𝕋𝕌𝔻𝕀𝕆 | Terminal</title>
+
+<!-- SEO / OG -->
+<meta name="description" content="Developer · Artist · Content Creator. Game dev, open source apps, analog horror projects and digital art.">
+<meta property="og:title" content="ALFY STUDIO">
+<meta property="og:description" content="Developer · Artist · Content Creator. Game dev, open source, art &amp; illustration.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://alfy181r.github.io">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ALFY STUDIO">
+<meta name="twitter:description" content="Developer · Artist · Content Creator.">
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+
 <style>
 /* ===== RESET ===== */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -81,6 +94,36 @@ a{text-decoration:none;color:inherit}
 .tb-nav a:hover{color:var(--accent)}
 .tb-right{color:var(--dim);font-size:.67rem;opacity:.7}
 .tb-right .on{color:var(--green)}
+
+/* hamburger */
+.hamburger{
+  display:none;
+  background:none;
+  border:1px solid var(--border2);
+  color:var(--dim);font-size:.9rem;
+  cursor:pointer;padding:3px 9px;border-radius:3px;
+  font-family:var(--mono);
+  transition:all .18s;line-height:1;
+}
+.hamburger:hover{border-color:var(--accent);color:var(--accent)}
+
+/* mobile nav overlay */
+.mob-nav{
+  display:none;flex-direction:column;gap:0;
+  position:fixed;top:40px;left:0;right:0;
+  background:rgba(13,17,23,.98);
+  border-bottom:1px solid var(--border);
+  z-index:190;
+  font-family:var(--mono);font-size:.75rem;
+  backdrop-filter:blur(14px);
+}
+.mob-nav.open{display:flex}
+.mob-nav a{
+  color:var(--dim);transition:color .18s;
+  padding:.7rem 1.5rem;
+  border-bottom:1px solid var(--border);
+}
+.mob-nav a:hover{color:var(--accent);background:var(--aglow)}
 
 /* ===== WRAPPER ===== */
 .wrap{position:relative;z-index:1;max-width:960px;margin:0 auto;padding:0 1.5rem}
@@ -168,9 +211,9 @@ a{text-decoration:none;color:inherit}
 /* neofetch block */
 .nf{
   font-family:var(--mono);font-size:.72rem;
-  line-height:1.6;color:var(--dim);
+  line-height:1.7;color:var(--dim);
 }
-.nf .k{color:var(--accent)}
+.nf .k{color:var(--accent);display:inline-block;min-width:7rem}
 .nf .v{color:var(--text)}
 .nf .os{color:var(--green)}
 .nf .de{color:var(--yellow)}
@@ -182,6 +225,7 @@ a{text-decoration:none;color:inherit}
   border-radius:6px;padding:1.2rem;
   display:block;color:inherit;
   transition:all .22s;position:relative;overflow:hidden;
+  text-align:left;
 }
 .pcard::before{
   content:'';position:absolute;
@@ -329,11 +373,14 @@ footer b{color:var(--accent)}
 /* ===== RESPONSIVE ===== */
 @media(max-width:680px){
   .tb-nav,.tb-right{display:none}
+  .hamburger{display:block}
   .about-grid,.proj-grid,.con-grid{grid-template-columns:1fr}
   .ggrid{grid-template-columns:repeat(2,1fr)}
   .hero-name{font-size:2rem}
   .lang-bar{bottom:.8rem;right:.8rem}
 }
+
+/* ===== LADA MAGIC ===== */
 .lada-magic{
   position:fixed;inset:0;z-index:450;
   display:grid;place-items:center;
@@ -345,7 +392,7 @@ footer b{color:var(--accent)}
   position:absolute;top:5%;right:6%;width:200px;height:200px;
   background:radial-gradient(circle at 35% 35%, #e84aff 0%, #d43aff 18%, #a855d4 35%, #6b21a8 65%, transparent 85%);
   border-radius:50%;
-  box-shadow:inset -25px 0 0 rgba(0,0,0,.95), 
+  box-shadow:inset -25px 0 0 rgba(0,0,0,.95),
              0 0 100px rgba(232,74,255,.8),
              0 0 150px rgba(168,85,212,.6),
              0 0 40px rgba(255,100,255,.5);
@@ -367,9 +414,7 @@ footer b{color:var(--accent)}
   animation:spiral-spin 6s linear infinite;
 }
 @keyframes spiral-spin{100%{transform:rotate(360deg);}}
-.lm-stars{
-  position:fixed;inset:0;z-index:451;pointer-events:none;
-}
+.lm-stars{position:fixed;inset:0;z-index:451;pointer-events:none;}
 .lm-star{
   position:absolute;width:2px;height:2px;background:#fff;
   border-radius:50%;box-shadow:0 0 8px rgba(255,255,255,.9);
@@ -420,9 +465,7 @@ footer b{color:var(--accent)}
   cursor:pointer;transition:transform .2s,filter .2s;
 }
 .lm-submit:hover{transform:translateY(-1px);filter:brightness(1.05);}
-.lm-feedback{
-  min-height:1.2rem;font-family:var(--mono);font-size:.82rem;color:rgba(255,255,255,.7);
-}
+.lm-feedback{min-height:1.2rem;font-family:var(--mono);font-size:.82rem;color:rgba(255,255,255,.7);}
 .lm-feedback.error{color:#f56a6a;}
 .lm-iris-stage{
   position:fixed;inset:0;z-index:452;
@@ -459,8 +502,10 @@ footer b{color:var(--accent)}
   animation:iris-spiral 8s linear infinite;
 }
 @keyframes iris-spiral{100%{transform:rotate(360deg);}}
-@keyframes iris-glow{0%,100%{box-shadow:0 0 60px rgba(232,74,255,1), 0 0 100px rgba(232,74,255,.7), 0 0 140px rgba(168,85,212,.5), inset 0 0 50px rgba(232,74,255,.3);filter:brightness(1);}50%{box-shadow:0 0 80px rgba(232,74,255,1), 0 0 130px rgba(232,74,255,.8), 0 0 180px rgba(168,85,212,.6), inset 0 0 60px rgba(255,150,255,.4);filter:brightness(1.2);}}
-@keyframes spin-reverse{100%{transform:translate(-50%,-50%) rotate(-360deg)}}
+@keyframes iris-glow{
+  0%,100%{box-shadow:0 0 60px rgba(232,74,255,1), 0 0 100px rgba(232,74,255,.7), 0 0 140px rgba(168,85,212,.5), inset 0 0 50px rgba(232,74,255,.3);filter:brightness(1);}
+  50%{box-shadow:0 0 80px rgba(232,74,255,1), 0 0 130px rgba(232,74,255,.8), 0 0 180px rgba(168,85,212,.6), inset 0 0 60px rgba(255,150,255,.4);filter:brightness(1.2);}
+}
 </style>
 </head>
 <body>
@@ -475,13 +520,27 @@ footer b{color:var(--accent)}
     <li><a href="#about" data-es="about" data-en="about" data-ca="sobre">about</a></li>
     <li><a href="#projects" data-es="projects" data-en="projects" data-ca="projectes">projects</a></li>
     <li><a href="#gallery" data-es="gallery" data-en="gallery" data-ca="galeria">gallery</a></li>
-    <li><a href="fnaf-as.html" data-es="FNAF AS" data-en="FNAF AS" data-ca="FNAF AS">FNAF AS</a></li>
-    <li><a href="https://gamejolt.com/games/Donnies2001/885221" target="_blank" data-es="Donnie" data-en="Donnie" data-ca="Donnie">Donnie</a></li>
+    <li><a href="fnaf-as.html">FNAF AS</a></li>
+    <li><a href="donnies.html">Donnies</a></li>
     <li><a href="foros.html" data-es="foro" data-en="forum" data-ca="foro">foro</a></li>
     <li><a href="#connect" data-es="connect" data-en="connect" data-ca="connectar">connect</a></li>
   </ul></nav>
-  <span class="tb-right"><span class="on">●</span> Online · Studio</span>
+  <div style="display:flex;align-items:center;gap:10px">
+    <span class="tb-right"><span class="on">●</span> Online · Studio</span>
+    <button class="hamburger" id="hamburger" onclick="toggleMobNav()" aria-label="menu">☰</button>
+  </div>
 </header>
+
+<!-- MOBILE NAV -->
+<nav class="mob-nav" id="mob-nav">
+  <a href="#about" onclick="closeMobNav()" data-es="about" data-en="about" data-ca="sobre">about</a>
+  <a href="#projects" onclick="closeMobNav()" data-es="projects" data-en="projects" data-ca="projectes">projects</a>
+  <a href="#gallery" onclick="closeMobNav()" data-es="gallery" data-en="gallery" data-ca="galeria">gallery</a>
+  <a href="fnaf-as.html">FNAF AS</a>
+  <a href="donnies.html">Donnies</a>
+  <a href="foros.html" data-es="foro" data-en="forum" data-ca="foro">foro</a>
+  <a href="#connect" onclick="closeMobNav()" data-es="connect" data-en="connect" data-ca="connectar">connect</a>
+</nav>
 
 <div class="wrap">
 
@@ -489,7 +548,9 @@ footer b{color:var(--accent)}
   <section class="hero" id="home">
     <div class="hero-prompt">alfy@studio:~ $ whoami</div>
     <h1 class="hero-name">𝔸𝕃𝔽𝕐 𝕊𝕋𝕌𝔻𝕀𝕆</h1>
-    <p class="hero-sub"><strong>Developer · Artist · Content Creator</strong><br>Open source, interfaz oscura y arte digital.</p>
+    <p class="hero-sub"><strong>Developer · Artist · Content Creator</strong><br>
+      <span data-es="Open source, interfaz oscura y arte digital." data-en="Open source, dark interfaces and digital art." data-ca="Open source, interfície fosca i art digital.">Open source, interfaz oscura y arte digital.</span>
+    </p>
     <div class="hero-tags">
       <span class="tag a">game dev</span>
       <span class="tag g">open source</span>
@@ -500,8 +561,8 @@ footer b{color:var(--accent)}
     <div class="hero-cta">
       <a href="#projects" class="btn pri" data-es="ver proyectos" data-en="view projects" data-ca="veure projectes">ver proyectos</a>
       <a href="#gallery" class="btn" data-es="galería" data-en="gallery" data-ca="galeria">galería</a>
-      <a href="https://gamejolt.com/games/Donnies2001/885221" class="btn" target="_blank">Donnie Origins →</a>
-      <a href="fnaf-as.html" class="btn" data-ca="FNaF AS →">FNAF AS →</a>
+      <a href="donnies.html" class="btn" data-es="Donnies →" data-en="Donnies →" data-ca="Donnies →">Donnies →</a>
+      <a href="fnaf-as.html" class="btn">FNAF AS →</a>
     </div>
   </section>
 
@@ -510,17 +571,23 @@ footer b{color:var(--accent)}
     <div class="sec-label">01 · about_me</div>
     <h2 class="sec-title" data-es="Sobre mí" data-en="About me" data-ca="Sobre mi">Sobre mí</h2>
     <div class="about-grid">
+
       <div class="acard full">
         <h3>$ cat bio.txt</h3>
-        <p>
+        <p data-es="¡Hola! Soy Alfy, un creador de contenido, desarrollador y artista. Me apasionan los proyectos creativos: desde fangames de terror analógico hasta apps open-source para Android."
+           data-en="Hi! I'm Alfy, a content creator, developer and artist. I'm passionate about creative projects: from analog horror fangames to open-source Android apps."
+           data-ca="Hola! Sóc l'Alfy, un creador de contingut, desenvolupador i artista. M'apassionen els projectes creatius: des de fangames de terror analògic fins a apps open-source per a Android.">
           ¡Hola! Soy <strong style="color:var(--bright)">Alfy</strong>, un creador de contenido, desarrollador y artista.
           Me apasionan los proyectos creativos: desde fangames de terror analógico hasta apps open-source para Android.
         </p>
-        <p>
+        <p data-es="Esta página es mi base de datos personal donde archivo mis trabajos y comparto mi proceso. Hablo català, castellano i english y trabajo con ideas que combinan código, diseño y narrativa."
+           data-en="This is my personal archive where I catalog my work and share my process. I speak català, castellano and english, and work with ideas that combine code, design and narrative."
+           data-ca="Aquesta pàgina és el meu arxiu personal on catalogo els meus treballs i comparteixo el meu procés. Parlo català, castellà i anglès i treballo amb idees que combinen codi, disseny i narrativa.">
           Esta página es mi base de datos personal donde archivo mis trabajos y comparto mi proceso.
           Hablo català, castellano i english y trabajo con ideas que combinan código, diseño y narrativa.
         </p>
       </div>
+
       <div class="acard">
         <h3>$ ls skills/</h3>
         <div class="chips">
@@ -534,20 +601,40 @@ footer b{color:var(--accent)}
           <span class="chip">VS Code</span>
         </div>
       </div>
+
       <div class="acard">
         <h3>$ cat tools.txt</h3>
-        <p>Principal stack: Kotlin, Jetpack Compose, Godot 4.6, Python, HTML/CSS/JS y VS Code.</p>
+        <p data-es="Principal stack: Kotlin, Jetpack Compose, Godot 4.6, Python, HTML/CSS/JS y VS Code."
+           data-en="Main stack: Kotlin, Jetpack Compose, Godot 4.6, Python, HTML/CSS/JS and VS Code."
+           data-ca="Stack principal: Kotlin, Jetpack Compose, Godot 4.6, Python, HTML/CSS/JS i VS Code.">
+          Principal stack: Kotlin, Jetpack Compose, Godot 4.6, Python, HTML/CSS/JS y VS Code.
+        </p>
         <div class="chips" style="margin-top:.85rem">
           <span class="chip">Cinema 4D</span>
           <span class="chip">Blender</span>
           <span class="chip">Krita</span>
-          <span class="chip">Adobe Premiere</span>
-          <span class="chip">Source SDK Engine</span>
+          <span class="chip">Source SDK</span>
           <span class="chip">GameMaker</span>
-          <span class="chip">Clickteam Fusion</span>
+          <span class="chip">LMMS</span>
+          <span class="chip">Audacity</span>
         </div>
-        <p>Trabajo con proyectos open source, interfaces oscuras y experiencias de usuario limpias.</p>
       </div>
+
+      <div class="acard full">
+        <h3>$ neofetch</h3>
+        <div class="nf">
+          <div><span class="k">OS      </span><span class="os">CachyOS // Arch Linux</span></div>
+          <div><span class="k">WM      </span><span class="de">Hyprland + Waybar</span></div>
+          <div><span class="k">Shell   </span><span class="v">fish</span></div>
+          <div><span class="k">Editor  </span><span class="v">VS Code</span></div>
+          <div><span class="k">Stack   </span><span class="v">Kotlin · Python · GDScript · HTML/CSS/JS</span></div>
+          <div><span class="k">3D/Art  </span><span class="v">Cinema 4D · Blender · Krita</span></div>
+          <div><span class="k">Audio   </span><span class="v">LMMS · Ardour · Audacity</span></div>
+          <div><span class="k">AI      </span><span class="v">Claude Code · Ollama · llama.cpp</span></div>
+          <div><span class="k">Game    </span><span class="v">Godot 4.6 · Source SDK 2013 · GameMaker</span></div>
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -557,52 +644,97 @@ footer b{color:var(--accent)}
     <h2 class="sec-title" data-es="Proyectos" data-en="Projects" data-ca="Projectes">Proyectos</h2>
     <div class="proj-grid">
 
-      <a class="pcard" href="https://gamejolt.com/games/Donnies2001/885221" target="_blank" style="--c:var(--red)">
-        <div class="pstatus" style="color:var(--yellow)"><span class="dot y"></span>en desarrollo · desde 2021</div>
+      <a class="pcard" href="donnies.html" style="--c:var(--red)">
+        <div class="pstatus" style="color:var(--yellow)"><span class="dot y"></span>
+          <span data-es="en desarrollo · desde 2021" data-en="in development · since 2021" data-ca="en desenvolupament · des de 2021">en desarrollo · desde 2021</span>
+        </div>
         <div class="pname">Donnie Origins</div>
-        <div class="pdesc">Fangame de FNaF con terror analógico y ambición máxima. Un proyecto largo, muy personal, que lleva años creciendo.</div>
+        <div class="pdesc" data-es="Fangame de FNaF con terror analógico y ambición máxima. Source Engine, renders 3D y una historia construida desde cero."
+             data-en="FNaF fangame with analog horror and maximum ambition. Source Engine, 3D renders and an original story."
+             data-ca="Fangame de FNaF amb terror analògic i màxima ambició. Source Engine, renders 3D i una història construïda des de zero.">
+          Fangame de FNaF con terror analógico y ambición máxima. Source Engine, renders 3D y una historia construida desde cero.
+        </div>
         <div class="ptags">
-          <span class="ptag">FNaF</span><span class="ptag">Game Dev</span>
-          <span class="ptag">Terror analógico</span><span class="ptag">GameJolt ↗</span>
+          <span class="ptag">FNaF</span><span class="ptag">Source Engine</span>
+          <span class="ptag">Terror analógico</span><span class="ptag">ver más →</span>
         </div>
       </a>
 
       <button class="pcard pcard-lada" type="button" onclick="openLadaMagic()" style="--c:var(--purple)">
-        <div class="pstatus" style="color:var(--purple)"><span class="dot p"></span>en construcción</div>
+        <div class="pstatus" style="color:var(--purple)"><span class="dot p"></span>
+          <span data-es="en construcción" data-en="in construction" data-ca="en construcció">en construcción</span>
+        </div>
         <div class="pname">LADA</div>
-        <div class="pdesc">Proyecto de personajes originales con historia de ficción extensa, worldbuilding propio y una trama construida desde cero.</div>
+        <div class="pdesc" data-es="Proyecto de personajes originales con historia de ficción extensa, worldbuilding propio y una trama construida desde cero."
+             data-en="Original characters project with an extensive fiction story, own worldbuilding and a plot built from scratch."
+             data-ca="Projecte de personatges originals amb una història de ficció extensa, worldbuilding propi i una trama construïda des de zero.">
+          Proyecto de personajes originales con historia de ficción extensa, worldbuilding propio y una trama construida desde cero.
+        </div>
         <div class="ptags">
           <span class="ptag">OC / Original</span><span class="ptag">Ficción</span><span class="ptag">Worldbuilding</span>
         </div>
       </button>
 
       <a class="pcard" href="fnaf-as.html" style="--c:var(--yellow)">
-        <div class="pstatus" style="color:var(--yellow)"><span class="dot y"></span>en desarrollo</div>
+        <div class="pstatus" style="color:var(--yellow)"><span class="dot y"></span>
+          <span data-es="en desarrollo" data-en="in development" data-ca="en desenvolupament">en desarrollo</span>
+        </div>
         <div class="pname">FNaF AS</div>
-        <div class="pdesc">Five Nights at Freddy's Alternative Stories: universo alternativo, lore propio y una experiencia visual basada en glitch los renders 3D.</div>
+        <div class="pdesc" data-es="Five Nights at Freddy's Alternative Stories: universo alternativo, lore propio y una experiencia visual basada en glitch y renders 3D."
+             data-en="Five Nights at Freddy's Alternative Stories: alternate universe, original lore and a glitch/3D render visual experience."
+             data-ca="Five Nights at Freddy's Alternative Stories: univers alternatiu, lore propi i una experiència visual basada en glitch i renders 3D.">
+          Five Nights at Freddy's Alternative Stories: universo alternativo, lore propio y una experiencia visual basada en glitch y renders 3D.
+        </div>
         <div class="ptags">
           <span class="ptag">FNAF</span><span class="ptag">Fan project</span><span class="ptag">3D</span>
-          <span class="ptag" style="cursor:pointer;" onclick="window.open('https://gamejolt.com/games/Donnies2001/885221','_blank')">Donnie Origins ↗</span>
         </div>
       </a>
 
-      <a class="pcard" href="https://github.com/Alfy181R/remotecontrol" target="_blank" style="--c:var(--green)">
-        <div class="pstatus" style="color:var(--green)"><span class="dot"></span>activo</div>
+      <a class="pcard" href="https://github.com/Alfy181R/X-USB" target="_blank" style="--c:var(--green)">
+        <div class="pstatus" style="color:var(--green)"><span class="dot"></span>
+          <span data-es="activo" data-en="active" data-ca="actiu">activo</span>
+        </div>
         <div class="pname">X-USB</div>
-        <div class="pdesc">App Android open-source tipo Rufus/Ventoy. Gratis, sin anuncios, uso ilimitado. ISO Burner, MultiOS USB UEFI, Partition Wizard, PS2 USB Utils y más.</div>
+        <div class="pdesc" data-es="App Android open-source tipo Rufus/Ventoy. Gratis, sin anuncios, uso ilimitado. ISO Burner, MultiOS USB UEFI, Partition Wizard y más."
+             data-en="Open-source Android app like Rufus/Ventoy. Free, no ads, unlimited use. ISO Burner, MultiOS USB UEFI, Partition Wizard and more."
+             data-ca="App Android open-source tipus Rufus/Ventoy. Gratis, sense anuncis, ús il·limitat. ISO Burner, MultiOS USB UEFI, Partition Wizard i més.">
+          App Android open-source tipo Rufus/Ventoy. Gratis, sin anuncios, uso ilimitado. ISO Burner, MultiOS USB UEFI, Partition Wizard y más.
+        </div>
         <div class="ptags">
           <span class="ptag">Android</span><span class="ptag">Open Source</span>
-          <span class="ptag">Ventoy</span><span class="ptag">USB Tools</span><span class="ptag">GitHub ↗</span>
+          <span class="ptag">USB Tools</span><span class="ptag">GitHub ↗</span>
         </div>
       </a>
+
       <a class="pcard" href="foros.html" style="--c:var(--purple)">
-        <div class="pstatus" style="color:var(--accent)"><span class="dot"></span>comunitario</div>
+        <div class="pstatus" style="color:var(--accent)"><span class="dot"></span>
+          <span data-es="comunitario" data-en="community" data-ca="comunitari">comunitario</span>
+        </div>
         <div class="pname">Foro</div>
-        <div class="pdesc">Foro con inicio de sesión por usuario y contraseña. Publica mensajes y revisa ideas compartidas en el sitio.</div>
+        <div class="pdesc" data-es="Espacio comunitario con sistema de login. Publica mensajes y comparte ideas."
+             data-en="Community space with login system. Post messages and share ideas."
+             data-ca="Espai comunitari amb sistema de login. Publica missatges i comparteix idees.">
+          Espacio comunitario con sistema de login. Publica mensajes y comparte ideas.
+        </div>
         <div class="ptags">
           <span class="ptag">Foro</span><span class="ptag">Chat</span><span class="ptag">Login</span>
         </div>
       </a>
+
+    </div>
+
+    <!-- VEX V5 BANNER -->
+    <div class="vex-banner">
+      <div>
+        <div class="label">VEX V5 Robotics · Blog</div>
+        <p data-es="Diario de la temporada de robótica — entradas, notas de torneo y progreso del equipo."
+           data-en="Robotics season diary — entries, tournament notes and team progress."
+           data-ca="Diari de la temporada de robòtica — entrades, notes de torneig i progrés de l'equip.">
+          Diario de la temporada de robótica — entradas, notas de torneo y progreso del equipo.
+        </p>
+      </div>
+      <a href="/diari-Vex-V5-4t-ESO/" class="btn" style="font-size:.7rem;white-space:nowrap"
+         data-es="Ver blog →" data-en="View blog →" data-ca="Veure blog →">Ver blog →</a>
     </div>
   </section>
 
@@ -611,18 +743,19 @@ footer b{color:var(--accent)}
     <div class="sec-label">03 · ls-gallery --drawings</div>
     <h2 class="sec-title" data-es="Galería" data-en="Gallery" data-ca="Galeria">Galería</h2>
     <div class="gfilt">
-      <button class="fbtn on" onclick="setF(this,&#39;all&#39;)">Todo</button>
-      <button class="fbtn" onclick="setF(this,&#39;oc&#39;)">OC / Original</button>
-      <button class="fbtn" onclick="setF(this,&#39;fanart&#39;)">Fanart</button>
-      <button class="fbtn" onclick="setF(this,&#39;concept&#39;)">Concept Art</button>
-      <button class="fbtn" onclick="setF(this,&#39;other&#39;)">Otro</button>
+      <button class="fbtn on" onclick="setF(this,'all')" data-es="Todo" data-en="All" data-ca="Tot">Todo</button>
+      <button class="fbtn" onclick="setF(this,'oc')" data-es="OC / Original" data-en="OC / Original" data-ca="OC / Original">OC / Original</button>
+      <button class="fbtn" onclick="setF(this,'fanart')" data-es="Fanart" data-en="Fanart" data-ca="Fanart">Fanart</button>
+      <button class="fbtn" onclick="setF(this,'concept')" data-es="Concept Art" data-en="Concept Art" data-ca="Concept Art">Concept Art</button>
+      <button class="fbtn" onclick="setF(this,'other')" data-es="Otro" data-en="Other" data-ca="Altre">Otro</button>
     </div>
     <div class="ggrid" id="ggrid">
-      <div class="gempty"><b>~/gallery</b> · 0 archivos<br><span style="font-size:.62rem;opacity:.6;display:block;margin-top:5px">las imágenes se guardan en esta sesión</span></div>
+      <div class="gempty"><b>~/gallery</b> · 0 archivos<br><span style="font-size:.62rem;opacity:.6;display:block;margin-top:5px">las imágenes se guardan localmente</span></div>
     </div>
     <div class="gupload-row">
-      <input type="file" id="fInput" accept="image/*" multiple="" style="display:none" onchange="handleUp(event)">
-      <button class="btn" onclick="document.getElementById(&#39;fInput&#39;).click()">+ subir dibujo</button>
+      <input type="file" id="fInput" accept="image/*" multiple style="display:none" onchange="handleUp(event)">
+      <button class="btn" onclick="document.getElementById('fInput').click()"
+              data-es="+ subir dibujo" data-en="+ upload drawing" data-ca="+ pujar dibuix">+ subir dibujo</button>
       <span class="gcount" id="gcount"></span>
     </div>
   </section>
@@ -653,13 +786,14 @@ footer b{color:var(--accent)}
 
 </div><!-- /wrap -->
 
+<!-- LADA MAGIC -->
 <div id="lada-stars" class="lm-stars"></div>
 <div id="lada-magic" class="lada-magic" onclick="closeLadaMagic()">
   <div class="lm-crescent"></div>
   <div class="lm-spiral"></div>
   <div class="lm-panel" onclick="event.stopPropagation()">
     <div class="lm-title">introducir contraseña</div>
-    <input id="lada-password" class="lm-input" type="password" maxlength="10" autocomplete="off" />
+    <input id="lada-password" class="lm-input" type="password" maxlength="10" autocomplete="off">
     <button class="lm-submit" onclick="validateLadaPassword()">entrar</button>
     <div id="lada-feedback" class="lm-feedback"></div>
   </div>
@@ -670,24 +804,27 @@ footer b{color:var(--accent)}
   <div id="lada-iris" class="lm-iris"></div>
 </div>
 
-<!-- FOOTER --><footer>  <div class="wrap">alfy@studio:~$ echo <b>"made with code & art"</b> · Studio OS v3.0 · <a href="https://github.com/Alfy181R/alfy181r.github.io" style="color:var(--accent)">github ↗</a></div>
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">alfy@studio:~$ echo <b>"made with code &amp; art"</b> · Studio OS v3.1 · <a href="https://github.com/Alfy181R/alfy181r.github.io" style="color:var(--accent)">github ↗</a></div>
 </footer>
 
 <!-- LANG SWITCHER -->
 <div class="lang-bar">
-  <button class="lang-btn active" data-lang="es" onclick="setLang(&#39;es&#39;)">ES</button>
-  <button class="lang-btn" data-lang="en" onclick="setLang(&#39;en&#39;)">EN</button>
-  <button class="lang-btn" data-lang="ca" onclick="setLang(&#39;ca&#39;)" style="color:var(--yellow);border-color:rgba(212,172,103,.3)">CA</button>
+  <button class="lang-btn active" data-lang="es" onclick="setLang('es')">ES</button>
+  <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
+  <button class="lang-btn" data-lang="ca" onclick="setLang('ca')" style="color:var(--yellow);border-color:rgba(212,172,103,.3)">CA</button>
 </div>
 
 <!-- LIGHTBOX -->
 <div class="lb" id="lb" onclick="closeLb()">
   <button class="lb-close" onclick="closeLb()">[ ✕ cerrar ]</button>
-  <img id="lbImg" src="assets/gallery/clip5.png" alt="">
+  <img id="lbImg" src="" alt="">
   <div class="lb-name" id="lbName"></div>
 </div>
 
 <script>
+/* ===== LADA ===== */
 function generateLadaStars(){
   const container=document.getElementById('lada-stars');
   container.innerHTML='';
@@ -714,7 +851,7 @@ function openLadaMagic(){
   feedback.classList.remove('error');
   panel.value='';
   panel.focus();
-  panel.onkeydown = e => { if (e.key === 'Enter') validateLadaPassword(); };
+  panel.onkeydown=e=>{if(e.key==='Enter')validateLadaPassword();};
 }
 function closeLadaMagic(){
   document.getElementById('lada-magic').classList.remove('open');
@@ -741,12 +878,34 @@ function validateLadaPassword(){
   setTimeout(()=>feedback.classList.remove('error'),2000);
 }
 
+/* ===== HAMBURGER ===== */
+function toggleMobNav(){
+  document.getElementById('mob-nav').classList.toggle('open');
+}
+function closeMobNav(){
+  document.getElementById('mob-nav').classList.remove('open');
+}
+
 /* ===== GALLERY ===== */
-let imgs=[
+const HARDCODED=[
   {src:'assets/gallery/clip5_2.png',name:'Render FNAF AS 1',cat:'fanart'},
-  {src:'assets/gallery/clip5.png',name:'Render FNAF AS 2',cat:'fanart'},
+  {src:'assets/gallery/clip5.png',  name:'Render FNAF AS 2',cat:'fanart'},
   {src:'assets/gallery/clip5_1.png',name:'Render FNAF AS 3',cat:'fanart'}
-],curF='all';
+];
+let imgs=[...HARDCODED];
+let curF='all';
+
+function loadGallery(){
+  try{
+    const saved=JSON.parse(localStorage.getItem('alfy_gallery')||'[]');
+    imgs=[...HARDCODED,...saved];
+  }catch(e){imgs=[...HARDCODED];}
+}
+
+function saveGallery(){
+  const uploads=imgs.filter(i=>!HARDCODED.some(h=>h.src===i.src));
+  try{localStorage.setItem('alfy_gallery',JSON.stringify(uploads));}catch(e){}
+}
 
 function setF(btn,f){
   document.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('on'));
@@ -756,7 +915,11 @@ function setF(btn,f){
 function handleUp(e){
   Array.from(e.target.files).forEach(file=>{
     const r=new FileReader();
-    r.onload=ev=>{imgs.push({src:ev.target.result,name:file.name,cat:'other'});renderG();};
+    r.onload=ev=>{
+      imgs.push({src:ev.target.result,name:file.name,cat:'other'});
+      saveGallery();
+      renderG();
+    };
     r.readAsDataURL(file);
   });
   e.target.value='';
@@ -768,11 +931,11 @@ function renderG(){
   const list=curF==='all'?imgs:imgs.filter(i=>i.cat===curF);
   cnt.textContent=imgs.length>0?`${imgs.length} archivo${imgs.length!==1?'s':''}`:'' ;
   if(!list.length){
-    grid.innerHTML=`<div class="gempty"><b>Galería vacía</b><br><span style="font-size:.62rem;opacity:.6;display:block;margin-top:5px">Sube tus dibujos o disfruta del contenido fijo del proyecto.</span></div>`;
+    grid.innerHTML=`<div class="gempty"><b>Galería vacía</b><br><span style="font-size:.62rem;opacity:.6;display:block;margin-top:5px">No hay imágenes en esta categoría.</span></div>`;
     return;
   }
-  grid.innerHTML=list.map((img,i)=>`
-    <div class="gitem" onclick="openLb('${img.src}','${img.name}')">
+  grid.innerHTML=list.map(img=>`
+    <div class="gitem" onclick="openLb('${img.src.replace(/'/g,"\\'")}','${img.name.replace(/'/g,"\\'")}')">
       <img src="${img.src}" alt="${img.name}" loading="lazy">
       <div class="gname">${img.name}</div>
     </div>`).join('');
@@ -783,36 +946,24 @@ function openLb(src,name){
   document.getElementById('lbName').textContent=name;
   document.getElementById('lb').classList.add('open');
 }
-function closeLb(){document.getElementById('lb').classList.remove('open')}
+function closeLb(){document.getElementById('lb').classList.remove('open');}
 
 /* ===== LANG ===== */
-const t={
-  es:{
-    'ver proyectos':'ver proyectos','galería':'galería',
-    'Sobre mí':'Sobre mí','Proyectos':'Proyectos','Galería':'Galería','Conectar':'Conectar'
-  },
-  en:{
-    'ver proyectos':'view projects','galería':'gallery',
-    'Sobre mí':'About me','Proyectos':'Projects','Galería':'Gallery','Conectar':'Connect'
-  },
-  ca:{
-    'ver proyectos':'veure projectes','galería':'galeria',
-    'Sobre mí':'Sobre mi','Proyectos':'Projectes','Galería':'Galeria','Conectar':'Connectar'
-  }
-};
-
 function setLang(l){
   document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('active'));
-  const activeBtn = document.querySelector(`.lang-btn[data-lang="${l}"]`);
-  if(activeBtn) activeBtn.classList.add('active');
-  document.querySelectorAll('[data-'+l+']').forEach(el=>{
-    const v=el.getAttribute('data-'+l);
+  const activeBtn=document.querySelector(`.lang-btn[data-lang="${l}"]`);
+  if(activeBtn)activeBtn.classList.add('active');
+  document.querySelectorAll(`[data-${l}]`).forEach(el=>{
+    const v=el.getAttribute(`data-${l}`);
     if(v)el.textContent=v;
   });
-  document.querySelectorAll('.btn.pri').forEach(b=>{const v=b.getAttribute('data-'+l);if(v)b.textContent=v;});
 }
-window.addEventListener('DOMContentLoaded',()=>{renderG();});
-</script>
 
+/* ===== INIT ===== */
+window.addEventListener('DOMContentLoaded',()=>{
+  loadGallery();
+  renderG();
+});
+</script>
 
 </body></html>
