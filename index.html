@@ -2,22 +2,22 @@
 <html lang="es"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>𝔸𝕃𝔽𝕐 𝕊𝕋𝕌𝔻𝕀𝕆 | Terminal</title>
+<title>Core · Static Forge</title>
 
 <!-- SEO / OG -->
 <meta name="description" content="Developer · Artist · Content Creator. Game dev, open source apps, analog horror projects and digital art.">
-<meta property="og:title" content="ALFY STUDIO">
+<meta property="og:title" content="Core · Static Forge">
 <meta property="og:description" content="Developer · Artist · Content Creator. Game dev, open source, art &amp; illustration.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://alfy181r.github.io">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ALFY STUDIO">
+<meta name="twitter:title" content="Core · Static Forge">
 <meta name="twitter:description" content="Developer · Artist · Content Creator.">
 
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 /* ===== RESET ===== */
@@ -26,21 +26,16 @@ html{scroll-behavior:smooth}
 
 /* ===== TOKENS ===== */
 :root{
-  --bg:       #0d1117;
-  --bg2:      #111820;
-  --card:     #161c26;
-  --card2:    #1a2330;
-  --border:   #1e2b3a;
-  --border2:  #253548;
-  --text:     #cdd6e0;
-  --dim:      #6b7e96;
-  --bright:   #e8f0f7;
+  --bg:       #0b0b0d;
+  --card:     #131316;
+  --card2:    #17171b;
+  --border:   #232328;
+  --border2:  #2d2d34;
+  --text:     #d6d6db;
+  --dim:      #86868f;
+  --bright:   #f2f2f4;
   --accent:   #5294e2;
-  --aglow:    rgba(82,148,226,.14);
-  --green:    #4ec9b0;
-  --yellow:   #d4ac67;
-  --red:      #e0656e;
-  --purple:   #c286dd;
+  --aglow:    rgba(82,148,226,.10);
   --mono:     'JetBrains Mono', monospace;
   --sans:     'Outfit', sans-serif;
 }
@@ -54,17 +49,6 @@ body{
   line-height:1.65;
   overflow-x:hidden;
 }
-
-/* dot-grid */
-body::before{
-  content:'';
-  position:fixed;inset:0;
-  background-image:radial-gradient(circle,rgba(82,148,226,.055) 1px,transparent 1px);
-  background-size:28px 28px;
-  pointer-events:none;
-  z-index:0;
-}
-
 a{text-decoration:none;color:inherit}
 ::selection{background:rgba(82,148,226,.3)}
 ::-webkit-scrollbar{width:4px}
@@ -75,34 +59,26 @@ a{text-decoration:none;color:inherit}
 /* ===== TOPBAR ===== */
 .topbar{
   position:sticky;top:0;z-index:200;
-  height:40px;
-  background:rgba(13,17,23,.93);
+  height:56px;
+  background:rgba(11,11,13,.9);
   border-bottom:1px solid var(--border);
   backdrop-filter:blur(14px);
   display:flex;align-items:center;justify-content:space-between;
   padding:0 1.5rem;
-  font-family:var(--mono);font-size:.72rem;
 }
-.tb-left{display:flex;align-items:center;gap:10px}
-.dots{display:flex;gap:5px}
-.dots span{width:10px;height:10px;border-radius:50%;display:block}
-.d-r{background:#e0656e}.d-y{background:#d4ac67}.d-g{background:#4ec9b0}
-.tb-title{color:var(--dim);letter-spacing:.04em}
-.tb-title b{color:var(--accent)}
-.tb-nav{display:flex;gap:1.4rem;list-style:none}
-.tb-nav a{color:var(--dim);transition:color .18s;letter-spacing:.04em;font-size:.7rem}
-.tb-nav a:hover{color:var(--accent)}
-.tb-right{color:var(--dim);font-size:.67rem;opacity:.7}
-.tb-right .on{color:var(--green)}
+.tb-logo{font-family:var(--sans);font-weight:600;font-size:.98rem;color:var(--bright);letter-spacing:.01em}
+.tb-logo span{color:var(--dim);font-weight:400}
+.tb-nav{display:flex;gap:1.9rem;list-style:none}
+.tb-nav a{color:var(--dim);transition:color .18s;font-size:.86rem}
+.tb-nav a:hover{color:var(--bright)}
 
 /* hamburger */
 .hamburger{
   display:none;
   background:none;
   border:1px solid var(--border2);
-  color:var(--dim);font-size:.9rem;
-  cursor:pointer;padding:3px 9px;border-radius:3px;
-  font-family:var(--mono);
+  color:var(--dim);font-size:.85rem;
+  cursor:pointer;padding:4px 10px;border-radius:6px;
   transition:all .18s;line-height:1;
 }
 .hamburger:hover{border-color:var(--accent);color:var(--accent)}
@@ -110,215 +86,159 @@ a{text-decoration:none;color:inherit}
 /* mobile nav overlay */
 .mob-nav{
   display:none;flex-direction:column;gap:0;
-  position:fixed;top:40px;left:0;right:0;
-  background:rgba(13,17,23,.98);
+  position:fixed;top:56px;left:0;right:0;
+  background:rgba(11,11,13,.98);
   border-bottom:1px solid var(--border);
   z-index:190;
-  font-family:var(--mono);font-size:.75rem;
+  font-size:.9rem;
   backdrop-filter:blur(14px);
 }
 .mob-nav.open{display:flex}
 .mob-nav a{
   color:var(--dim);transition:color .18s;
-  padding:.7rem 1.5rem;
+  padding:.85rem 1.5rem;
   border-bottom:1px solid var(--border);
 }
-.mob-nav a:hover{color:var(--accent);background:var(--aglow)}
+.mob-nav a:hover{color:var(--bright);background:var(--aglow)}
 
 /* ===== WRAPPER ===== */
-.wrap{position:relative;z-index:1;max-width:960px;margin:0 auto;padding:0 1.5rem}
+.wrap{position:relative;z-index:1;max-width:880px;margin:0 auto;padding:0 1.5rem}
 
 /* ===== HERO ===== */
-.hero{padding:3.5rem 0 3rem;border-bottom:1px solid var(--border)}
-.hero-prompt{
-  font-family:var(--mono);font-size:.75rem;
-  color:var(--dim);margin-bottom:.85rem;
-  display:flex;align-items:center;gap:8px;
+.hero{padding:5rem 0 4rem}
+.hero-eyebrow{
+  font-size:.85rem;font-weight:500;
+  color:var(--accent);margin-bottom:1rem;
+  letter-spacing:.02em;
 }
-.hero-prompt::before{content:'';width:22px;height:1px;background:var(--accent);display:inline-block}
 .hero-name{
-  font-family:var(--mono);
-  font-size:clamp(2.2rem,6.5vw,4rem);
+  font-size:clamp(2.6rem,7vw,4.2rem);
   font-weight:700;color:var(--bright);
-  line-height:1.08;letter-spacing:-.025em;
-  margin-bottom:.6rem;
-  text-shadow:0 0 18px rgba(82,148,226,.28), 0 0 40px rgba(82,148,226,.15);
+  line-height:1.05;letter-spacing:-.02em;
+  margin-bottom:1rem;
 }
-.hero-name .hi{color:var(--accent)}
-.hero-sub{font-size:1rem;color:var(--dim);font-weight:300;margin-bottom:1.3rem;letter-spacing:.02em}
-.hero-sub strong{color:var(--text)}
-.hero-tags{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:1.8rem}
+.hero-sub{font-size:1.05rem;color:var(--dim);font-weight:300;margin-bottom:1.6rem;max-width:560px}
+.hero-sub strong{color:var(--text);font-weight:500}
+.hero-tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:2.2rem}
 .tag{
-  font-family:var(--mono);font-size:.68rem;
-  padding:3px 9px;border-radius:3px;
-  background:var(--card);border:1px solid var(--border2);
-  color:var(--dim);letter-spacing:.03em;
+  font-size:.78rem;
+  padding:5px 12px;border-radius:20px;
+  background:var(--card);border:1px solid var(--border);
+  color:var(--dim);
 }
-.tag.a{border-color:var(--accent);color:var(--accent);background:var(--aglow)}
-.tag.g{border-color:var(--green);color:var(--green);background:rgba(78,201,176,.08)}
-.tag.y{border-color:var(--yellow);color:var(--yellow);background:rgba(212,172,103,.08)}
-.tag.p{border-color:var(--purple);color:var(--purple);background:rgba(194,134,221,.08)}
 .hero-cta{display:flex;gap:10px;flex-wrap:wrap}
 .btn{
-  font-family:var(--mono);font-size:.73rem;
-  padding:7px 18px;border-radius:4px;
+  font-size:.85rem;
+  padding:10px 20px;border-radius:8px;
   border:1px solid var(--border2);background:var(--card);
   color:var(--text);cursor:pointer;transition:all .2s;
-  letter-spacing:.04em;display:inline-block;
+  display:inline-block;
 }
-.btn:hover{border-color:var(--accent);color:var(--accent);background:var(--aglow)}
-.btn.pri{background:var(--accent);color:#fff;border-color:var(--accent)}
-.btn.pri:hover{background:#6ba8e8;border-color:#6ba8e8;color:#fff}
+.btn:hover{border-color:var(--border2);background:var(--card2)}
+.btn.pri{background:var(--bright);color:#0b0b0d;border-color:var(--bright);font-weight:500}
+.btn.pri:hover{background:#fff;opacity:.9}
 
 /* ===== SECTIONS ===== */
-.sec{padding:2.75rem 0;border-bottom:1px solid var(--border)}
-.sec:last-child{border-bottom:none}
+.sec{padding:3.5rem 0;border-top:1px solid var(--border)}
 .sec-label{
-  font-family:var(--mono);font-size:.67rem;
-  color:var(--accent);letter-spacing:.14em;
-  text-transform:uppercase;margin-bottom:.35rem;
-  display:flex;align-items:center;gap:8px;
+  font-size:.78rem;
+  color:var(--accent);letter-spacing:.06em;
+  text-transform:uppercase;margin-bottom:.5rem;
 }
-.sec-label::after{content:'';flex:1;height:1px;background:var(--border)}
-.sec-title{font-size:1.5rem;font-weight:600;color:var(--bright);margin-bottom:1.3rem;line-height:1.2}
+.sec-title{font-size:1.6rem;font-weight:600;color:var(--bright);margin-bottom:1.5rem;line-height:1.2}
 
 /* ===== ABOUT GRID ===== */
 .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
 .acard{
   background:var(--card);border:1px solid var(--border);
-  border-radius:6px;padding:1.2rem;transition:border-color .2s;
+  border-radius:10px;padding:1.4rem;transition:border-color .2s;
 }
 .acard:hover{border-color:var(--border2)}
 .acard.full{grid-column:1/-1}
 .acard h3{
-  font-family:var(--mono);font-size:.7rem;
-  color:var(--accent);letter-spacing:.07em;
-  text-transform:uppercase;margin-bottom:.7rem;
+  font-size:.82rem;font-weight:600;
+  color:var(--bright);margin-bottom:.85rem;
 }
-.acard p{color:var(--text);font-size:.9rem;line-height:1.65}
-.acard p + p{margin-top:.6rem;color:var(--dim);font-size:.85rem}
-.chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:.7rem}
+.acard p{color:var(--text);font-size:.92rem;line-height:1.7}
+.acard p + p{margin-top:.6rem;color:var(--dim);font-size:.88rem}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:.7rem}
 .chip{
-  font-family:var(--mono);font-size:.65rem;
-  padding:2px 7px;border-radius:2px;
-  background:var(--aglow);
-  border:1px solid rgba(82,148,226,.25);
-  color:var(--accent);
+  font-size:.76rem;
+  padding:3px 10px;border-radius:14px;
+  background:var(--bg);
+  border:1px solid var(--border);
+  color:var(--dim);
 }
-.chip.g{background:rgba(78,201,176,.08);border-color:rgba(78,201,176,.25);color:var(--green)}
-.chip.y{background:rgba(212,172,103,.08);border-color:rgba(212,172,103,.25);color:var(--yellow)}
 
-/* neofetch block */
-.nf{
-  font-family:var(--mono);font-size:.72rem;
-  line-height:1.7;color:var(--dim);
-}
-.nf .k{color:var(--accent);display:inline-block;min-width:7rem}
-.nf .v{color:var(--text)}
-.nf .os{color:var(--green)}
-.nf .de{color:var(--yellow)}
+/* stack list */
+.stack-list{display:grid;gap:.55rem;font-size:.88rem}
+.stack-list .k{color:var(--dim);display:inline-block;min-width:6.5rem}
+.stack-list .v{color:var(--text)}
 
 /* ===== PROJECTS GRID ===== */
-.proj-grid{display:grid;grid-template-columns:1fr 1fr;gap:.9rem}
+.proj-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
 .pcard{
   background:var(--card);border:1px solid var(--border);
-  border-radius:6px;padding:1.2rem;
+  border-radius:10px;padding:1.4rem;
   display:block;color:inherit;
-  transition:all .22s;position:relative;overflow:hidden;
+  transition:all .2s;
   text-align:left;
 }
-.pcard::before{
-  content:'';position:absolute;
-  top:0;left:0;width:3px;height:100%;
-  background:var(--c,var(--accent));
-  opacity:0;transition:opacity .22s;
-}
-.pcard:hover{border-color:var(--border2);background:var(--card2);transform:translateY(-1px)}
-.pcard:hover::before{opacity:1}
+.pcard:hover{border-color:var(--border2);background:var(--card2)}
 .pstatus{
-  font-family:var(--mono);font-size:.63rem;
-  letter-spacing:.07em;text-transform:uppercase;
-  color:var(--dim);margin-bottom:.55rem;
-  display:flex;align-items:center;gap:5px;
+  font-size:.72rem;
+  text-transform:uppercase;letter-spacing:.04em;
+  color:var(--dim);margin-bottom:.6rem;
 }
-.dot{width:5px;height:5px;border-radius:50%;background:var(--green);animation:blink 2s infinite}
-.dot.y{background:var(--yellow)}
-.dot.p{background:var(--purple);animation:none}
-.dot.d{background:var(--dim);animation:none}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
-.pname{font-family:var(--mono);font-size:1.05rem;font-weight:600;color:var(--bright);margin-bottom:.45rem}
-.pdesc{font-size:.85rem;color:var(--dim);line-height:1.6;margin-bottom:.9rem}
-.ptags{display:flex;flex-wrap:wrap;gap:4px}
+.pname{font-size:1.05rem;font-weight:600;color:var(--bright);margin-bottom:.5rem}
+.pdesc{font-size:.88rem;color:var(--dim);line-height:1.65;margin-bottom:1rem}
+.ptags{display:flex;flex-wrap:wrap;gap:5px}
 .ptag{
-  font-family:var(--mono);font-size:.62rem;
-  padding:2px 6px;border-radius:2px;
+  font-size:.72rem;
+  padding:3px 9px;border-radius:12px;
   background:var(--bg);border:1px solid var(--border);
   color:var(--dim);
 }
 
 /* ===== GALLERY ===== */
-.gfilt{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:1.2rem}
+.gfilt{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:1.4rem}
 .fbtn{
-  font-family:var(--mono);font-size:.68rem;
-  padding:3px 11px;border-radius:3px;
+  font-size:.8rem;
+  padding:5px 14px;border-radius:16px;
   background:var(--card);border:1px solid var(--border);
   color:var(--dim);cursor:pointer;transition:all .18s;
 }
-.fbtn.on,.fbtn:hover{border-color:var(--accent);color:var(--accent);background:var(--aglow)}
+.fbtn.on,.fbtn:hover{border-color:var(--border2);color:var(--bright);background:var(--card2)}
 .ggrid{
   display:grid;
   grid-template-columns:repeat(4,1fr);
-  gap:7px;min-height:160px;
+  gap:8px;min-height:160px;
 }
 .gempty{
   grid-column:1/-1;
-  border:1px dashed var(--border2);border-radius:6px;
+  border:1px dashed var(--border2);border-radius:10px;
   padding:2.5rem 1rem;text-align:center;
-  font-family:var(--mono);font-size:.75rem;color:var(--dim);
+  font-size:.85rem;color:var(--dim);
 }
-.gempty b{color:var(--accent)}
+.gempty b{color:var(--text)}
 .gitem{
-  aspect-ratio:1;border-radius:4px;overflow:hidden;
+  aspect-ratio:1;border-radius:8px;overflow:hidden;
   border:1px solid var(--border);background:var(--card);
   cursor:pointer;transition:border-color .2s;
   position:relative;
 }
-.gitem:hover{border-color:var(--accent)}
+.gitem:hover{border-color:var(--border2)}
 .gitem img{width:100%;height:100%;object-fit:cover;display:block}
 .gitem .gname{
   position:absolute;bottom:0;left:0;right:0;
-  font-family:var(--mono);font-size:.6rem;
-  background:rgba(13,17,23,.85);color:var(--dim);
-  padding:3px 6px;opacity:0;transition:opacity .2s;
+  font-size:.7rem;
+  background:rgba(11,11,13,.85);color:var(--dim);
+  padding:4px 7px;opacity:0;transition:opacity .2s;
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
 }
 .gitem:hover .gname{opacity:1}
-.gupload-row{margin-top:.9rem;display:flex;gap:.75rem;align-items:center;flex-wrap:wrap}
-.gcount{font-family:var(--mono);font-size:.7rem;color:var(--dim)}
-
-/* ===== CONNECT ===== */
-.con-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.9rem}
-.ccard{
-  background:var(--card);border:1px solid var(--border);
-  border-radius:6px;padding:1rem 1.2rem;
-  display:flex;align-items:center;gap:12px;
-  transition:all .22s;
-}
-.ccard:hover{border-color:var(--accent);background:var(--card2)}
-.cico{
-  width:42px;height:42px;border-radius:12px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:1.2rem;flex-shrink:0;
-  color:#fff;
-  box-shadow:0 0 18px rgba(82,148,226,.12);
-}
-.cico.youtube{background:#fff;box-shadow:0 0 20px rgba(255,0,0,.35);}
-.cico.tiktok{background:#010101;box-shadow:0 0 20px rgba(238,29,82,.35);}
-.cico.gamejolt{background:#111;box-shadow:0 0 18px rgba(248,188,0,.35);}
-.cico.github{background:#181717;box-shadow:0 0 18px rgba(255,255,255,.15);}
-.cico img{width:30px;height:30px;object-fit:contain;display:block;}
-.cplat{font-family:var(--mono);font-size:.67rem;color:var(--dim);letter-spacing:.04em;display:block}
-.chandle{font-size:.9rem;font-weight:500;color:var(--bright);display:block}
+.gupload-row{margin-top:1rem;display:flex;gap:.75rem;align-items:center;flex-wrap:wrap}
+.gcount{font-size:.82rem;color:var(--dim)}
 
 /* ===== LANG PILL ===== */
 .lang-bar{
@@ -327,8 +247,8 @@ a{text-decoration:none;color:inherit}
   display:flex;gap:6px;
 }
 .lang-btn{
-  font-family:var(--mono);font-size:.68rem;
-  padding:4px 10px;border-radius:20px;
+  font-size:.75rem;
+  padding:5px 11px;border-radius:20px;
   background:var(--card2);border:1px solid var(--border2);
   color:var(--dim);cursor:pointer;transition:all .2s;
 }
@@ -336,8 +256,9 @@ a{text-decoration:none;color:inherit}
 .lang-btn:hover{border-color:var(--accent);color:var(--accent)}
 
 /* ===== FOOTER ===== */
-footer{padding:1.2rem 0;border-top:1px solid var(--border);text-align:center;font-family:var(--mono);font-size:.67rem;color:var(--dim)}
-footer b{color:var(--accent)}
+footer{padding:1.6rem 0;border-top:1px solid var(--border);text-align:center;font-size:.8rem;color:var(--dim)}
+footer a{color:var(--dim);transition:color .18s}
+footer a:hover{color:var(--bright)}
 
 /* ===== LIGHTBOX ===== */
 .lb{
@@ -348,23 +269,22 @@ footer b{color:var(--accent)}
   padding:2rem;
 }
 .lb.open{display:flex}
-.lb img{max-width:90vw;max-height:80vh;border-radius:6px;border:1px solid var(--border2)}
-.lb-name{font-family:var(--mono);font-size:.75rem;color:var(--dim)}
+.lb img{max-width:90vw;max-height:80vh;border-radius:8px;border:1px solid var(--border2)}
+.lb-name{font-size:.85rem;color:var(--dim)}
 .lb-close{
   position:absolute;top:1rem;right:1.5rem;
-  font-family:var(--mono);font-size:.8rem;
+  font-size:.85rem;
   color:var(--dim);cursor:pointer;background:none;border:none;
   transition:color .18s;
 }
-.lb-close:hover{color:var(--red)}
+.lb-close:hover{color:var(--bright)}
 
 /* ===== RESPONSIVE ===== */
 @media(max-width:680px){
-  .tb-nav,.tb-right{display:none}
+  .tb-nav{display:none}
   .hamburger{display:block}
-  .about-grid,.proj-grid,.con-grid{grid-template-columns:1fr}
+  .about-grid,.proj-grid{grid-template-columns:1fr}
   .ggrid{grid-template-columns:repeat(2,1fr)}
-  .hero-name{font-size:2rem}
   .lang-bar{bottom:.8rem;right:.8rem}
 }
 
@@ -380,24 +300,22 @@ footer b{color:var(--accent)}
 .wip-box{
   background:var(--card2);
   border:1px solid var(--border2);
-  border-top:2px solid var(--purple);
-  border-radius:8px;
+  border-radius:12px;
   padding:1.8rem 2.2rem;
   text-align:center;
   transform:translateY(10px) scale(.97);
   transition:transform .2s;
-  font-family:var(--mono);
   max-width:320px;width:calc(100%-3rem);
 }
 .wip-backdrop.show .wip-box{transform:none}
 .wip-icon{font-size:1.8rem;margin-bottom:.8rem;opacity:.7}
-.wip-title{font-size:.95rem;color:#fff;letter-spacing:.06em;margin-bottom:.4rem}
-.wip-sub{font-size:.72rem;color:var(--dim);letter-spacing:.03em}
+.wip-title{font-size:.98rem;color:var(--bright);margin-bottom:.4rem}
+.wip-sub{font-size:.82rem;color:var(--dim)}
 .wip-close{
   margin-top:1.2rem;
-  font-size:.68rem;color:var(--dim);
-  cursor:pointer;letter-spacing:.06em;
-  transition:color .15s;display:inline-block;
+  font-size:.78rem;color:var(--dim);
+  cursor:pointer;display:inline-block;
+  transition:color .15s;
 }
 .wip-close:hover{color:var(--accent)}
 </style>
@@ -406,10 +324,7 @@ footer b{color:var(--accent)}
 
 <!-- TOPBAR -->
 <header class="topbar">
-  <div class="tb-left">
-    <div class="dots"><span class="d-r"></span><span class="d-y"></span><span class="d-g"></span></div>
-    <span class="tb-title">alfy@studio</span>
-  </div>
+  <div class="tb-logo">Static<span> Forge</span></div>
   <nav><ul class="tb-nav">
     <li><a href="#about" data-es="about" data-en="about" data-ca="sobre">about</a></li>
     <li><a href="#projects" data-es="projects" data-en="projects" data-ca="projectes">projects</a></li>
@@ -417,12 +332,8 @@ footer b{color:var(--accent)}
     <li><a href="fnaf-as.html">FNAF AS</a></li>
     <li><a href="donnies.html">Donnies</a></li>
     <li><a href="foros.html" data-es="foro" data-en="forum" data-ca="foro">foro</a></li>
-    <li><a href="#connect" data-es="connect" data-en="connect" data-ca="connectar">connect</a></li>
   </ul></nav>
-  <div style="display:flex;align-items:center;gap:10px">
-    <span class="tb-right"><span class="on">●</span> Online · Studio</span>
-    <button class="hamburger" id="hamburger" onclick="toggleMobNav()" aria-label="menu">☰</button>
-  </div>
+  <button class="hamburger" id="hamburger" onclick="toggleMobNav()" aria-label="menu">☰</button>
 </header>
 
 <!-- MOBILE NAV -->
@@ -433,22 +344,21 @@ footer b{color:var(--accent)}
   <a href="fnaf-as.html">FNAF AS</a>
   <a href="donnies.html">Donnies</a>
   <a href="foros.html" data-es="foro" data-en="forum" data-ca="foro">foro</a>
-  <a href="#connect" onclick="closeMobNav()" data-es="connect" data-en="connect" data-ca="connectar">connect</a>
 </nav>
 
 <div class="wrap">
 
   <!-- HERO -->
   <section class="hero" id="home">
-    <div class="hero-prompt">alfy@studio:~ $ whoami</div>
-    <h1 class="hero-name">𝔸𝕃𝔽𝕐 𝕊𝕋𝕌𝔻𝕀𝕆</h1>
+    <div class="hero-eyebrow">Static Forge</div>
+    <h1 class="hero-name">Core</h1>
     <p class="hero-sub"><strong>Developer · Artist · Content Creator</strong><br>
-      <span data-es="Open source, interfaz oscura y arte digital." data-en="Open source, dark interfaces and digital art." data-ca="Open source, interfície fosca i art digital.">Open source, interfaz oscura y arte digital.</span>
+      <span data-es="Open source, diseño minimalista y arte digital." data-en="Open source, minimalist design and digital art." data-ca="Open source, disseny minimalista i art digital.">Open source, diseño minimalista y arte digital.</span>
     </p>
     <div class="hero-tags">
-      <span class="tag a">game dev</span>
-      <span class="tag g">open source</span>
-      <span class="tag p">art &amp; illustration</span>
+      <span class="tag">game dev</span>
+      <span class="tag">open source</span>
+      <span class="tag">art &amp; illustration</span>
       <span class="tag">content creator</span>
       <span class="tag">català · español · english</span>
     </div>
@@ -462,42 +372,42 @@ footer b{color:var(--accent)}
 
   <!-- ABOUT -->
   <section class="sec" id="about">
-    <div class="sec-label">01 · about_me</div>
+    <div class="sec-label">01</div>
     <h2 class="sec-title" data-es="Sobre mí" data-en="About me" data-ca="Sobre mi">Sobre mí</h2>
     <div class="about-grid">
 
       <div class="acard full">
-        <h3>$ cat bio.txt</h3>
-        <p data-es="¡Hola! Soy Alfy, un creador de contenido, desarrollador y artista. Me apasionan los proyectos creativos: desde fangames de terror analógico hasta apps open-source para Android."
-           data-en="Hi! I'm Alfy, a content creator, developer and artist. I'm passionate about creative projects: from analog horror fangames to open-source Android apps."
-           data-ca="Hola! Sóc l'Alfy, un creador de contingut, desenvolupador i artista. M'apassionen els projectes creatius: des de fangames de terror analògic fins a apps open-source per a Android.">
-          ¡Hola! Soy <strong style="color:var(--bright)">Alfy</strong>, un creador de contenido, desarrollador y artista.
+        <h3 data-es="Bio" data-en="Bio" data-ca="Bio">Bio</h3>
+        <p data-es="¡Hola! Soy Core, un creador de contenido, desarrollador y artista. Me apasionan los proyectos creativos: desde fangames de terror analógico hasta apps open-source para Android."
+           data-en="Hi! I'm Core, a content creator, developer and artist. I'm passionate about creative projects: from analog horror fangames to open-source Android apps."
+           data-ca="Hola! Sóc en Core, un creador de contingut, desenvolupador i artista. M'apassionen els projectes creatius: des de fangames de terror analògic fins a apps open-source per a Android.">
+          ¡Hola! Soy <strong style="color:var(--bright)">Core</strong>, un creador de contenido, desarrollador y artista.
           Me apasionan los proyectos creativos: desde fangames de terror analógico hasta apps open-source para Android.
         </p>
-        <p data-es="Esta página es mi base de datos personal donde archivo mis trabajos y comparto mi proceso. Hablo català, castellano i english y trabajo con ideas que combinan código, diseño y narrativa."
+        <p data-es="Esta página es mi archivo personal donde catalogo mis trabajos y comparto mi proceso. Hablo català, castellano i english y trabajo con ideas que combinan código, diseño y narrativa."
            data-en="This is my personal archive where I catalog my work and share my process. I speak català, castellano and english, and work with ideas that combine code, design and narrative."
            data-ca="Aquesta pàgina és el meu arxiu personal on catalogo els meus treballs i comparteixo el meu procés. Parlo català, castellà i anglès i treballo amb idees que combinen codi, disseny i narrativa.">
-          Esta página es mi base de datos personal donde archivo mis trabajos y comparto mi proceso.
+          Esta página es mi archivo personal donde catalogo mis trabajos y comparto mi proceso.
           Hablo català, castellano i english y trabajo con ideas que combinan código, diseño y narrativa.
         </p>
       </div>
 
       <div class="acard">
-        <h3>$ ls skills/</h3>
+        <h3 data-es="Skills" data-en="Skills" data-ca="Skills">Skills</h3>
         <div class="chips">
           <span class="chip">Game Dev</span>
           <span class="chip">Android Dev</span>
-          <span class="chip g">Open Source</span>
+          <span class="chip">Open Source</span>
           <span class="chip">Art / Illustration</span>
           <span class="chip">Content Creation</span>
-          <span class="chip g">Linux</span>
+          <span class="chip">Linux</span>
           <span class="chip">Git / GitHub</span>
           <span class="chip">VS Code</span>
         </div>
       </div>
 
       <div class="acard">
-        <h3>$ cat tools.txt</h3>
+        <h3 data-es="Herramientas" data-en="Tools" data-ca="Eines">Herramientas</h3>
         <p data-es="Principal stack: Kotlin, Jetpack Compose, Godot 4.6, Python, HTML/CSS/JS y VS Code."
            data-en="Main stack: Kotlin, Jetpack Compose, Godot 4.6, Python, HTML/CSS/JS and VS Code."
            data-ca="Stack principal: Kotlin, Jetpack Compose, Godot 4.6, Python, HTML/CSS/JS i VS Code.">
@@ -515,17 +425,16 @@ footer b{color:var(--accent)}
       </div>
 
       <div class="acard full">
-        <h3>$ neofetch</h3>
-        <div class="nf">
-          <div><span class="k">OS      </span><span class="os">CachyOS // Arch Linux</span></div>
-          <div><span class="k">WM      </span><span class="de">Hyprland + Waybar</span></div>
-          <div><span class="k">Shell   </span><span class="v">fish</span></div>
-          <div><span class="k">Editor  </span><span class="v">VS Code</span></div>
-          <div><span class="k">Stack   </span><span class="v">Kotlin · Python · GDScript · HTML/CSS/JS</span></div>
-          <div><span class="k">3D/Art  </span><span class="v">Cinema 4D · Blender · Krita</span></div>
-          <div><span class="k">Audio   </span><span class="v">LMMS · Ardour · Audacity</span></div>
-          <div><span class="k">AI      </span><span class="v">Claude Code · Ollama · llama.cpp</span></div>
-          <div><span class="k">Game    </span><span class="v">Godot 4.6 · Source SDK 2013 · GameMaker</span></div>
+        <h3 data-es="Stack" data-en="Stack" data-ca="Stack">Stack</h3>
+        <div class="stack-list">
+          <div><span class="k">OS</span><span class="v">CachyOS // Arch Linux</span></div>
+          <div><span class="k">WM</span><span class="v">Hyprland + Waybar</span></div>
+          <div><span class="k">Editor</span><span class="v">VS Code</span></div>
+          <div><span class="k">Dev</span><span class="v">Kotlin · Python · GDScript · HTML/CSS/JS</span></div>
+          <div><span class="k">3D/Art</span><span class="v">Cinema 4D · Blender · Krita</span></div>
+          <div><span class="k">Audio</span><span class="v">LMMS · Ardour · Audacity</span></div>
+          <div><span class="k">AI</span><span class="v">Claude Code · Ollama · llama.cpp</span></div>
+          <div><span class="k">Game</span><span class="v">Godot 4.6 · Source SDK 2013 · GameMaker</span></div>
         </div>
       </div>
 
@@ -534,14 +443,12 @@ footer b{color:var(--accent)}
 
   <!-- PROJECTS -->
   <section class="sec" id="projects">
-    <div class="sec-label">02 · ls-projects --active</div>
+    <div class="sec-label">02</div>
     <h2 class="sec-title" data-es="Proyectos" data-en="Projects" data-ca="Projectes">Proyectos</h2>
     <div class="proj-grid">
 
-      <a class="pcard" href="donnies.html" style="--c:var(--red)">
-        <div class="pstatus" style="color:var(--yellow)"><span class="dot y"></span>
-          <span data-es="en desarrollo · desde 2021" data-en="in development · since 2021" data-ca="en desenvolupament · des de 2021">en desarrollo · desde 2021</span>
-        </div>
+      <a class="pcard" href="donnies.html">
+        <div class="pstatus" data-es="en desarrollo · desde 2021" data-en="in development · since 2021" data-ca="en desenvolupament · des de 2021">en desarrollo · desde 2021</div>
         <div class="pname">Donnie Origins</div>
         <div class="pdesc" data-es="Fangame de FNaF con terror analógico y ambición máxima. Source Engine, renders 3D y una historia construida desde cero."
              data-en="FNaF fangame with analog horror and maximum ambition. Source Engine, 3D renders and an original story."
@@ -554,10 +461,8 @@ footer b{color:var(--accent)}
         </div>
       </a>
 
-      <div class="pcard" role="button" tabindex="0" onclick="showWip()" onkeydown="if(event.key==='Enter')showWip()" style="--c:var(--purple);cursor:pointer">
-        <div class="pstatus" style="color:var(--purple)"><span class="dot p"></span>
-          <span data-es="en construcción" data-en="in construction" data-ca="en construcció">en construcción</span>
-        </div>
+      <div class="pcard" role="button" tabindex="0" onclick="showWip()" onkeydown="if(event.key==='Enter')showWip()" style="cursor:pointer">
+        <div class="pstatus" data-es="en construcción" data-en="in construction" data-ca="en construcció">en construcción</div>
         <div class="pname">LADA</div>
         <div class="pdesc" data-es="Proyecto de personajes originales con historia de ficción extensa, worldbuilding propio y una trama construida desde cero."
              data-en="Original characters project with an extensive fiction story, own worldbuilding and a plot built from scratch."
@@ -569,10 +474,8 @@ footer b{color:var(--accent)}
         </div>
       </div>
 
-      <a class="pcard" href="fnaf-as.html" style="--c:var(--yellow)">
-        <div class="pstatus" style="color:var(--yellow)"><span class="dot y"></span>
-          <span data-es="en desarrollo" data-en="in development" data-ca="en desenvolupament">en desarrollo</span>
-        </div>
+      <a class="pcard" href="fnaf-as.html">
+        <div class="pstatus" data-es="en desarrollo" data-en="in development" data-ca="en desenvolupament">en desarrollo</div>
         <div class="pname">FNaF AS</div>
         <div class="pdesc" data-es="Five Nights at Freddy's Alternative Stories: universo alternativo, lore propio y una experiencia visual basada en glitch y renders 3D."
              data-en="Five Nights at Freddy's Alternative Stories: alternate universe, original lore and a glitch/3D render visual experience."
@@ -584,10 +487,8 @@ footer b{color:var(--accent)}
         </div>
       </a>
 
-      <a class="pcard" href="https://github.com/Alfy181R/X-USB" target="_blank" style="--c:var(--green)">
-        <div class="pstatus" style="color:var(--green)"><span class="dot"></span>
-          <span data-es="activo" data-en="active" data-ca="actiu">activo</span>
-        </div>
+      <a class="pcard" href="https://github.com/KCRooty/X-USB" target="_blank">
+        <div class="pstatus" data-es="activo" data-en="active" data-ca="actiu">activo</div>
         <div class="pname">X-USB</div>
         <div class="pdesc" data-es="App Android open-source tipo Rufus/Ventoy. Gratis, sin anuncios, uso ilimitado. ISO Burner, MultiOS USB UEFI, Partition Wizard y más."
              data-en="Open-source Android app like Rufus/Ventoy. Free, no ads, unlimited use. ISO Burner, MultiOS USB UEFI, Partition Wizard and more."
@@ -600,10 +501,8 @@ footer b{color:var(--accent)}
         </div>
       </a>
 
-      <a class="pcard" href="foros.html" style="--c:var(--purple)">
-        <div class="pstatus" style="color:var(--accent)"><span class="dot"></span>
-          <span data-es="comunitario" data-en="community" data-ca="comunitari">comunitario</span>
-        </div>
+      <a class="pcard" href="foros.html">
+        <div class="pstatus" data-es="comunitario" data-en="community" data-ca="comunitari">comunitario</div>
         <div class="pname">Foro</div>
         <div class="pdesc" data-es="Espacio comunitario con sistema de login. Publica mensajes y comparte ideas."
              data-en="Community space with login system. Post messages and share ideas."
@@ -621,7 +520,7 @@ footer b{color:var(--accent)}
 
   <!-- GALLERY -->
   <section class="sec" id="gallery">
-    <div class="sec-label">03 · ls-gallery --drawings</div>
+    <div class="sec-label">03</div>
     <h2 class="sec-title" data-es="Galería" data-en="Gallery" data-ca="Galeria">Galería</h2>
     <div class="gfilt">
       <button class="fbtn on" onclick="setF(this,'all')" data-es="Todo" data-en="All" data-ca="Tot">Todo</button>
@@ -631,37 +530,13 @@ footer b{color:var(--accent)}
       <button class="fbtn" onclick="setF(this,'other')" data-es="Otro" data-en="Other" data-ca="Altre">Otro</button>
     </div>
     <div class="ggrid" id="ggrid">
-      <div class="gempty"><b>~/gallery</b> · 0 archivos<br><span style="font-size:.62rem;opacity:.6;display:block;margin-top:5px">las imágenes se guardan localmente</span></div>
+      <div class="gempty"><b>~/gallery</b> · 0 archivos<br><span style="font-size:.75rem;opacity:.7;display:block;margin-top:5px">las imágenes se guardan localmente</span></div>
     </div>
     <div class="gupload-row">
       <input type="file" id="fInput" accept="image/*" multiple style="display:none" onchange="handleUp(event)">
       <button class="btn" onclick="document.getElementById('fInput').click()"
               data-es="+ subir dibujo" data-en="+ upload drawing" data-ca="+ pujar dibuix">+ subir dibujo</button>
       <span class="gcount" id="gcount"></span>
-    </div>
-  </section>
-
-  <!-- CONNECT -->
-  <section class="sec" id="connect">
-    <div class="sec-label">04 · ./connect.sh</div>
-    <h2 class="sec-title" data-es="Conectar" data-en="Connect" data-ca="Connectar">Conectar</h2>
-    <div class="con-grid">
-      <a href="https://www.youtube.com/@ALFY181X" target="_blank" class="ccard">
-        <div class="cico youtube"><img src="assets/icons/youtube.png" alt="YouTube"></div>
-        <div><span class="cplat">YouTube</span><span class="chandle">@ALFY181X</span></div>
-      </a>
-      <a href="https://www.tiktok.com/@a181xy" target="_blank" class="ccard">
-        <div class="cico tiktok"><img src="assets/icons/tiktok.png" alt="TikTok"></div>
-        <div><span class="cplat">TikTok</span><span class="chandle">@a181xy</span></div>
-      </a>
-      <a href="https://gamejolt.com/@alfy181R" target="_blank" class="ccard">
-        <div class="cico gamejolt"><img src="assets/icons/gamejolt.jpg" alt="GameJolt"></div>
-        <div><span class="cplat">GameJolt</span><span class="chandle">@alfy181R</span></div>
-      </a>
-      <a href="https://github.com/Alfy181R" target="_blank" class="ccard">
-        <div class="cico github"><img src="assets/icons/github.png" alt="GitHub"></div>
-        <div><span class="cplat">GitHub</span><span class="chandle">Alfy181R</span></div>
-      </a>
     </div>
   </section>
 
@@ -679,14 +554,14 @@ footer b{color:var(--accent)}
 
 <!-- FOOTER -->
 <footer>
-  <div class="wrap">alfy@studio:~$ echo <b>"made with code &amp; art"</b> · Studio OS v3.1 · <a href="https://github.com/Alfy181R/alfy181r.github.io" style="color:var(--accent)">github ↗</a></div>
+  <div class="wrap">Static Forge · <a href="https://github.com/KCRooty/alfy181r.github.io">github ↗</a></div>
 </footer>
 
 <!-- LANG SWITCHER -->
 <div class="lang-bar">
   <button class="lang-btn active" data-lang="es" onclick="setLang('es')">ES</button>
   <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
-  <button class="lang-btn" data-lang="ca" onclick="setLang('ca')" style="color:var(--yellow);border-color:rgba(212,172,103,.3)">CA</button>
+  <button class="lang-btn" data-lang="ca" onclick="setLang('ca')">CA</button>
 </div>
 
 <!-- LIGHTBOX -->
@@ -755,7 +630,7 @@ function renderG(){
   const list=curF==='all'?imgs:imgs.filter(i=>i.cat===curF);
   cnt.textContent=imgs.length>0?`${imgs.length} archivo${imgs.length!==1?'s':''}`:'' ;
   if(!list.length){
-    grid.innerHTML=`<div class="gempty"><b>Galería vacía</b><br><span style="font-size:.62rem;opacity:.6;display:block;margin-top:5px">No hay imágenes en esta categoría.</span></div>`;
+    grid.innerHTML=`<div class="gempty"><b>Galería vacía</b><br><span style="font-size:.75rem;opacity:.7;display:block;margin-top:5px">No hay imágenes en esta categoría.</span></div>`;
     return;
   }
   grid.innerHTML=list.map(img=>`
